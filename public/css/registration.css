@@ -1,0 +1,27 @@
+/* public/css/registration.css */
+.registration-section {
+    background-color: #f8f9fa; /* Warna latar belakang */
+}
+
+.registration-wrap {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    padding: 40px; /* Padding yang lebih banyak */
+}
+
+.registration-form .form-control {
+    height: 50px; /* Tinggi input */
+    margin-bottom: 15px; /* Jarak antar input */
+}
+
+.registration-form .btn {
+    width: 100%; /* Tombol mengisi lebar kotak */
+    height: 50px; /* Ukuran tombol yang konsisten */
+}
+
+.img {
+    height: 100vh; /* Mengisi tinggi viewport */
+    background-size: cover; /* Menjaga proporsi gambar */
+    background-position: center; /* Menempatkan gambar di tengah */
+}
