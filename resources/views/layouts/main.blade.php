@@ -69,7 +69,7 @@
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
-    <a href="{{ route('admin_dashboard') }}" class="brand-link">
+    <a href="{{ route('dashboard') }}" class="brand-link">
       <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
     </a>
   
@@ -77,19 +77,19 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ route('admin_dashboard') }}" class="nav-link {{ request()->is('admin_dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('data_mitra') }}" class="nav-link {{ request()->is('data_mitra') ? 'active' : '' }}">
+            <a href="{{ route('data_mitra') }}" class="nav-link {{ request()->is('admin/data_mitra') ? 'active' : '' }}">
               <i class="nav-icon fas fa-handshake"></i>
               <p>Data Mitra</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('data_user') }}" class="nav-link {{ request()->is('data_user') ? 'active' : '' }}">
+            <a href="{{ route('data_user') }}" class="nav-link {{ request()->is('admin/data_user') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>Data User</p>
             </a>

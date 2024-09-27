@@ -46,7 +46,9 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
 
 // Rute untuk Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/data_mitra', [AdminController::class, 'data_mitra'])->name('data_mitra');
+    Route::get('/admin/data_user', [AdminController::class, 'data_user'])->name('data_user');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
