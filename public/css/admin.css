@@ -1,0 +1,103 @@
+/* .inner {
+    color: #004085;
+}
+
+.icon .fas {
+    color: #004085;
+}
+
+.small-box {
+    color:#F8F9FA;
+} */
+
+/* Make navbar blend with the background */
+.main-header {
+    background-color: #007bff !important; /* Ensure the background matches the content */
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Sidebar modification */
+  .main-sidebar {
+    background-color: white !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow effect */
+    color: #333;
+  }
+
+  /* Remove the border under the Dashboard Admin in the sidebar */
+  .brand-link {
+    border-bottom: none !important;
+    color: #333 !important;
+  }
+  
+  /* Adjust sidebar link colors */
+  .nav-sidebar .nav-link {
+    color: #333 !important;
+  }
+
+  .nav-sidebar .nav-link:hover {
+    background-color: #f0f0f0 !important;
+  }
+  
+  /* Change color of active menu items */
+  .nav-sidebar .nav-item .nav-link.active {
+    background-color: #007bff !important;
+    color: white !important;
+  }
+
+  .nav-sidebar .nav-item .nav-link.active .nav-icon {
+    color: white !important; /* Warna ikon putih */
+  }
+
+  .nav-icon {
+    color: gray;
+  }
+
+
+  /* css card pada dashboard admin */
+
+  /* Small box styling */
+.small-box {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.small-box:hover {
+    transform: translateY(-5px);
+}
+
+.small-box .inner {
+    color: #007bff;
+    padding: 20px;
+}
+
+.small-box .inner h3 {
+    font-weight: bold;
+}
+
+.small-box .inner p {
+    font-size: 18px;
+}
+
+.small-box .icon {
+    font-size: 60px;
+    color: #007bff;
+    opacity: 0.8;
+}
+
+.small-box-footer {
+    color: #007bff !important;
+    background-color: #f8f9fa !important;
+    border-radius: 0 0 15px 15px;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.small-box-footer:hover {
+    background-color: #e2e6ea;
+}
