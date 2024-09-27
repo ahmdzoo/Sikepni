@@ -1,4 +1,4 @@
-@extends('layout.mhs')
+@extends('layouts.mhs')
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #007bff, #ffffff ); min-height: 100vh;">
     <!-- Content Header (Page header) -->
