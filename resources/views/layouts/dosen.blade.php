@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Mahasiswa</title>
+  <title>Dashboard Dosen Pembimbing</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -92,7 +92,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> mahasiswa@gmail.com
+          <i class="fas fa-user"></i> dospem@gmail.com
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">
@@ -118,23 +118,11 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('mahasiswa/dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('mhs_lowongan') }}" class="nav-link {{ request()->is('mahasiswa/mhs_lowongan') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-handshake"></i>
-              <p>Program Magang</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('mhs_aktifitas') }}" class="nav-link {{ request()->is('mahasiswa/mhs_aktifitas') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Aktifitas Magang</p>
-            </a>
-          </li>          
+          </li>      
         </ul>
       </nav>
     </div>

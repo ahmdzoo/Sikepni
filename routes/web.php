@@ -31,7 +31,9 @@ Route::post('register', [RegisterController::class, 'register']);
 
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
-    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard']);
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
+    Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
 });
 
 // Rute untuk Dosen Pembimbing

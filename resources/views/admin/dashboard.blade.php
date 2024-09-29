@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<div class="content-wrapper" style="background: linear-gradient(to bottom, #007bff, #ffffff ); min-height: 100vh;">
+<div class="content-wrapper" style="background: linear-gradient(to bottom, #007bff, #bfdaf7 ); min-height: 100vh;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -17,7 +17,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="row m-4">
           <!-- Pengaduan Masyarakat -->
-          <div class="col-lg-3 col-6">
+          <div class="col-lg-3  col-md-6">
             <!-- small box -->
             <div class="small-box">
               <div class="inner">
@@ -31,7 +31,7 @@
             </div>
           </div>
           <!-- Data Penduduk -->
-          <div class="col-lg-3 col-6">
+          <div class="col-lg-3  col-md-6">
             <!-- small box -->
             <div class="small-box">
               <div class="inner">
