@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\User;
+
 
 class AdminController extends Controller
 {
@@ -21,33 +22,70 @@ class AdminController extends Controller
     
     public function data_user(Request $request)
     {
-        // Filter berdasarkan role jika ada
-        $roleFilter = $request->input('role');
-        $users = User::when($roleFilter, function ($query, $roleFilter) {
-            return $query->where('role', $roleFilter);
-        })->paginate(10);
+        $data = User::query();
+            if ($request->input('role')){
+               
+                $data= $data->where('role',$request->role);
+            }
 
-        return view('admin.data_user', compact('users', 'roleFilter'));
+            // Menangani pencarian
+            if ($request->has('search') && !empty($request->search)) {
+                $searchValue = $request->search;
+                $data->where(function($q) use ($searchValue) {
+                    $q->where('name', 'like', "%{$searchValue}%")
+                      ->orWhere('email', 'like', "%{$searchValue}%")
+                      ->orWhere('role', 'like', "%{$searchValue}%");
+                });
+            }
+            
+        
+        if($request->ajax()){
+            
+
+            // $data = latest();
+            return DataTables::of($data)
+            
+            ->addColumn('no', function($data){
+                return $data->DT_RowIndex;
+            })
+            ->addColumn('name', function($data){
+                return $data->name;
+            })
+            ->addColumn('email', function($data){
+                return $data->email;
+            })
+            ->addColumn('role', function($data){
+                return $data->role;
+            })
+            ->addColumn('action', function($data){
+                return 'action';
+            })
+            ->make(true);
+        }
+
+        
+
+        return view('admin.data_user');
     }
 
-    public function deleteUser($id)
-    {
-        User::findOrFail($id)->delete();
-        return redirect()->route('data_user')->with('success', 'User deleted successfully');
-    }
+    // public function deleteUser($id)
+    // {
+    //     User::findOrFail($id)->delete();
+    //     return redirect()->route('data_user')->with('success', 'User deleted successfully');
+    // }
 
-    public function editUser($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.edit_user', compact('user'));
-    }
+    // public function editUser($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     return view('admin.edit_user', compact('user'));
+    // }
 
-    public function updateUser(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $user->update($request->only('name', 'email', 'role'));
-        return redirect()->route('data_user')->with('success', 'User updated successfully');
-    }
+    // public function updateUser(Request $request, $id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     $user->update($request->only('name', 'email', 'role'));
+    //     return redirect()->route('data_user')->with('success', 'User updated successfully');
+    // }
 
     public function addUser()
     {

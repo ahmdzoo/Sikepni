@@ -36,7 +36,7 @@
     
   </style>
 
-  @yield('css')
+  @yield('css') 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" style="background-color: white;">
 <div class="wrapper">
@@ -153,5 +153,7 @@
 
 
 @stack('js')
+
+@yield('scripts')
 </body>
 </html>

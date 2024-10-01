@@ -53,8 +53,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/data_user', [AdminController::class, 'data_user'])->name('data_user');
     
     Route::post('/admin/user/store', [AdminController::class, 'storeUser'])->name('store_user');
-    Route::post('/admin/user/update/{id}', [AdminController::class, 'updateUser'])->name('update_user');
-    Route::post('/admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
+    // Route::post('/admin/user/update/{id}', [AdminController::class, 'updateUser'])->name('update_user');
+    // Route::post('/admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
+
+    Route::get('/admin/users/{id}', [AdminController::class, 'editUser'])->name('edit_user');
+    Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('update_user');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
+
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
