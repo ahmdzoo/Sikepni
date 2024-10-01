@@ -1,0 +1,498 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --black-color: hsl(220, 24%, 12%);
+  --black-color-light: hsl(220, 24%, 15%);
+  --black-color-lighten: hsl(220, 20%, 18%);
+  --white-color: #fff;
+  --body-color: hsl(220, 100%, 97%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Hanken Grotesk";
+  --normal-font-size: .938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1024px) {
+  :root {
+    --normal-font-size: 1rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+/*=============== HEADER ===============*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--black-color);
+  box-shadow: 0 2px 16px hsla(220, 32%, 8%, .3);
+  z-index: var(--z-fixed);
+}
+
+/*=============== NAV ===============*/
+.nav {
+  height: var(--header-height);
+}
+
+.nav__logo, 
+.nav__burger, 
+.nav__close {
+  color: var(--white-color);
+}
+
+.nav__data {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  display: inline-flex;
+  align-items: center;
+  column-gap: .25rem;
+  font-weight: var(--font-semi-bold);
+}
+
+.nav__logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.nav__toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.nav__burger, 
+.nav__close {
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  inset: 0;
+  margin: auto;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: opacity .1s, transform .4s;
+}
+
+.nav__close {
+  opacity: 0;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1118px) {
+  .nav__menu {
+    position: absolute;
+    left: 0;
+    top: 2.5rem;
+    width: 100%;
+    height: calc(100vh - 3.5rem);
+    overflow: auto;
+    pointer-events: none;
+    opacity: 0;
+    transition: top .4s, opacity .3s;
+  }
+  .nav__menu::-webkit-scrollbar {
+    width: 0;
+  }
+  .nav__list {
+    background-color: var(--black-color);
+    padding-top: 1rem;
+  }
+}
+
+.nav__link {
+  color: var(--white-color);
+  background-color: var(--black-color);
+  font-weight: var(--font-semi-bold);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color .3s;
+}
+
+.nav__link:hover {
+  background-color: var(--black-color-light);
+}
+
+/* Show menu */
+.show-menu {
+  opacity: 1;
+  top: 3.5rem;
+  pointer-events: initial;
+}
+
+/* Show icon */
+.show-icon .nav__burger {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+.show-icon .nav__close {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/*=============== BREAKPOINTS NAV DISPLAY ===============*/
+/* For small devices */
+@media screen and (max-width: 340px) {
+  .container {
+    margin-inline: 1rem;
+  }
+
+  .nav__link {
+    padding-inline: 1rem;
+  }
+}
+
+/* ===== Nav Display ===== */
+@media screen and (min-width: 1118px) {
+  .container {
+    margin-inline: auto;
+  }
+
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+    display: flex;
+    justify-content: space-between;
+  }
+  .nav__toggle {
+    display: none;
+  }
+  .nav__list {
+    height: 100%;
+    display: flex;
+    column-gap: 3rem;
+  }
+  .nav__link {
+    height: 100%;
+    padding: 0;
+    justify-content: initial;
+    column-gap: .25rem;
+  }
+  .nav__link:hover {
+    background-color: transparent;
+  }
+}
+
+/*===== Section Home =====*/
+.home{
+  position: relative;
+}
+
+.home__container{
+  padding-top: 10.5rem;
+  height: 100vh;
+}
+
+.home__bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.home__data{
+  position: relative;
+  text-align: center;
+  z-index: var(--z-tooltip);
+}
+
+.home__title{
+  padding-top: 1cm;
+  font-size: 40px;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.home__description{
+  font-weight: var(--font-medium);
+  margin-bottom: 2rem;
+}
+
+.home__button{
+  display: inline-flex;
+  background: #171c26;
+  color: white;
+  font-weight: var(--font-semi-bold);
+  padding: 1rem 2rem;
+  border-radius: .5rem;
+  transition: box-shadow .4s;
+}
+
+.home__button:hover{
+  box-shadow: 0 16px 48px hsla(353, 90%, 56%, .4);
+}
+
+.home__images img {
+  position: absolute;
+  max-width: initial;
+  width: 800px;
+  right: 2rem;
+  bottom: 0;
+  padding-bottom: 5cm;
+}
+
+/* ====== FOOTER ==============*/
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--black-color);
+  color: var(--white-color);
+  padding-block: 3.5rem 2rem;
+}
+
+.footer__container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer__logo img {
+  width: 30px;
+  height: auto;
+}
+
+.footer__logo{
+  display: inline-flex;
+  align-items: center;
+  column-gap: .25rem;
+  margin-bottom: 1rem;
+}
+
+.footer__content{
+  display: flex;
+  gap: 4rem;
+}
+
+.footer__links, .footer__layanan{
+  list-style: none;
+  padding: 0;
+}
+
+.footer__links a, .footer__layanan a{
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+
+.footer__title{
+  font-size: 14px;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.footer__description, .footer__email {
+  text-align: left;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.footer__logo span{
+  color: var(--white-color);
+  font-size: 14px;
+  font-weight: var(--font-semi-bold);
+}
+
+.footer__copy {
+  margin-top: 2rem;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+}
+
+.footer__email,
+.footer__info{
+  font-style: normal;
+  text-align: left;
+}
+
+/*===== Mobile Display =====*/
+@media screen and (max-width: 320px) {
+  .container {
+    margin-inline: 1rem;
+  }
+  .home__title {
+    font-size: 2rem; 
+    padding-top: 1rem; 
+  }
+  .home__description {
+    font-size: 14px; 
+  }
+  .home__button {
+    padding: 0.5rem 1rem;
+  }
+  .home__images img {
+    width: 100%;
+  }
+}
+
+/* Tablet and Small Devices */
+@media screen and (min-width: 350px) and (max-height: 680px) {
+  .home__container {
+    height: 700px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .home__data {
+    max-width: 380px;
+    margin-inline: auto;
+  }
+  .home__title {
+    font-size: 2.5rem;
+  }
+}
+
+/* Large Devices */
+@media screen and (min-width: 1150px) {
+  .container {
+    margin-inline: auto;
+  }
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+  }
+  .nav__toggle,
+  .nav__close {
+    display: none;
+  }
+  .home__container {
+    height: 960px;
+  }
+  .home__data {
+    max-width: 610px;
+    text-align: initial;
+    margin: 0;
+  }
+  .home__description {
+    padding-right: 8rem;
+    margin-bottom: 3rem;
+  }
+}
+
+/* 2K Devices */
+@media screen and (min-width: 2048px) and (min-height: 1100px) {
+  .container {
+    max-width: 1300px;
+  }
+  .home__container {
+    height: 100vh;
+    display: grid;
+  }
+  .home__data {
+    align-self: center;
+  }
+}
+
+/* Taller Devices */
+@media screen and (max-width: 1150px) and (min-height: 900px) {
+  .home__container {
+    display: grid;
+  }
+  .home__data {
+    align-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .home__title {
+    font-size: 30px; 
+    padding-top: 2rem; 
+  }
+  .home__description {
+    font-size: 16px; 
+    margin-bottom: 1rem; 
+  }
+  .home__button {
+    padding: 0.8rem 1.5rem;
+    font-size: 14px; 
+  }
+  .home__images img {
+    width: 100%; 
+    max-width: 400px; 
+    right: 0; 
+    bottom: 1rem; 
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .footer__title {
+    text-align: left;
+    font-size: 12px;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer__links a, .footer__layanan a {
+    font-size: 12px; /* Ukuran font untuk mobile */
+  }
+}
+
+/* Untuk layar dengan lebar maksimum 480px (ponsel kecil) */
+@media screen and (max-width: 480px) {
+  .footer__content {
+    flex-direction: row;/* Kembali bertumpuk pada layar kecil */
+  }
+
+  .footer__links a, .footer__layanan a {
+    font-size: 12px;
+  }
+
+  .footer__title {
+    font-size: 12px;
+  }
+}
+
+
+
+
