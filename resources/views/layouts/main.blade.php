@@ -36,7 +36,7 @@
     
   </style>
 
-  @yield('css')
+  @yield('css') 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" style="background-color: white;">
 <div class="wrapper">
@@ -54,18 +54,52 @@
           <i class="fas fa-user"></i> admin@example.com
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#resetPasswordModal">
             <i class="fas fa-key"></i> Reset Password
-          </a>
+          </a>          
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i> Logout
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
         </div>
       </li>
     </ul>
-    
   </nav>
+
+  <!-- Modal Reset Password -->
+  <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resetPasswordLabel">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="resetPasswordForm">
+            <div class="form-group">
+              <label for="currentPassword">Password Saat Ini</label>
+              <input type="password" class="form-control" id="currentPassword" name="current_password" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">Password Baru</label>
+              <input type="password" class="form-control" id="newPassword" name="new_password" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Konfirmasi Password Baru</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Reset Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
@@ -119,5 +153,7 @@
 
 
 @stack('js')
+
+@yield('scripts')
 </body>
 </html>

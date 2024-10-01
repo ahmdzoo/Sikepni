@@ -32,50 +32,7 @@
   <!-- CKEditor -->
   <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 
-  <style>
-    /* Make navbar blend with the background */
-    .main-header {
-      background-color: #007bff !important; /* Ensure the background matches the content */
-      border-bottom: none !important;
-      box-shadow: none !important;
-    }
-    
-    /* Sidebar modification */
-    .main-sidebar {
-      background-color: white !important;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow effect */
-      color: #333;
-    }
-
-    /* Remove the border under the Dashboard Admin in the sidebar */
-    .brand-link {
-      border-bottom: none !important;
-      color: #333 !important;
-    }
-    
-    /* Adjust sidebar link colors */
-    .nav-sidebar .nav-link {
-      color: #333 !important;
-    }
-
-    .nav-sidebar .nav-link:hover {
-      background-color: #f0f0f0 !important;
-    }
-    
-    /* Change color of active menu items */
-    .nav-sidebar .nav-item .nav-link.active {
-      background-color: #007bff !important;
-      color: white !important;
-    }
-
-    .nav-sidebar .nav-item .nav-link.active .nav-icon {
-      color: white !important; /* Warna ikon putih */
-    }
-
-    .nav-icon {
-      color: gray;
-    }
-  </style>
+  
 
   @yield('css')
 </head>
@@ -92,16 +49,19 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> mahasiswa@gmail.com
+          <i class="fas fa-user"></i> admin@example.com
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#resetPasswordModal">
             <i class="fas fa-key"></i> Reset Password
-          </a>
+          </a>          
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i> Logout
           </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
         </div>
       </li>
     </ul>
