@@ -52,7 +52,7 @@ html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     height: 100%; /* Memastikan HTML dan body memiliki tinggi penuh */
-    margin: 0
+    margin: 0;
 }
 
 article,
@@ -5528,6 +5528,15 @@ a.badge-dark.focus {
     border-radius: 0.25rem;
 }
 
+.alert ul {
+    list-style-type: none; /* Menghilangkan titik poin */
+    padding-left: 0; /* Menghilangkan padding kiri */
+    margin: 0; /* Menghilangkan margin */
+}
+.alert p {
+    margin: 0; /* Menghilangkan margin dari paragraf */
+}
+
 .alert-heading {
     color: inherit;
 }
@@ -10705,12 +10714,13 @@ h5,
 }
 
 .ftco-section {
-    background-color: #f5f5f5;
-    padding: 7em 0;
-    padding: 60px 0;
-    height: 100vh; /* Mengatur tinggi bagian menjadi penuh layar */
-    display: flex; /* Menggunakan flex untuk mengatur konten */
-    align-items: center;
+    background-image: url("/images/sky.png"); /* Path ke gambar background */
+    background-size: cover; /* Menutupi seluruh bagian elemen */
+    background-position: center; /* Posisi gambar di tengah */
+    background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+    height: 100vh; /* Mengatur tinggi section menjadi penuh layar */
+    display: flex; /* Agar konten di dalamnya terpusat */
+    align-items: center; /* Konten berada di tengah secara vertikal */
 }
 
 .ftco-no-pt {
