@@ -17,14 +17,12 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* Mencegah scroll */
         }
 
         .registration-section {
             display: flex;
             width: 100%;
             height: 100vh;
-            /* Full height */
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -32,70 +30,63 @@
 
         .img {
             flex: 7;
-            /* 70% untuk gambar */
             background-image: url('images/bg-1.jpg');
             background-size: cover;
             background-position: center;
             height: 100%;
-            /* Full height */
             min-height: 300px;
-            /* Minimum height untuk mobile */
         }
 
         .registration-wrap {
             flex: 3;
-            /* 30% untuk kolom registrasi */
-            background: white;
-            padding: 40px;
+            background-color: #eff3f6;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* Center items vertically */
             box-sizing: border-box;
-            /* Pastikan padding tidak mempengaruhi ukuran */
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 28px;
             font-weight: bold;
             color: #333;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             width: 100%;
-            /* Lebar penuh */
         }
 
         .form-control {
-            height: 50px;
+            height: 55px;
             border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 10px 15px;
             width: 100%;
-            /* Lebar penuh */
             box-sizing: border-box;
-            /* Pastikan padding tidak mempengaruhi ukuran */
-            transition: border-color 0.3s ease;
+            font-size: 16px;
+            color: #495057;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .form-control:focus {
             border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         }
 
         .btn {
             width: 100%;
-            height: 50px;
+            height: 55px;
             background-color: #007bff;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
-            /* Space above button */
+            margin-top: 25px;
         }
 
         .btn:hover {
@@ -103,62 +94,67 @@
         }
 
         .text-muted {
-            font-size: 0.8em;
+            font-size: 0.9em;
+            color: #6c757d;
         }
 
         p.text-center {
             margin-top: 20px;
             text-align: center;
+            font-size: 16px;
         }
 
         .field-icon {
             float: right;
-            margin-top: -30px;
-            margin-right: 10px;
+            margin-top: -40px;
+            margin-right: 15px;
             cursor: pointer;
         }
 
-        /* Media Queries untuk mobile */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
         @media (max-width: 768px) {
             .registration-section {
                 flex-direction: column;
-                /* Mengubah arah flex untuk mobile */
                 height: auto;
-                /* Tidak perlu 100vh pada mobile */
             }
 
             .img {
                 height: 40vh;
-                /* Atur tinggi untuk gambar di mobile */
                 min-height: 200px;
-                /* Minimum height untuk menjaga gambar tetap terlihat */
             }
 
             .registration-wrap {
                 padding: 20px;
-                /* Mengurangi padding untuk mobile */
             }
 
             h2 {
                 font-size: 24px;
-                /* Ukuran font yang lebih kecil untuk mobile */
             }
 
             .form-control {
-                height: 45px;
-                /* Ukuran input lebih kecil untuk mobile */
+                height: 50px;
             }
 
             .btn {
-                font-size: 14px;
-                /* Ukuran font yang lebih kecil untuk tombol di mobile */
-                height: 45px;
-                /* Ukuran tombol lebih kecil untuk mobile */
+                font-size: 16px;
+                height: 50px;
             }
 
             .text-muted {
-                font-size: 0.7em;
-                /* Ukuran font yang lebih kecil untuk mobile */
+                font-size: 0.8em;
             }
 
             
@@ -171,6 +167,7 @@
         <div class="img"></div>
         <div class="registration-wrap">
             <h2>Registrasi</h2>
+            <div id="error-message-container" class="alert alert-danger" style="display: none;"></div>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group">
@@ -186,6 +183,7 @@
                     <input id="password-field" type="password" name="password" class="form-control" required
                         placeholder="Masukkan Kata Sandi" />
                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <small class="text-muted">Catatan : Kata sandi harus memiliki minimal 6 karakter.</small>
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Konfirmasi Kata Sandi <small class="text-muted">(Wajib
@@ -194,6 +192,7 @@
                         class="form-control" required placeholder="Konfirmasi Kata Sandi" />
                     <span toggle="#password-confirmation-field"
                         class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <small class="text-muted">Harap masukkan kata sandi yang sama.</small>
                 </div>
                 <div class="form-group">
                     <label for="role">Role <small class="text-muted">(Wajib diisi)</small></label>

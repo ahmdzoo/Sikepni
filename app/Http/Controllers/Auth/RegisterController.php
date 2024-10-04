@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -28,8 +29,8 @@ class RegisterController extends Controller
         // Login pengguna setelah registrasi
         auth()->login($user);
 
-        // Redirect ke halaman yang diinginkan setelah registrasi
-        return redirect()->route('dashboard');// Ganti dengan route yang sesuai
+        // Flash pesan sukses
+        return redirect()->route('login')->with('success', 'Akun Anda berhasil dibuat. Silahkan login.');
     }
 
     // Validasi input registrasi
@@ -38,8 +39,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'in:mahasiswa,dosen_pembimbing,mitra_magang,admin'], // Validasi role
+            'password' => ['required', 'string', 'min:6', 'confirmed'], // Minimal panjang 6
+            'role' => ['required', 'string'],
         ]);
     }
 
