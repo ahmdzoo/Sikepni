@@ -17,19 +17,25 @@ class LoginController extends Controller
     // Proses login
     public function login(Request $request)
     {
-        $request->validate([
+        // Validasi input dengan pesan kesalahan kustom
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Kata sandi tidak boleh kosong.',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // Redirect ke dashboard setelah berhasil login
-            return redirect()->route('dashboard');
+        // Coba untuk login
+        if (Auth::attempt($credentials)) {
+            // Jika berhasil, redirect ke halaman yang diinginkan
+            return redirect()->intended('dashboard'); // Ganti 'dashboard' dengan rute yang sesuai
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
+            'email' => 'Email atau password salah.', // Pesan kesalahan
+        ])->withInput($request->only('email'));
     }
 
     // Proses logout

@@ -1,12 +1,12 @@
 /* public/css/registration.css */
 .registration-section {
-    background-color: #f8f9fa; /* Warna latar belakang */
+    background-color: #9ea2a5; /* Warna latar belakang */
 }
 
 .registration-wrap {
-    background: white;
+    background-color: #9ea2a5; /* Warna latar belakang */
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 40px; /* Padding yang lebih banyak */
 }
 
