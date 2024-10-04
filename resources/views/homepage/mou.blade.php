@@ -10,7 +10,7 @@
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-      <title>SIKEPNI - Sistem Informasi Kerjasama Politeknik Negeri Indramayu</title>
+      <title>SIKEPNI - MOU</title>
    </head> 
    <body>
       <!--=============== HEADER ===============-->
@@ -48,19 +48,11 @@
 
             <div class="home__container container">
                <div class="home__data">
-                  <h1 class="home__title">Selamat Datang <br> Sistem Informasi Kerjasama Polindra</h1>
+                  <h1 class="home__title">INI PAGE MOU</h1>
 
                   <p class="home__description">
-                     Aplikasi Kerjasama Mitra Perusahaan Magang
-                     Dengan Kampus Politeknik Negeri Indramayu.
+                     Page Informasi MOU
                   </p>
-
-                  <a href="#" class="home__button">Login</a>
-                  <a href="#" class="home__button">Daftar</a>
-               </div>
-
-               <div class="home__images">
-                  <img src="{{ url('gambar/gsc1.png') }}" alt="">
                </div>
             </div>
       </section>
