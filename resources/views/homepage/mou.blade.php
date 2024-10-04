@@ -10,7 +10,7 @@
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-      <title>SIKEPNI - Sistem Informasi Kerjasama Politeknik Negeri Indramayu</title>
+      <title>SIKEPNI - MOU</title>
    </head> 
    <body>
       <!--=============== HEADER ===============-->
