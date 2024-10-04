@@ -20,8 +20,13 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('homepage/landing-page');
+
+// });
+
 Route::get('/', function () {
-    return view('homepage/landing-page');
+    return view('welcome');
 
 });
 
@@ -49,16 +54,19 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
 // Rute untuk Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/admin/data_mitra', [AdminController::class, 'data_mitra'])->name('data_mitra');
+    Route::get('/admin/data_mitra', [MitraMagangController::class, 'data_mitra'])->name('data_mitra');
     Route::get('/admin/data_user', [AdminController::class, 'data_user'])->name('data_user');
     
     Route::post('/admin/user/store', [AdminController::class, 'storeUser'])->name('store_user');
-    // Route::post('/admin/user/update/{id}', [AdminController::class, 'updateUser'])->name('update_user');
-    // Route::post('/admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
 
     Route::get('/admin/users/{id}', [AdminController::class, 'editUser'])->name('edit_user');
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('update_user');
     Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
+
+    // Rute untuk Menyimpan Jurusan
+    Route::post('/admin/jurusan/store', [MitraMagangController::class, 'storeJurusan'])->name('jurusan.store');
+
+    
 
 });
 
@@ -67,3 +75,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::resource('mitras', MitraMagangController::class);

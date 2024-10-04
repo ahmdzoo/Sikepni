@@ -41,4 +41,17 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
+    public function mitra()
+    {
+        return $this->hasOne(Mitra::class, 'nama_mitra');
+    }
+
+    /**
+     * Get the mitras where user is dosen pendamping.
+     */
+    public function mitrasAsDosenPembimbing()
+    {
+        return $this->hasMany(Mitra::class, 'dosen_pembimbing');
+    }
+
 }

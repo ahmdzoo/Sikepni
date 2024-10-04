@@ -160,6 +160,8 @@
                 font-size: 0.7em;
                 /* Ukuran font yang lebih kecil untuk mobile */
             }
+
+            
         }
     </style>
 </head>
