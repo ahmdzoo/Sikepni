@@ -28,7 +28,8 @@ use App\Http\Controllers\homepageController;
 
 #ROUTE HOMEPAGE
 Route::get('/', function () {
-    return view('homepage/landing-page');
+    return view('homepage/dashboard');
+
 });
 
 #ROUTE LINK NAV
@@ -84,3 +85,5 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::resource('mitras', MitraMagangController::class);
+//rute kirim cv
+Route::post('/mahasiswa/kirim_cv', [MahasiswaController::class, 'kirimCV'])->name('kirim_cv');
