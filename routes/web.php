@@ -21,7 +21,7 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return view('homepage/landing-page');
+    return view('homepage/dashboard');
 
 });
 
@@ -69,3 +69,5 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
+//rute kirim cv
+Route::post('/mahasiswa/kirim_cv', [MahasiswaController::class, 'kirimCV'])->name('kirim_cv');
