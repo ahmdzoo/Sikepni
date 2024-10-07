@@ -55,8 +55,8 @@
                      Dengan Kampus Politeknik Negeri Indramayu.
                   </p>
 
-                  <a href="#" class="home__button">Login</a>
-                  <a href="#" class="home__button">Daftar</a>
+                  <a href="{{ route('login') }}" class="home__button">Login</a>
+                  <a href="{{ route('register') }}" class="home__button">Daftar</a>
                </div>
 
                <div class="home__images">

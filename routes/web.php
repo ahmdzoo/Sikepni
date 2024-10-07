@@ -22,7 +22,7 @@ use App\Http\Controllers\homepageController;
 */
 
 // Route::get('/', function () {
-//     return view('homepage/landing-page');
+//     return view('welcome');
 
 // });
 
