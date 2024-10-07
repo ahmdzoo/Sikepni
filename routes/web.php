@@ -8,6 +8,7 @@ use App\Http\Controllers\MitraMagangController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\homepageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +21,16 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
+#ROUTE HOMEPAGE
 Route::get('/', function () {
     return view('homepage/dashboard');
 
 });
 
-//ROUTE LOGIN
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+#ROUTE LINK NAV
+Route::get('/moa',[homepageController::class, 'show_moa'])->name('homepage.moa');
+Route::get('/mou', [homepageController::class, 'show_mou'])->name('homepage.mou');
+Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 
 #ROUTE REGISTRASI
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
