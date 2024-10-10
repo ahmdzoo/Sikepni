@@ -50,7 +50,7 @@
       </div>
     </div>
   
-    <span class="footer__copy">
+    {{-- <span class="footer__copy">
       &#169; All Rights Reserved Politeknik Negeri Indramayu
-    </span>
+    </span> --}}
   </footer>

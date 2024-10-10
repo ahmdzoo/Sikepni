@@ -6,7 +6,7 @@ function onClick(element) {
     captionText.innerHTML = element.alt;
   }
   
-  // Toggle between showing and hiding the sidebar when clicking the menu icon
+
   var mySidebar = document.getElementById("mySidebar");
   
   function w3_open() {
@@ -17,8 +17,23 @@ function onClick(element) {
     }
   }
   
-  // Close the sidebar with the close button
   function w3_close() {
       mySidebar.style.display = "none";
   }
   
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const navToggle = document.getElementById("nav-toggle");
+//   const navMenu = document.getElementById("nav-menu");
+//   const navBurger = document.querySelector(".nav__burger");
+//   const navClose = document.querySelector(".nav__close");
+
+//   navToggle.addEventListener("click", () => {
+//     // Toggle menu visibility
+//     navMenu.classList.toggle("show-menu"); // Toggle class to show/hide menu
+
+//     // Toggle icons
+//     navBurger.classList.toggle("hide-icon"); // Hide burger icon
+//     navClose.classList.toggle("show-icon");  // Show close icon
+//   });
+// });
