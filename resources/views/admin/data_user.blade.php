@@ -293,7 +293,7 @@ function deleteUser(id) {
 
 
 </script>
-
+@include('layouts/footer')
 @endsection
 
 

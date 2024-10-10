@@ -10,33 +10,30 @@ class Mitra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'no_pks',
-        'tgl_mulai',
-        'tgl_selesai',
         'nama_mitra_id',
         'jurusan_id',
         'dosen_pembimbing_id',
+        'no_pks',
+        'tgl_mulai',
+        'tgl_selesai',
     ];
 
-    /**
-     * Get the user that owns the mitra.
-     */
+    protected $casts = [
+        'tgl_mulai' => 'date',
+        'tgl_selesai' => 'date',
+    ];
+
+    // Relasi
     public function mitraUser()
     {
         return $this->belongsTo(User::class, 'nama_mitra_id');
     }
 
-    /**
-     * Get the jurusan associated with the mitra.
-     */
     public function jurusan()
     {
-        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+        return $this->belongsTo(Jurusan::class);
     }
 
-    /**
-     * Get the dosen pembimbing associated with the mitra.
-     */
     public function dosenPembimbing()
     {
         return $this->belongsTo(User::class, 'dosen_pembimbing_id');

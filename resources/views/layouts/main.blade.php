@@ -51,7 +51,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> admin@example.com
+          <i class="fas fa-user"></i> {{ Auth::user()->email }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#resetPasswordModal">
@@ -127,7 +127,13 @@
               <i class="nav-icon fas fa-users"></i>
               <p>Data User</p>
             </a>
-          </li>          
+          </li> 
+          <li class="nav-item">
+            <a href="{{ route('jurusan') }}" class="nav-link {{ request()->is('admin/jurusan') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>Data Jurusan</p>
+            </a>
+          </li>         
         </ul>
       </nav>
     </div>

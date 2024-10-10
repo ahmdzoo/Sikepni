@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\InfoMitra; // Mengimpor model InfoMitra
 use App\Models\Lamaran;   // Mengimpor model Lamaran
-
+use Illuminate\Support\Facades\DB;
 class MahasiswaController extends Controller
 {
     // Menampilkan dashboard mahasiswa
@@ -50,7 +50,7 @@ class MahasiswaController extends Controller
         $userId = auth()->user()->id; // Ambil ID mahasiswa yang login
 
         // Simpan ke tabel terkait, misal tabel 'lamaran'
-        \DB::table('lamaran')->insert([
+        DB::table('lamaran')->insert([
             'user_id' => $userId,      // Gunakan 'user_id' untuk mahasiswa
             'mitra_id' => $request->mitra_id,
             'cv_path' => $path,        // Path CV disimpan
