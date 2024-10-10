@@ -28,7 +28,7 @@ use App\Http\Controllers\homepageController;
 
 #ROUTE HOMEPAGE
 Route::get('/', function () {
-    return view('homepage/dashboard');
+    return view('homepage/landing-page');
 
 });
 
