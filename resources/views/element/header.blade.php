@@ -23,4 +23,6 @@
           </ul>
        </div>
     </nav>
- </header>
+</header>
+
+<script src="{{ asset('js/script.js') }}"></script>
