@@ -173,4 +173,20 @@ class MitraMagangController extends Controller
 
         return redirect()->route('data_mitra')->with('success', 'Jurusan berhasil ditambahkan.');
     }
+
+    public function showMitra(Request $request)
+    {
+        $query = Mitra::with(['mitraUser', 'dosenPembimbing', 'jurusan']);
+
+        // Jika jurusan_id di request
+        if ($request->has('jurusan_id') && $request->jurusan_id != '') {
+            $query->where('jurusan_id', $request->jurusan_id);
+        }
+
+        $mitras = $query->get();
+        $jurusanList = Jurusan::all();
+
+        return view('mahasiswa.mhs_lowongan', compact('mitras', 'jurusanList'));
+    }
+
 }

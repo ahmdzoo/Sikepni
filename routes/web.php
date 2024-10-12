@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\LamaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,7 @@ Route::get('/', function () {
 });
 
 #ROUTE LINK NAV
-Route::get('/moa',[homepageController::class, 'show_moa'])->name('homepage.moa');
+Route::get('/moa', [homepageController::class, 'show_moa'])->name('homepage.moa');
 Route::get('/mou', [homepageController::class, 'show_mou'])->name('homepage.mou');
 Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 
@@ -47,6 +48,13 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
     Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
     Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
+    Route::get('/mahasiswa/mhs_lowongan', [LamaranController::class, 'index'])->name('mhs_lowongan');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/mahasiswa/lowongan', [LamaranController::class, 'index'])->name('lamaran.index');
+        Route::post('/mahasiswa/lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
+    });
+    Route::get('/mhs-lowongan', [MitraMagangController::class, 'showMitra'])->name('mhs_lowongan');
+    // Mengajukan lamaran
 });
 
 // Rute untuk Dosen Pembimbing
@@ -76,14 +84,14 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/mitra/{mitra}/edit', [MitraMagangController::class, 'edit'])->name('mitra.edit');
     Route::put('/admin/mitra/{mitra}', [MitraMagangController::class, 'update'])->name('mitra.update');
     Route::delete('/admin/mitra/{mitra}', [MitraMagangController::class, 'deleteMitra'])->name('mitra.destroy');
-    
+
 
     // Rute untuk manajemen user
     Route::get('/admin/users/{id}', [AdminController::class, 'editUser'])->name('edit_user');
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('update_user');
     Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('delete_user');
 
-        // Rute untuk Menyimpan Jurusan
+    // Rute untuk Menyimpan Jurusan
     Route::post('/admin/jurusan/store', [JurusanController::class, 'storeJurusan'])->name('jurusan.store');
 
     // Rute untuk Edit Jurusan
@@ -107,7 +115,4 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::resource('mitras', MitraMagangController::class);
-//rute kirim cv
-Route::post('/mahasiswa/kirim_cv', [MahasiswaController::class, 'kirimCV'])->name('kirim_cv');
-
 Route::resource('mitras', MitraMagangController::class);

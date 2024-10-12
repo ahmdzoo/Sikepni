@@ -28,11 +28,12 @@ class Mitra extends Model
     {
         return $this->belongsTo(User::class, 'nama_mitra_id');
     }
-
+    // Mitra.php
     public function jurusan()
     {
-        return $this->belongsTo(Jurusan::class);
+        return $this->belongsTo(Jurusan::class, 'jurusan_id'); // Menggunakan 'jurusan_id' sebagai foreign key
     }
+
 
     public function dosenPembimbing()
     {
