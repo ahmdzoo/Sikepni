@@ -9,7 +9,8 @@
 
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+       <!-- Favicon -->
+      <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
       <title>SIKEPNI - Sistem Informasi Kerjasama Politeknik Negeri Indramayu</title>
    </head> 
    <body>

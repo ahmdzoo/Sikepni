@@ -9,7 +9,8 @@
 
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+       <!-- Favicon -->
+      <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
       <title>SIKEPNI - MOU</title>
    </head> 
    <body>
