@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 #ROUTE REGISTRASI
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+
+Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
+
+
 
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
