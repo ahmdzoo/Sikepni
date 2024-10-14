@@ -107,6 +107,34 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan user.'])->withInput();
         }
     }
+
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('data_user')->with('success', 'User updated successfully');
+    }
+
+    public function deleteuser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('data_user')->with('success', 'user deleted successfully');
+    }
     
 
         
