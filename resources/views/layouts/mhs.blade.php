@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Mahasiswa</title>
+   <!-- Favicon -->
+   <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
+   <title>@yield('title', 'Dashboard Mahasiswa | SIKEPNI')</title>
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -49,12 +52,12 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> mhs@example.com
+          <i class="fas fa-user"></i> {{ Auth::user()->email }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#resetPasswordModal">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ubahPasswordModal">
             <i class="fas fa-key"></i> Reset Password
-          </a>          
+          </a>         
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i> Logout
@@ -67,6 +70,63 @@
     </ul>
     
   </nav>
+
+  <!-- Modal Ubah Password -->
+<div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="ubahPasswordLabel">Ubah Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearErrors()">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+            <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+
+            <form id="resetPasswordForm" method="POST" action="{{ route('password.update') }}">
+              @csrf
+              <div class="form-group">
+                  <label for="currentPassword">Password Saat Ini</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control" id="currentPassword" name="current_password" required>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('currentPassword')">
+                              <i class="fas fa-eye" id="currentPasswordToggle"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="newPassword">Password Baru</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('newPassword')">
+                              <i class="fas fa-eye" id="newPasswordToggle"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="confirmPassword">Konfirmasi Password Baru</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control" id="confirmPassword" name="new_password_confirmation" required>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('confirmPassword')">
+                              <i class="fas fa-eye" id="confirmPasswordToggle"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Reset Password</button>
+          </form>
+          
+          </div>
+      </div>
+  </div>
+</div>
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
@@ -117,7 +177,74 @@
 <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('lte/dist/js/adminlte.js') }}"></script>
+<script>
+  // Fungsi untuk menampilkan/menyembunyikan password
+  function togglePasswordVisibility(inputId) {
+      var input = document.getElementById(inputId);
+      var toggleIcon = document.getElementById(inputId + 'Toggle');
 
+      if (input.type === "password") {
+          input.type = "text";
+          toggleIcon.classList.remove('fa-eye');
+          toggleIcon.classList.add('fa-eye-slash');
+      } else {
+          input.type = "password";
+          toggleIcon.classList.remove('fa-eye-slash');
+          toggleIcon.classList.add('fa-eye');
+      }
+  }
+
+  // Fungsi untuk membersihkan pesan error
+  function clearErrors() {
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'none';
+  }
+
+  // Fungsi untuk menampilkan pesan
+  function showMessage(message, isSuccess) {
+      var successMessageDiv = document.getElementById('successMessage');
+      var errorMessageDiv = document.getElementById('errorMessage');
+
+      if (isSuccess) {
+          successMessageDiv.innerText = message;
+          successMessageDiv.style.display = 'block';
+          errorMessageDiv.style.display = 'none';
+      } else {
+          errorMessageDiv.innerText = message;
+          errorMessageDiv.style.display = 'block';
+          successMessageDiv.style.display = 'none';
+      }
+  }
+
+  // Mengelola pengiriman form dan menampilkan pesan
+  document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Mencegah pengiriman form default
+      clearErrors(); // Menghapus pesan sebelumnya
+
+      // Mengambil data form
+      var formData = new FormData(this);
+      
+      fetch(this.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              showMessage(data.message, true);
+          } else {
+              showMessage(data.message, false);
+          }
+      })
+      .catch(error => {
+          showMessage('Terjadi kesalahan. Silakan coba lagi.', false);
+      });
+  });
+</script>
 
 @stack('js')
 </body>

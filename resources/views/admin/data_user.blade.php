@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', 'Data User | SIKEPNI')
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
 @endsection
@@ -293,7 +294,7 @@ function deleteUser(id) {
 
 
 </script>
-
+@include('layouts/footer')
 @endsection
 
 

@@ -16,7 +16,7 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row m-4">
-          <!-- Pengaduan Masyarakat -->
+          <!-- Jumlah mitra -->
           <div class="col-lg-3  col-md-6">
             <!-- small box -->
             <div class="small-box">
@@ -30,7 +30,7 @@
               <a href="{{ route('data_mitra') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- Data Penduduk -->
+          <!-- Data user -->
           <div class="col-lg-3  col-md-6">
             <!-- small box -->
             <div class="small-box">
@@ -44,9 +44,24 @@
               <a href="{{ route('data_user') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+          <!-- Data jurusan -->
+          <div class="col-lg-3  col-md-6">
+            <!-- small box -->
+            <div class="small-box">
+              <div class="inner">
+                <h3>20</sup></h3>
+                <p>Jumlah Jurusan</p>
+              </div>
+              <div class="icon">
+                <i class="fas fas fa-cogs"></i>
+              </div>
+              <a href="{{ route('jurusan') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
    
 </div>
+@include('layouts/footer')
 @endsection
