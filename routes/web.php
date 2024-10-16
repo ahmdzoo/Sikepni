@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -120,4 +121,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::resource('mitras', MitraMagangController::class);
-Route::resource('mitras', MitraMagangController::class);
+
+
+
+Route::get('/admin/mitra/data', [MitraController::class, 'getData'])->name('mitra.data');
