@@ -18,6 +18,17 @@ class MitraMagangController extends Controller
         return view('admin.dashboard'); // Pastikan Anda memiliki view ini
     }
 
+
+    public function mitra_lamaran()
+    {
+        return view('mitra.mitra_lamaran'); // Pastikan Anda memiliki view ini
+    }
+
+    public function mitra_laporan()
+    {
+        return view('mitra.mitra_laporan'); // Pastikan Anda memiliki view ini
+    }
+
     public function data_mitra(Request $request)
     {
         if ($request->ajax()) {

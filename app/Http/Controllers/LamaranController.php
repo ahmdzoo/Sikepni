@@ -12,10 +12,20 @@ class LamaranController extends Controller
 {
     public function index()
     {
-        // Mendapatkan semua mitra untuk ditampilkan di view
-        $mitras = Mitra::with('mitraUser')->get(); // Menggunakan eager loading untuk mendapatkan nama mitra
+        // Ambil data mitra berdasarkan nama_mitra_id yang sesuai dengan user_id yang login
+        $mitra = Mitra::where('nama_mitra_id', Auth::user()->id)->first(); // Ganti 'user_id' dengan 'nama_mitra_id'
 
-        return view('mahasiswa.mhs_lowongan', compact('mitras'));
+        // Cek apakah mitra ditemukan
+        if ($mitra) {
+            // Ambil semua lamaran yang terkait dengan mitra_id tersebut
+            $lamarans = Lamaran::where('mitra_id', $mitra->id)->get();
+        } else {
+            // Jika mitra tidak ditemukan, set lamarans sebagai koleksi kosong
+            $lamarans = collect(); // Membuat Collection kosong
+        }
+
+        // Kembalikan ke view 'mitra.mitra_lamaran'
+        return view('mitra.mitra_lamaran', compact('lamarans'));
     }
 
     public function store(Request $request)

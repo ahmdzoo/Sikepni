@@ -71,7 +71,11 @@ Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
 // Rute untuk Mitra Magang
 Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard']);
+    Route::get('/mitra/mitra_lamaran', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
+    Route::get('/mitra/mitra_laporan', [MitraMagangController::class, 'mitra_laporan'])->name('mitra_laporan');
+    Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
 });
+
 
 // Rute untuk Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
