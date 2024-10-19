@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Jurusan;
+use App\Models\Mitra;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,8 +13,15 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard'); // Pastikan Anda memiliki view ini
+        // Hitung jumlah dari masing-masing model
+        $totalMitra = Mitra::count() ?? 0; // Menjamin default 0
+        $totalUser = User::count() ?? 0;   // Menjamin default 0
+        $totalJurusan = Jurusan::count() ?? 0; // Menjamin default 0
+
+        return view('admin.dashboard', compact('totalMitra', 'totalUser', 'totalJurusan'));
     }
+
+  
 
     public function data_mitra()
     {

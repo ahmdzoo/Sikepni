@@ -66,9 +66,8 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
 // Rute untuk Dosen Pembimbing
 Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
     Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard']);
-    Route::get('/dosen/dosen_lamaran', [MitraMagangController::class, 'dosen_lamaran'])->name('dosen_lamaran');
+    Route::get('/dosen/dosen_lamaran', [DosenPembimbingController::class, 'dosen_lamaran'])->name('dosen_lamaran');
     Route::get('/dosen/dosen_laporan', [MitraMagangController::class, 'dosen_laporan'])->name('dosen_laporan');
-    Route::get('/dosen/lamarans', [LamaranController::class, 'index'])->name('dosen_lamaran');
 });
 
 // Rute untuk Mitra Magang
