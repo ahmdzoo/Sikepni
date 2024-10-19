@@ -141,7 +141,20 @@
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
-          </li>      
+          </li>   
+          <li class="nav-item">
+            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/lamarans') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-handshake"></i>
+              <p>Lamaran Magang</p>
+            </a>
+          </li>
+          
+          {{-- <li class="nav-item">
+            <a href="{{ route('dosen_laporan') }}" class="nav-link {{ request()->is('dosen.dosen_laporan') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+                  <p>Laporan Magang</p>
+            </a>
+          </li>    --}}
         </ul>
       </nav>
     </div>
