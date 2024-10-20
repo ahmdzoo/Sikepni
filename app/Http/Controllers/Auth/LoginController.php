@@ -27,10 +27,23 @@ class LoginController extends Controller
             'password.required' => 'Kata sandi tidak boleh kosong.',
         ]);
 
-        // Coba untuk login
         if (Auth::attempt($credentials)) {
-            // Jika berhasil, redirect ke halaman yang diinginkan
-            return redirect()->intended('dashboard'); // Ganti 'dashboard' dengan rute yang sesuai
+            // Dapatkan pengguna yang sedang login
+            $user = Auth::user();
+        
+            // Redirect berdasarkan peran pengguna
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->intended('admin/dashboard'); // Rute untuk admin
+                case 'mahasiswa':
+                    return redirect()->intended('mahasiswa/dashboard'); // Rute untuk mahasiswa
+                case 'mitra':
+                    return redirect()->intended('mitra/dashboard'); // Rute untuk mitra
+                case 'dosen':
+                    return redirect()->intended('dosen/dashboard'); // Rute untuk dosen
+                default:
+                    return redirect()->intended('default/dashboard'); // Rute default jika peran tidak dikenali
+            }
         }
 
         return back()->withErrors([

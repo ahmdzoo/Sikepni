@@ -12,14 +12,17 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function dashboard()
-    {
-        // Hitung jumlah dari masing-masing model
-        $totalMitra = Mitra::count() ?? 0; // Menjamin default 0
-        $totalUser = User::count() ?? 0;   // Menjamin default 0
-        $totalJurusan = Jurusan::count() ?? 0; // Menjamin default 0
+{
+    $jumlahMitra = DB::table('mitras')->count(); // Menggunakan query builder
+    $jumlahUser = DB::table('users')->count();
+    $jumlahJurusan = DB::table('jurusans')->count();
 
-        return view('admin.dashboard', compact('totalMitra', 'totalUser', 'totalJurusan'));
-    }
+
+    return view('admin.dashboard', compact('jumlahMitra', 'jumlahUser', 'jumlahJurusan'));
+}
+
+
+
 
   
 
