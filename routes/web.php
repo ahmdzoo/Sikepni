@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     });
     Route::get('/mhs-lowongan', [MitraMagangController::class, 'showMitra'])->name('mhs_lowongan');
     // Mengajukan lamaran
+    Route::get('/status-lamaran', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
 });
 
 // Rute untuk Dosen Pembimbing
@@ -74,6 +75,9 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/mitra_lamaran', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
     Route::get('/mitra/mitra_laporan', [MitraMagangController::class, 'mitra_laporan'])->name('mitra_laporan');
     Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
+    Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
+    Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
+
 });
 
 
