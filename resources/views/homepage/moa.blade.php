@@ -14,7 +14,11 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
-    <title>SIKEPNI - MOA</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+
+    <title>SIKEPNI - Mitra Kerjasama</title>
 
   
 </head>
@@ -26,24 +30,36 @@
         <!--=============== HOME ===============-->
         <section class="home">
             <section class="table">
+                <h1>Data Mitra Kerjasama Politeknik Negeri Indramayu</h1>
                 {{-- Table header --}}
                 <div class="table__header">
-                    <h1>Tabel data MOA</h1>
-                    {{-- <div class="input__group">
-                        <input type="search" placeholder="Search Data...">
-                    </div> --}}
+                    
+                    <div class="filter-section" style="display: flex; align-items: center; margin-top: 10px;">
+                        <!-- Icon Filter -->
+                        <i class="ri-filter-3-line" style="font-size: 1.5rem; margin-right: 10px;"></i>
+                
+                        <!-- Dropdown Filter -->
+                        <select id="filter-jurusan" class="form-control" style="width: 200px;">
+                            <option value="">Semua Jurusan</option>
+                            @foreach($jurusans as $jurusan)
+                                <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+                
+                
                 {{-- Table Body --}}
                 <div class="table__body">
                     <table id="mitra-table-body">
                         <thead>
                             <tr>
-                                <th> No <span class="icon-arrow">&UpArrow;</span></th>
-                                <th> No PKS <span class="icon-arrow">&UpArrow;</span></th>
-                                <th> Tgl Mulai <span class="icon-arrow">&UpArrow;</span></th>
-                                <th> Tgl Selesai <span class="icon-arrow">&UpArrow;</span></th>
-                                <th> nama mitra <span class="icon-arrow">&UpArrow;</span></th>
-                                <th> jurusan <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>No <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>No PKS <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Tgl Mulai <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Tgl Selesai <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Nama Mitra <span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Jurusan <span class="icon-arrow">&UpArrow;</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,15 +78,20 @@
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-    $('#mitra-table-body').DataTable({
+$(document).ready(function() {
+    var table = $('#mitra-table-body').DataTable({
         processing: false,
         pagination: true,
         responsive: true,
         serverSide: true,
         searching: true,
-        ordering: false,
-        ajax: '{{ route("mitra.data") }}',
+        ordering: true,
+        ajax: {
+            url: '{{ route("mitra.data") }}',
+            data: function(d) {
+                d.jurusan_id = $('#filter-jurusan').val(); // Tambahkan filter jurusan ke parameter AJAX
+            }
+        },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'no_pks', name: 'no_pks' },
@@ -79,11 +100,31 @@
             { data: 'nama_mitra', name: 'nama_mitra' },
             { data: 'jurusan', name: 'jurusan' },
         ],
-        //lengthChange: false // Menonaktifkan "Show entries"
+        lengthChange: false // Menonaktifkan "Show entries"
+    });
+
+    // Menambahkan placeholder ke input pencarian
+    $('.dataTables_filter input').attr('placeholder', 'Search...');
+
+    // Menghapus teks "Search" dari label tanpa menyembunyikan label
+    $('.dataTables_filter label').contents().filter(function() {
+        return this.nodeType === 3; // Teks node
+    }).remove(); // Hapus hanya teks
+
+    // // Tambahkan ikon kaca pembesar di samping input pencarian
+    // $('.dataTables_filter').append('<span class="search-icon"><i class="ri-search-line"></i></span>');
+
+
+    // Event listener untuk filter jurusan
+    $('#filter-jurusan').on('change', function() {
+        table.draw(); // Perbarui tabel berdasarkan jurusan yang dipilih
     });
 });
 
-    </script>
 
+
+    </script>
 </body>
+
+
 </html>

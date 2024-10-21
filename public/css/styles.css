@@ -399,7 +399,7 @@ body .home .table {
   width: 82vw;
   /* height: 85vh; */
   max-height: 85vh; 
-  background-color: #fff5;
+  background-color: #ffff;
   backdrop-filter: blur(7px);
   box-shadow: 0 .4rem .8rem #0005;
   border-radius: .8rem;
@@ -408,7 +408,7 @@ body .home .table {
   display: flex;
   flex-direction: column;
   margin: 10rem auto 5rem;
-  /* padding-top: 6rem; */
+  padding-top: 1rem;
 }
 
 .table__header {
@@ -422,6 +422,7 @@ body .home .table {
   position: sticky;
   top: 0;
   z-index: 1;
+
 }
 
 .table__header h1 {
@@ -813,4 +814,64 @@ thead th.active,tbody td.active {
 
 
 
+/* Agar tabel tidak terpotong dan pas dengan layar */
+.table__body {
+  overflow-x: auto; /* Aktifkan scroll horizontal jika tabel terlalu lebar */
+}
 
+/* Atur tabel agar memanfaatkan lebar penuh */
+#mitra-table-body {
+  width: 100%; /* Atur lebar tabel */
+  border-collapse: collapse; /* Agar tidak ada space antara border */
+}
+
+/* Atur kolom untuk menyesuaikan isi */
+#mitra-table-body th, 
+#mitra-table-body td {
+  text-align: left; /* Rata kiri konten dalam kolom */
+  padding: 10px; /* Spasi dalam sel */
+  white-space: nowrap; /* Cegah teks agar tidak memotong di baris baru */
+}
+
+.dataTables_filter {
+  display: flex; /* Mengatur konten dalam flexbox */
+  align-items: center; /* Vertikal align center */
+  margin-bottom: 1rem;
+  margin-top: 0rem;
+  margin-right: 1rem;
+}
+
+.dataTables_filter input {
+  width: 100%; /* Mengatur lebar input sesuai kebutuhan */
+  height: 30px; /* Atur tinggi input */
+  background-color: #fff5; /* Warna latar belakang */
+  padding: 0 0.8rem; /* Padding kanan dan kiri */
+  padding-left: 40px; /* Menambahkan padding kiri untuk memberikan ruang bagi ikon */
+  border-radius: 10rem; /* Sudut melengkung */
+  border: 1px solid #ccc; /* Border input */
+  outline: none; /* Menghilangkan outline */
+  transition: .2s; /* Transisi saat hover */
+}
+
+
+/* Mengatur posisi relative pada parent untuk menempatkan ikon dan input dengan baik */
+.table__body {
+  position: relative; /* Mengatur posisi relatif untuk parent */
+  margin-top: 20px; /* Atur jarak antara input dan tabel */
+}
+
+/* Style untuk dropdown filter dan ikon filter */
+.filter-section {
+    display: flex;
+    align-items: center;
+}
+
+.filter-section select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filter-section .ri-filter-3-line {
+    color: #333; /* Warna ikon */
+}

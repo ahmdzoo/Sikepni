@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Jurusan;
+use App\Models\Mitra;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -9,9 +12,19 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function dashboard()
-    {
-        return view('admin.dashboard'); // Pastikan Anda memiliki view ini
-    }
+{
+    $jumlahMitra = DB::table('mitras')->count(); // Menggunakan query builder
+    $jumlahUser = DB::table('users')->count();
+    $jumlahJurusan = DB::table('jurusans')->count();
+
+
+    return view('admin.dashboard', compact('jumlahMitra', 'jumlahUser', 'jumlahJurusan'));
+}
+
+
+
+
+  
 
     public function data_mitra()
     {
