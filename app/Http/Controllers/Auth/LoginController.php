@@ -37,9 +37,9 @@ class LoginController extends Controller
                     return redirect()->intended('admin/dashboard'); // Rute untuk admin
                 case 'mahasiswa':
                     return redirect()->intended('mahasiswa/dashboard'); // Rute untuk mahasiswa
-                case 'mitra':
+                case 'mitra_magang':
                     return redirect()->intended('mitra/dashboard'); // Rute untuk mitra
-                case 'dosen':
+                case 'dosen_pembimbing':
                     return redirect()->intended('dosen/dashboard'); // Rute untuk dosen
                 default:
                     return redirect()->intended('default/dashboard'); // Rute default jika peran tidak dikenali
