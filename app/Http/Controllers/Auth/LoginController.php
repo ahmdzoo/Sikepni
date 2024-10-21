@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Dapatkan pengguna yang sedang login
             $user = Auth::user();
-
+        
             // Redirect berdasarkan peran pengguna
             switch ($user->role) {
                 case 'admin':
