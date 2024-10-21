@@ -138,6 +138,41 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+  </div>
+</div>
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <a href="{{ route('dashboard') }}" class="brand-link">
+      <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
+    </a>
+  
+    <div class="sidebar mt-3 pb-3 mb-3 d-flex">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="{{ route('mhs.dashboard') }}" class="nav-link {{ request()->is('mahasiswa/dashboard') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('mhs_lowongan') }}" class="nav-link {{ request()->is('mahasiswa/mhs_lowongan') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-handshake"></i>
+              <p>Program Magang</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('mhs_aktifitas') }}" class="nav-link {{ request()->is('mahasiswa/mhs_aktifitas') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Aktifitas Magang</p>
+            </a>
+          </li>          
+        </ul>
+      </nav>
+>>>>>>> 5e23c23b64cd51759e981a67de5b1f06656bb719
     </div>
 
     <!-- Main Sidebar Container -->
