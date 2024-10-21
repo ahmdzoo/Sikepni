@@ -15,29 +15,31 @@
             <table class="table" id="lamaranTable">
                 <thead>
                     <tr>
-                        <th>ID Lamaran</th>
+                        <th>Tanggal Lamaran</th> <!-- Ganti ID Lamaran dengan Tanggal Lamaran -->
                         <th>Mitra</th>
                         <th>Dosen Pembimbing</th>
                         <th>Status</th>
+                        <th>Tanggal Diterima</th> <!-- Tambahkan kolom Tanggal Diterima -->
                     </tr>
                 </thead>
                 <tbody>
                     @if(isset($lamarans) && $lamarans->isEmpty())
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada lamaran yang tersedia.</td>
+                            <td colspan="5" class="text-center">Tidak ada lamaran yang tersedia.</td>
                         </tr>
                     @else
                         @foreach($lamarans as $lamaran)
                             <tr>
-                                <td>{{ $lamaran->id }}</td>
+                                <td>{{ $lamaran->created_at->format('d-m-Y') }}</td> <!-- Menampilkan tanggal lamaran -->
                                 <td>{{ $lamaran->mitra->mitraUser?->name ?? 'Belum ditentukan' }}</td>
                                 <td>{{ $lamaran->mitra->dosenPembimbing?->name ?? 'Belum ditentukan' }}</td>
                                 <td>{{ $lamaran->status }}</td>
+                                <td>{{ $lamaran->tanggal_diterima ? $lamaran->tanggal_diterima->format('d-m-Y') : '-' }}</td>
+                                <!-- Tanggal diterima -->
                             </tr>
                         @endforeach
                     @endif
                 </tbody>
-
             </table>
         </div>
     </div>

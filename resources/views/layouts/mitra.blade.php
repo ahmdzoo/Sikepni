@@ -141,7 +141,7 @@
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
-      <a href="{{ route('dashboard') }}" class="brand-link">
+      <a href="{{ route('mitra.dashboard') }}" class="brand-link">
         <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
       </a>
 
@@ -149,7 +149,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}"
+              <a href="{{ route('mitra.dashboard') }}"
                 class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>Dashboard</p>

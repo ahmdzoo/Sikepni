@@ -150,7 +150,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}"
+              <a href="{{ route('mhs.dashboard') }}"
                 class="nav-link {{ request()->is('mahasiswa/dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>Dashboard</p>

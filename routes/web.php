@@ -51,7 +51,7 @@ Route::post('/password/update', [UserController::class, 'updatePassword'])->name
 
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
-    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mhs.dashboard');
     Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
     Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
     Route::get('/mahasiswa/mhs_lowongan', [LamaranController::class, 'index'])->name('mhs_lowongan');
@@ -66,12 +66,14 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
 
 // Rute untuk Dosen Pembimbing
 Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
-    Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard']);
+    Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard'])->name('dosen.dashboard');
+    Route::get('/dosen/dosen_lamaran', [DosenPembimbingController::class, 'dosen_lamaran'])->name('dosen_lamaran');
+    Route::get('/dosen/dosen_laporan', [MitraMagangController::class, 'dosen_laporan'])->name('dosen_laporan');
 });
 
 // Rute untuk Mitra Magang
 Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
-    Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard']);
+    Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard'])->name('mitra.dashboard');
     Route::get('/mitra/mitra_lamaran', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
     Route::get('/mitra/mitra_laporan', [MitraMagangController::class, 'mitra_laporan'])->name('mitra_laporan');
     Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
@@ -85,7 +87,7 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     // Tampilan manajemen data
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/data_mitra', [MitraMagangController::class, 'data_mitra'])->name('data_mitra');
     Route::get('/admin/data_user', [AdminController::class, 'data_user'])->name('data_user');
     Route::get('/admin/jurusan', [JurusanController::class, 'jurusan'])->name('jurusan');
@@ -133,3 +135,5 @@ Route::resource('mitras', MitraMagangController::class);
 
 
 Route::get('/admin/mitra/data', [MitraController::class, 'getData'])->name('mitra.data');
+Route::get('/moa', [MitraController::class, 'index'])->name('moa.index');
+Route::get('/moa/data', [MitraController::class, 'getData'])->name('mitra.data');

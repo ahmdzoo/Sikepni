@@ -21,7 +21,8 @@
             <!-- small box -->
             <div class="small-box">
               <div class="inner">
-                <h3>20</sup></h3>
+                <h3>{{ $jumlahMitra ?? 0 }}</h3>
+              </sup></h3>
                 <p>Jumlah Mitra</p>
               </div>
               <div class="icon">
@@ -35,7 +36,7 @@
             <!-- small box -->
             <div class="small-box">
               <div class="inner">
-                <h3>20</sup></h3>
+                <h3>{{ $jumlahUser ?? 0 }}</sup></h3>
                 <p>Jumlah User</p>
               </div>
               <div class="icon">
@@ -49,7 +50,7 @@
             <!-- small box -->
             <div class="small-box">
               <div class="inner">
-                <h3>20</sup></h3>
+                <h3>{{ $jumlahJurusan ?? 0 }}</sup></h3>
                 <p>Jumlah Jurusan</p>
               </div>
               <div class="icon">

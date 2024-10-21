@@ -15,7 +15,7 @@ class MitraMagangController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard'); // Pastikan Anda memiliki view ini
+        return view('mitra.dashboard'); // Pastikan Anda memiliki view ini
     }
 
 

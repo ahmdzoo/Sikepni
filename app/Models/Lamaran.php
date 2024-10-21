@@ -15,6 +15,8 @@ class Lamaran extends Model
         'user_id',
         'mitra_id',
         'cv_path',
+        'status',
+        'tanggal_diterima',
     ];
 
     public function user()

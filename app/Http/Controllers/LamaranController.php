@@ -58,6 +58,7 @@ class LamaranController extends Controller
     {
         $lamaran = Lamaran::find($id);
         $lamaran->status = 'diterima';
+        $lamaran->tanggal_diterima = now(); // Menambahkan tanggal diterima
         $lamaran->save();
 
         return redirect()->back()->with('success', 'Lamaran diterima.');
