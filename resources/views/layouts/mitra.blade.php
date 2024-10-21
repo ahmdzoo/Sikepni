@@ -155,12 +155,12 @@
                 <p>Dashboard</p>
               </a>
             </li>
-<li class="nav-item">
-  <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
-    <i class="nav-icon fas fa-handshake"></i>
-    <p>Lamaran Magang</p>
-  </a>
-</li>
+            <li class="nav-item">
+              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-handshake"></i>
+                <p>Lamaran Magang</p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a href="{{ route('mitra_laporan') }}"
