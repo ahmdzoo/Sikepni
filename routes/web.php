@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
     Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
     Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
+    Route::post('/lamaran/acc/{id}', [LamaranController::class, 'acc'])->name('lamaran.acc');
+
 
 });
 
