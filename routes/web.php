@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginRegController;
 use App\Http\Controllers\RegLoginController;
@@ -61,7 +62,7 @@ Route::post('/password/update', [RegLoginController::class, 'updatePassword'])->
 
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
-    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mhs.dashboard');
     Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
     Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
     Route::get('/mahasiswa/mhs_lowongan', [LamaranController::class, 'index'])->name('mhs_lowongan');
@@ -71,23 +72,35 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     });
     Route::get('/mhs-lowongan', [MitraMagangController::class, 'showMitra'])->name('mhs_lowongan');
     // Mengajukan lamaran
+    Route::get('/status-lamaran', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
 });
 
 // Rute untuk Dosen Pembimbing
 Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
-    Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard']);
+    Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard'])->name('dosen.dashboard');
+    Route::get('/dosen/dosen_lamaran', [DosenPembimbingController::class, 'dosen_lamaran'])->name('dosen_lamaran');
+    Route::get('/dosen/dosen_laporan', [MitraMagangController::class, 'dosen_laporan'])->name('dosen_laporan');
 });
 
 // Rute untuk Mitra Magang
 Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
-    Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard']);
+    Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard'])->name('mitra.dashboard');
+    Route::get('/mitra/mitra_lamaran', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
+    Route::get('/mitra/mitra_laporan', [MitraMagangController::class, 'mitra_laporan'])->name('mitra_laporan');
+    Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
+    Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
+    Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
+    Route::post('/lamaran/acc/{id}', [LamaranController::class, 'acc'])->name('lamaran.acc');
+
+
 });
+
 
 // Rute untuk Admin
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     // Tampilan manajemen data
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/data_mitra', [MitraMagangController::class, 'data_mitra'])->name('data_mitra');
     Route::get('/admin/data_user', [AdminController::class, 'data_user'])->name('data_user');
     Route::get('/admin/jurusan', [JurusanController::class, 'jurusan'])->name('jurusan');
@@ -126,4 +139,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('mitras', MitraMagangController::class);
-Route::resource('mitras', MitraMagangController::class);
+
+
+
+Route::get('/admin/mitra/data', [MitraController::class, 'getData'])->name('mitra.data');
+Route::get('/moa', [MitraController::class, 'index'])->name('moa.index');
+Route::get('/moa/data', [MitraController::class, 'getData'])->name('mitra.data');

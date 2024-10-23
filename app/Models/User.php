@@ -10,7 +10,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Tambahkan kolom role ke dalam $fillable agar bisa diisi secara massal
+        'role',
     ];
 
     // Fungsi untuk memeriksa apakah pengguna adalah Mahasiswa
@@ -36,22 +36,32 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
     public function hasRole($role)
     {
         return $this->role === $role;
     }
 
+    // Relasi satu ke satu dengan Mitra (jika ada)
     public function mitra()
     {
-        return $this->hasOne(Mitra::class, 'nama_mitra');
+        return $this->hasOne(Mitra::class, 'nama_mitra'); // Pastikan 'nama_mitra' adalah foreign key yang benar
     }
 
-    /**
-     * Get the mitras where user is dosen pendamping.
-     */
+    public function mitras()
+    {
+        return $this->hasMany(Mitra::class, 'user_id'); // Ganti 'user_id' dengan nama kolom yang sesuai
+    }
+
+    // Relasi satu ke banyak untuk Dosen Pembimbing ke Mitra
     public function mitrasAsDosenPembimbing()
     {
-        return $this->hasMany(Mitra::class, 'dosen_pembimbing');
+        return $this->hasMany(Mitra::class, 'dosen_pembimbing_id'); // Relasi ke model Mitra
     }
 
+    // Relasi satu ke banyak untuk Mahasiswa ke Lamaran
+    public function lamaran()
+    {
+        return $this->hasMany(Lamaran::class, 'user_id'); // Relasi ke model Lamaran
+    }
 }

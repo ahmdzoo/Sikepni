@@ -53,7 +53,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> {{ Auth::user()->email }}
+           {{ Auth::user()->email }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ubahPasswordModal">
@@ -142,11 +142,12 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
           </li>
+          
           <li class="nav-item">
             <a href="{{ route('data_mitra') }}" class="nav-link {{ request()->is('admin/data_mitra') ? 'active' : '' }}">
               <i class="nav-icon fas fa-handshake"></i>

@@ -12,31 +12,24 @@ class Mitra extends Model
     protected $fillable = [
         'nama_mitra_id',
         'jurusan_id',
-        'dosen_pembimbing_id',
+        'dosen_pembimbing_id', // Pastikan kolom ini ada di tabel mitra
         'no_pks',
         'tgl_mulai',
         'tgl_selesai',
     ];
 
-    protected $casts = [
-        'tgl_mulai' => 'date',
-        'tgl_selesai' => 'date',
-    ];
-
-    // Relasi
-    public function mitraUser()
-    {
-        return $this->belongsTo(User::class, 'nama_mitra_id');
-    }
-    // Mitra.php
-    public function jurusan()
-    {
-        return $this->belongsTo(Jurusan::class, 'jurusan_id'); // Menggunakan 'jurusan_id' sebagai foreign key
-    }
-
-
     public function dosenPembimbing()
     {
-        return $this->belongsTo(User::class, 'dosen_pembimbing_id');
+        return $this->belongsTo(User::class, 'dosen_pembimbing_id'); // Relasi ke User
+    }
+
+    public function mitraUser()
+    {
+        return $this->belongsTo(User::class, 'nama_mitra_id'); 
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'jurusan_id'); // Ganti 'jurusan_id' sesuai nama kolom di tabel
     }
 }

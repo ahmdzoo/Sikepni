@@ -16,10 +16,10 @@
        <!--=============== NAV MENU ===============-->
        <div class="nav__menu" id="nav-menu">
           <ul class="nav__list">
-             <li><a href="/" class="nav__link">Home</a></li>
-             <li><a href="/moa" class="nav__link">MOA</a></li>
-             <li><a href="/mou" class="nav__link">MOU</a></li>
-             <li><a href="/ia" class="nav__link">IA</a></li>
+             <li><a href="/" class="nav__link">Beranda</a></li>
+             <li><a href="/moa" class="nav__link">Mitra Kerjasama</a></li>
+             {{-- <li><a href="/mou" class="nav__link">MOU</a></li>
+             <li><a href="/ia" class="nav__link">IA</a></li> --}}
           </ul>
        </div>
     </nav>

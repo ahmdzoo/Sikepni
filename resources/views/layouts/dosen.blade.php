@@ -51,7 +51,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
-          <i class="fas fa-user"></i> dospem@example.com
+          {{ Auth::user()->email }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ubahPasswordModal">
@@ -137,11 +137,24 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dosen.dashboard') }}" class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
-          </li>      
+          </li>   
+          <li class="nav-item">
+            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/lamarans') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-handshake"></i>
+              <p>Lamaran Magang</p>
+            </a>
+          </li>
+          
+          {{-- <li class="nav-item">
+            <a href="{{ route('dosen_laporan') }}" class="nav-link {{ request()->is('dosen.dosen_laporan') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+                  <p>Laporan Magang</p>
+            </a>
+          </li>    --}}
         </ul>
       </nav>
     </div>
