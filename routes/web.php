@@ -12,6 +12,9 @@ use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LamaranController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginRegController;
+use App\Http\Controllers\RegLoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,9 +46,17 @@ Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 #ROUTE REGISTRASI
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-
 Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
 
+#ROUTE LOGIN BARU
+Route::get('/loginReg', [LoginRegController::class, 'showLogin'])->name('loginReg');
+Route::post('/loginReg', [LoginRegController::class, 'loginReg']);
+Route::post('/logout', [LoginRegController::class, 'logout'])->name('logout');
+
+#ROUTE REGISTRASI BARU
+Route::get('/regLogin', [RegLoginController::class, 'showRegistration'])->name('regLogin');
+Route::post('/regLogin', [RegLoginController::class, 'regLogin']);
+Route::post('/password/update', [RegLoginController::class, 'updatePassword'])->name('password.update');
 
 
 // Rute untuk Mahasiswa
@@ -113,11 +124,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 
 Route::resource('mitras', MitraMagangController::class);
 Route::resource('mitras', MitraMagangController::class);

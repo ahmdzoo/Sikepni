@@ -31,7 +31,7 @@
             <li><a href="https://prosiding.polindra.ac.id/index.php/semitera" class="footer__links" target="_blank">PROSIDING</a></li>
           </ul>
         </div>
-        <div>
+        {{-- <div>
           <h3 class="footer__title">Layanan</h3>
           <ul class="footer__links">
             <li><a href="https://pmb.polindra.ac.id/" class="footer__links" target="_blank">PMB</a></li>
@@ -46,7 +46,7 @@
             <li><a href="http://dashboard.polindra.ac.id/" class="footer__links" target="_blank">DASHBOARD</a></li>
             <li><a href="https://www.lapor.go.id/" class="footer__links" target="_blank">LAPOR</a></li>
           </ul>
-        </div>
+        </div> --}}
       </div>
     </div>
   
