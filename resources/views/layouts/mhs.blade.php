@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- CKEditor -->
@@ -158,26 +159,27 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('mhs_lowongan') }}"
-                class="nav-link {{ request()->is('mahasiswa/mhs_lowongan') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-handshake"></i>
+                class="nav-link {{ request()->is('mhs-lowongan') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-briefcase"></i>
                 <p>Program Magang</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('mhs_aktifitas') }}"
                 class="nav-link {{ request()->is('mahasiswa/mhs_aktifitas') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
+                <i class="nav-icon fas fa-file-alt"></i>
                 <p>Aktifitas Magang</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('mahasiswa.status_lamaran') }}"
-                class="nav-link {{ request()->is('mahasiswa/status_lamaran') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
+                class="nav-link {{ request()->is('status-lamaran') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-check-circle"></i>
                 <p>Status Lamaran</p>
               </a>
             </li>
           </ul>
+          
         </nav>
       </div>
     </aside>

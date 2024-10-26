@@ -12,7 +12,8 @@
                 <h5 class="m-0" style="font-size: 24px; font-weight: bold;">Status Lamaran</h5>
             </div>
 
-            <table>
+            <div class="table-responsive">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -54,7 +55,7 @@
                     @endforeach
                 </tbody>
             </table>
-
+            </div>
         </div>
     </div>
 </div>

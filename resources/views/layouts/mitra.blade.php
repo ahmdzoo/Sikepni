@@ -155,21 +155,21 @@
                 <p>Dashboard</p>
               </a>
             </li>
-<li class="nav-item">
-  <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
-    <i class="nav-icon fas fa-handshake"></i>
-    <p>Lamaran Magang</p>
-  </a>
-</li>
-
+            <li class="nav-item">
+              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-file-alt"></i>
+                <p>Lamaran Magang</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="{{ route('mitra_laporan') }}"
-                class="nav-link {{ request()->is('mitra.mitra_laporan') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
+                class="nav-link {{ request()->is('mitra/mitra_laporan') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-folder-open"></i>
                 <p>Laporan Magang</p>
               </a>
             </li>
           </ul>
+          
         </nav>
       </div>
     </aside>

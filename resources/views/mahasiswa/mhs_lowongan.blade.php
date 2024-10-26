@@ -5,23 +5,37 @@
   <div class="container-fluid">
     @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
-  @endif
+    @endif
 
     <div class="card p-4" style="width: 100%;">
       <div class="card-header">
         <h5 class="m-0" style="font-size: 24px; font-weight: bold;">Informasi Mitra</h5>
       </div>
 
+      <!-- Dropdown filter jurusan -->
       <div class="mb-3">
-        <input type="text" id="search" class="form-control" placeholder="Cari Mitra..." onkeyup="searchMitra()"
-          style="width: 300px;"> <!-- Menyesuaikan lebar input -->
+        <select id="jurusanFilter" class="form-select" onchange="filterByJurusan()">
+          <option value="">Semua Jurusan</option>
+          @foreach($jurusanList as $jurusan)
+            <option value="{{ $jurusan->id }}" {{ request('jurusan_id') == $jurusan->id ? 'selected' : '' }}>
+              {{ $jurusan->name }}
+            </option>
+          @endforeach
+        </select>
       </div>
 
+      <!-- Input pencarian -->
+      <div class="mb-3">
+        <input type="text" id="search" class="form-control" placeholder="Cari Mitra..." onkeyup="searchMitra()"
+          style="width: 300px;">
+      </div>
+
+      <!-- Tabel informasi mitra -->
       <table class="table" id="mitraTable">
         <thead>
           <tr>
-            <th>Nama Mitra</th>
             <th>No PKS</th>
+            <th>Nama Mitra</th>
             <th>Nama Dosen Pembimbing</th>
             <th>Jurusan</th>
             <th>Tanggal Mulai</th>
@@ -30,60 +44,63 @@
           </tr>
         </thead>
         <tbody>
-          @if(isset($mitras) && $mitras->isEmpty())
-        <tr>
-        <td colspan="7" class="text-center">Tidak ada mitra yang tersedia.</td>
-        </tr>
-      @else
-      @foreach($mitras as $mitra)
-      <tr>
-      <td>{{ $mitra->mitraUser?->name ?? 'Belum ditentukan' }}</td>
-      <td>{{ $mitra->no_pks }}</td>
-      <td>{{ $mitra->dosenPembimbing?->name ?? 'Belum ditentukan' }}</td>
-      <td>{{ $mitra->jurusan?->name ?? 'Belum ditentukan' }}</td>
-      <td>{{ \Carbon\Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') }}</td>
-      <td>{{ \Carbon\Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') }}</td>
-      <td>
-      <!-- Button untuk membuka modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-      data-bs-target="#lamaranModal-{{ $mitra->id }}">
-      Ajukan Lamaran
-      </button>
-      </td>
-      </tr>
-    @endforeach
-    @endif
+          @if($mitras->isEmpty())
+          <tr>
+            <td colspan="7" class="text-center">Tidak ada mitra yang tersedia.</td>
+          </tr>
+          @else
+          @foreach($mitras as $mitra)
+          <tr>
+            <td>{{ $mitra->no_pks }}</td>
+            <td>{{ $mitra->mitraUser?->name ?? 'Belum ditentukan' }}</td>
+            <td>{{ $mitra->dosenPembimbing?->name ?? 'Belum ditentukan' }}</td>
+            <td>{{ $mitra->jurusan?->name ?? 'Belum ditentukan' }}</td>
+            <td>{{ \Carbon\Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') }}</td>
+            <td>{{ \Carbon\Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#lamaranModal-{{ $mitra->id }}">
+                Ajukan Lamaran
+              </button>
+            </td>
+          </tr>
+          @endforeach
+          @endif
         </tbody>
       </table>
+
+      <!-- Pagination links -->
+      <div class="d-flex justify-content-center">
+        {{ $mitras->appends(['jurusan_id' => request('jurusan_id')])->links() }}
+      </div>
 
       <!-- Modal untuk masing-masing mitra -->
       @foreach($mitras as $mitra)
       <div class="modal fade" id="lamaranModal-{{ $mitra->id }}" tabindex="-1" aria-labelledby="modalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">Ajukan Lamaran ke {{ $mitra->mitraUser?->name }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- Form untuk mengajukan lamaran -->
-          <form action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
-          @csrf
-          <input type="hidden" name="mitra_id" value="{{ $mitra->id }}">
-          <div class="mb-3">
-            <label for="cv" class="form-label">Upload CV</label>
-            <input type="file" class="form-control" id="cv" name="cv" required>
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Ajukan Lamaran ke {{ $mitra->mitraUser?->name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="mitra_id" value="{{ $mitra->id }}">
+                <div class="mb-3">
+                  <label for="cv" class="form-label">Upload CV</label>
+                  <input type="file" class="form-control" id="cv" name="cv" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim Lamaran</button>
+              </form>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Kirim Lamaran</button>
-          </form>
-        </div>
         </div>
       </div>
-      </div>
-    @endforeach
+      @endforeach
 
-      <!-- JavaScript untuk pencarian -->
+      <!-- JavaScript untuk pencarian dan filter jurusan -->
       <script>
         function searchMitra() {
           const input = document.getElementById('search');
@@ -91,13 +108,20 @@
           const table = document.getElementById('mitraTable');
           const tr = table.getElementsByTagName('tr');
 
-          for (let i = 1; i < tr.length; i++) { // Mulai dari 1 untuk melewati header
-            const td = tr[i].getElementsByTagName('td')[0]; // Ganti dengan indeks kolom yang diinginkan
+          for (let i = 1; i < tr.length; i++) {
+            const td = tr[i].getElementsByTagName('td')[0];
             if (td) {
               const txtValue = td.textContent || td.innerText;
               tr[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
             }
           }
+        }
+
+        function filterByJurusan() {
+          const jurusanId = document.getElementById('jurusanFilter').value;
+          const url = new URL(window.location.href);
+          url.searchParams.set('jurusan_id', jurusanId);
+          window.location.href = url;
         }
       </script>
 

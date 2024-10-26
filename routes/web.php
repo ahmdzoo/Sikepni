@@ -52,9 +52,7 @@ Route::post('/password/update', [UserController::class, 'updatePassword'])->name
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mhs.dashboard');
-    Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
     Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
-    Route::get('/mahasiswa/mhs_lowongan', [LamaranController::class, 'index'])->name('mhs_lowongan');
     Route::middleware(['auth'])->group(function () {
         Route::get('/mahasiswa/lowongan', [LamaranController::class, 'index'])->name('lamaran.index');
         Route::post('/mahasiswa/lamaran', [LamaranController::class, 'store'])->name('lamaran.store');

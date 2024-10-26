@@ -17,10 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('mitra_id'); // ID mitra yang menerima lamaran
             $table->foreign('mitra_id')->references('id')->on('mitras')->onDelete('cascade'); // Menambahkan foreign key
             $table->string('cv_path'); // Path ke file CV
-            $table->timestamp('tanggal_diterima')->nullable();
-            $table->text('alasan_acc')->nullable();
-            $table->text('alasan_penolakan')->nullable();
-            $table->string('status')->nullable();
+            $table->timestamps();
         });
     }
 

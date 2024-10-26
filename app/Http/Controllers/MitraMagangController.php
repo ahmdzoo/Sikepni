@@ -194,10 +194,12 @@ class MitraMagangController extends Controller
             $query->where('jurusan_id', $request->jurusan_id);
         }
 
-        $mitras = $query->get();
+        // Ambil data dengan pagination
+        $mitras = $query->paginate(10); // Menampilkan 10 data per halaman
         $jurusanList = Jurusan::all();
 
         return view('mahasiswa.mhs_lowongan', compact('mitras', 'jurusanList'));
     }
+
 
 }
