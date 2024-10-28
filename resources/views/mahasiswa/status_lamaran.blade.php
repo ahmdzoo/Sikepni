@@ -12,33 +12,50 @@
                 <h5 class="m-0" style="font-size: 24px; font-weight: bold;">Status Lamaran</h5>
             </div>
 
-            <table class="table" id="lamaranTable">
+            <div class="table-responsive">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID Lamaran</th>
-                        <th>Mitra</th>
-                        <th>Dosen Pembimbing</th>
-                        <th>Status</th>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Perusahaan</th>
+                        <th>CV</th>
+                        <th>Tanggal Lamaran</th>
+                        <th>Keterangan</th>
+                        <th>Alasan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($lamarans) && $lamarans->isEmpty())
+                    @foreach($lamarans as $index => $lamaran)
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada lamaran yang tersedia.</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $lamaran->user->name}}</td>
+                            <td>{{ $lamaran->mitra->mitraUser->name  }}</td>
+                            <td><a href="{{ asset('storage/' . $lamaran->cv_path) }}" target="_blank">Lihat CV</a></td>
+                            <td>{{ \Carbon\Carbon::parse($lamaran->created_at)->format('d-m-Y') }}</td>
+                            <td>
+                                @if($lamaran->status == 'diterima')
+                                    <span class="badge badge-success">DITERIMA</span>
+                                @elseif($lamaran->status == 'ditolak')
+                                    <span class="badge badge-danger">DITOLAK</span>
+                                @else
+                                    <span class="badge badge-warning">Pending</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($lamaran->status == 'diterima')
+                                    {{ $lamaran->alasan_acc }} <!-- Tampilkan alasan diterima -->
+                                @elseif($lamaran->status == 'ditolak')
+                                    {{ $lamaran->alasan_penolakan }} <!-- Tampilkan alasan ditolak -->
+                                @else
+                                    -
+                                @endif
+                            </td>
                         </tr>
-                    @else
-                        @foreach($lamarans as $lamaran)
-                            <tr>
-                                <td>{{ $lamaran->id }}</td>
-                                <td>{{ $lamaran->mitra->mitraUser?->name ?? 'Belum ditentukan' }}</td>
-                                <td>{{ $lamaran->mitra->dosenPembimbing?->name ?? 'Belum ditentukan' }}</td>
-                                <td>{{ $lamaran->status }}</td>
-                            </tr>
-                        @endforeach
-                    @endif
+                    @endforeach
                 </tbody>
-
             </table>
+            </div>
         </div>
     </div>
 </div>

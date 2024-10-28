@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-
+use Carbon\Carbon;
 
 class LamaranController extends Controller
 {
@@ -54,13 +54,31 @@ class LamaranController extends Controller
         return redirect()->route('mhs_lowongan')->with('success', 'Lamaran berhasil diajukan.');
     }
 
-    public function accLamaran($id)
+    public function accLamaran(Request $request, $id)
     {
-        $lamaran = Lamaran::find($id);
+        // Validasi input
+        $request->validate([
+            'alasan_acc' => 'required|string|max:255', // Alasan ACC harus diisi, bertipe string, dan maksimal 255 karakter
+            'mitra_id' => 'required|exists:mitras,id', // Pastikan mitra_id juga valid
+        ]);
+
+        $lamaran = Lamaran::findOrFail($id);
         $lamaran->status = 'diterima';
+        $lamaran->alasan_acc = $request->alasan_acc; // Simpan alasan penerimaan
+        $lamaran->tanggal_diterima = now(); // Menambahkan tanggal diterima
         $lamaran->save();
 
         return redirect()->back()->with('success', 'Lamaran diterima.');
+    }
+
+    public function acc(Request $request, $id)
+    {
+        $lamaran = Lamaran::find($id);
+        $lamaran->status = 'diterima';
+        $lamaran->alasan_acc = $request->input('alasan_acc');
+        $lamaran->save();
+
+        return redirect()->back()->with('success', 'Lamaran diterima!');
     }
 
     public function tolakLamaran(Request $request, $id)

@@ -52,14 +52,12 @@ Route::post('/password/update', [UserController::class, 'updatePassword'])->name
 // Rute untuk Mahasiswa
 Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'dashboard'])->name('mhs.dashboard');
-    Route::get('/mahasiswa/mhs_lowongan', [MahasiswaController::class, 'mhs_lowongan'])->name('mhs_lowongan');
     Route::get('/mahasiswa/mhs_aktifitas', [MahasiswaController::class, 'mhs_aktifitas'])->name('mhs_aktifitas');
-    Route::get('/mahasiswa/mhs_lowongan', [LamaranController::class, 'index'])->name('mhs_lowongan');
     Route::middleware(['auth'])->group(function () {
         Route::get('/mahasiswa/lowongan', [LamaranController::class, 'index'])->name('lamaran.index');
         Route::post('/mahasiswa/lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
     });
-    Route::get('/mhs-lowongan', [MitraMagangController::class, 'showMitra'])->name('mhs_lowongan');
+    Route::get('/mhs-lowongan', [MahasiswaController::class, 'showMitra'])->name('mhs_lowongan');
     // Mengajukan lamaran
     Route::get('/status-lamaran', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
 });
@@ -79,6 +77,8 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
     Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
     Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
+    Route::post('/lamaran/acc/{id}', [LamaranController::class, 'acc'])->name('lamaran.acc');
+
 
 });
 

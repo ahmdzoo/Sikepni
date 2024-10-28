@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Lamaran extends Model
 {
@@ -15,6 +16,8 @@ class Lamaran extends Model
         'user_id',
         'mitra_id',
         'cv_path',
+        'status',
+        'tanggal_diterima',
     ];
 
     public function user()
