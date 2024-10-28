@@ -144,3 +144,12 @@ font-size: 0.8rem; /* Ukuran ikon lebih kecil */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   border-color: #80b8c7;
 }
+
+.table td, .table th {
+  max-width: 200px; /* Ganti sesuai kebutuhan */
+  word-wrap: break-word; /* Memungkinkan kata panjang untuk pecah */
+  white-space: normal; /* Biarkan teks turun ke baris baru */
+  vertical-align: top; /* Pastikan isi sel dimulai dari bagian atas */
+}
+
+
