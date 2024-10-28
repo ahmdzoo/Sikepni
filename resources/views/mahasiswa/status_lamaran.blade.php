@@ -18,7 +18,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Mahasiswa</th>
-                        <th>Email</th>
+                        <th>Perusahaan</th>
                         <th>CV</th>
                         <th>Tanggal Lamaran</th>
                         <th>Keterangan</th>
@@ -29,8 +29,8 @@
                     @foreach($lamarans as $index => $lamaran)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $lamaran->user->name }}</td>
-                            <td>{{ $lamaran->user->email }}</td>
+                            <td>{{ $lamaran->user->name}}</td>
+                            <td>{{ $lamaran->mitra->mitraUser->name  }}</td>
                             <td><a href="{{ asset('storage/' . $lamaran->cv_path) }}" target="_blank">Lihat CV</a></td>
                             <td>{{ \Carbon\Carbon::parse($lamaran->created_at)->format('d-m-Y') }}</td>
                             <td>

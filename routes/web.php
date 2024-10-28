@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
         Route::get('/mahasiswa/lowongan', [LamaranController::class, 'index'])->name('lamaran.index');
         Route::post('/mahasiswa/lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
     });
-    Route::get('/mhs-lowongan', [MitraMagangController::class, 'showMitra'])->name('mhs_lowongan');
+    Route::get('/mhs-lowongan', [MahasiswaController::class, 'showMitra'])->name('mhs_lowongan');
     // Mengajukan lamaran
     Route::get('/status-lamaran', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
 });
