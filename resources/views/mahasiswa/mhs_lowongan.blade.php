@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Data Mitra</h1>
+                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Program Magang</h1>
                 </div>
             </div>
         </div>
@@ -59,7 +59,6 @@
                     <table class="table table-striped table-sm" id="lowongan">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>No.PKS</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
@@ -186,25 +185,18 @@
              },
              columns: [
                  {
-                     data: null,
-                     name: 'no',
-                     render: function (data, type, row, meta) {
-                         return meta.row + meta.settings._iDisplayStart + 1;
-                     },
-                     orderable: false,
-                     searchable: false
-                 },
-                 {
                      data: 'no_pks',
                      name: 'no_pks',
                  },
                  {
                      data: 'tgl_mulai',
                      name: 'tgl_mulai',
+                     className: 'text-center',
                  },
                  {
                      data: 'tgl_selesai',
                      name: 'tgl_selesai',
+                     className: 'text-center',
                  },
                  {
                      data: 'mitra_user', // Mengambil nama mitra dari relasi
@@ -227,7 +219,8 @@
                         return `
                             <button class="btn btn-primary btn-sm ajukan" data-id="${row.id}" data-nama="${row.mitra_user}">Ajukan Lamaran</button>
                         `;
-                    }
+                    },
+                    className: 'text-center',
                 }
 
              ]
