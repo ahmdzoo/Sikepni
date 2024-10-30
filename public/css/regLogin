@@ -27,8 +27,8 @@ main {
 .box {
   position: relative;
   width: 100%;
-  max-width: 850px;
-  height: 600px;
+  max-width: 400px;
+  height: 580px;
   min-height: 200px;
   background-color: #fff;
   border-radius: 3.3rem;
@@ -41,62 +41,13 @@ main {
 .inner-box {
   position: absolute;
   width: calc(100% - 4.1rem);
-  height: calc(100% - 4.1rem);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.forms-wrap {
-  position: absolute;
-  height: calc(100% - 60px);
-  width: 45%;
-  top: 60px;
-  left: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  transition: 0.8s ease-in-out;
-  box-sizing: border-box;
-}
-
-form {
-  max-width: 260px;
-  width: 100%;
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  transition: opacity 0.02s 0.4s;
-}
-
-form.sign-up-form {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  width: 27px;
-  margin-right: 0.3rem;
-}
-
-.logo h4 {
-  font-size: 1.1rem;
-  margin-top: -9px;
-  letter-spacing: -0.5px;
-  color: #151111;
-}
-
 .heading h2 {
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #151111;
 }
@@ -118,21 +69,6 @@ form.sign-up-form {
 
 .toggle:hover {
   color: #8371fd;
-}
-
-/* Icons */
-.toggle-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #bbb;
-  cursor: pointer;
-  transform: color 0.3s ease;
-}
-
-.toggle-icon:hover {
-  color: #7ebbcd;
 }
 
 /* alert */
@@ -238,102 +174,6 @@ label {
   background-color: #8371fd;
 }
 
-.text {
-  color: #bbb;
-  font-size: 0.7rem;
-}
-
-.text a {
-  color: #bbb;
-  transition: 0.3s;
-}
-
-.text a:hover {
-  color: #8371fd;
-}
-
-main.sign-up-mode form.sign-in-form {
-  opacity: 0;
-  pointer-events: none;
-}
-
-main.sign-up-mode form.sign-up-form {
-  opacity: 1;
-  pointer-events: all;
-}
-
-main.sign-up-mode .forms-wrap {
-  left: 55%;
-}
-
-main.sign-up-mode .carousel {
-  left: 0%;
-}
-
-.carousel {
-  position: absolute;
-  height: calc(100% - 60px);
-  width: 55%;
-  left: 45%;
-  top: 60px;
-  background-image: linear-gradient(#7dbacc, #e0dbd8);
-  border-radius: 2rem;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  padding-bottom: 2rem;
-  overflow: hidden;
-  transition: 0.8s ease-in-out;
-  box-sizing: border-box;
-}
-
-.images-wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-}
-
-.image {
-  width: 100%;
-  grid-column: 1/2;
-  grid-row: 1/2;
-  opacity: 0;
-  transition: opacity 0.3s, transform 0.5s;
-}
-
-.image.show {
-  opacity: 1;
-  transform: none;
-}
-
-.text-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.text-wrap {
-  max-height: 2.2rem;
-  overflow: hidden;
-  margin-bottom: 2.5rem;
-}
-
-.text-group {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  transform: translateY(0);
-  transition: 0.5s;
-}
-
-.text-group h2 {
-  line-height: 2.2rem;
-  font-weight: 600;
-  font-size: 1.6rem;
-  color: #fff;
-}
-
 @media (max-width: 850px) {
   .box {
     height: auto;
@@ -347,12 +187,6 @@ main.sign-up-mode .carousel {
     width: revert;
     height: revert;
     padding: 2rem;
-  }
-
-  .forms-wrap {
-    position: revert;
-    width: 100%;
-    height: auto;
   }
 
   form {
@@ -377,18 +211,6 @@ main.sign-up-mode .carousel {
     transform: translateX(0%);
   }
 
-  .carousel {
-    position: revert;
-    height: auto;
-    width: 100%;
-    padding: 3rem 2rem;
-    display: flex;
-  }
-
-  .images-wrapper {
-    display: none;
-  }
-
   .text-slider {
     width: 100%;
   }
@@ -405,11 +227,6 @@ main.sign-up-mode .carousel {
 
   .inner-box {
     padding: 1rem;
-  }
-
-  .carousel {
-    padding: 1.5rem 1rem;
-    border-radius: 1.6rem;
   }
 
   .text-wrap {
