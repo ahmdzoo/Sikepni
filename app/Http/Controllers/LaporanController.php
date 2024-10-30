@@ -154,7 +154,7 @@ class LaporanController extends Controller
     public function magang()
     {
         $mahasiswa = auth()->user(); // Ambil pengguna yang sedang login
-        $lamaran = $mahasiswa->lamaran()->with('mitra', 'dosenPembimbing')->first(); // Ambil lamaran pertama
+        $lamaran = $mahasiswa->lamaran()->with('mitra', 'dosenPembimbing')->where('status', 'diterima')->first(); // Ambil lamaran pertama
 
         return view('mahasiswa.magang', compact('lamaran'));
     }

@@ -162,11 +162,6 @@
                 <p>Lamaran Magang</p>
               </a>
             </li>
-
-                <i class="nav-icon fas fa-file-alt"></i>
-                <p>Lamaran Magang</p>
-              </a>
-            </li>
             <li class="nav-item">
               <a href="{{ route('mitra.laporan') }}"
                 class="nav-link {{ request()->is('mitra/mitra_laporan') ? 'active' : '' }}">
