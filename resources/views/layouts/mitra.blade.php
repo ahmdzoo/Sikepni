@@ -158,6 +158,11 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-handshake"></i>
+                <p>Lamaran Magang</p>
+              </a>
+            </li>
+
                 <i class="nav-icon fas fa-file-alt"></i>
                 <p>Lamaran Magang</p>
               </a>

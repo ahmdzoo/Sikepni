@@ -32,4 +32,9 @@ class Mitra extends Model
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id'); // Ganti 'jurusan_id' sesuai nama kolom di tabel
     }
+
+    public function lamaran()
+    {
+        return $this->hasMany(Lamaran::class, 'mitra_id'); // Pastikan nama kolom 'mitra_id' sesuai dengan kolom di tabel lamaran
+    }
 }
