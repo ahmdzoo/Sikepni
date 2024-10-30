@@ -122,12 +122,13 @@ class MitraMagangController extends Controller
     /**
      * Menampilkan form edit mitra.
      */
+ 
+
     public function edit(Mitra $mitra)
     {
-        // Pastikan tgl_mulai dan tgl_selesai tidak null
         try {
-            $tgl_mulai = $mitra->tgl_mulai ? $mitra->tgl_mulai->format('Y-m-d') : null;
-            $tgl_selesai = $mitra->tgl_selesai ? $mitra->tgl_selesai->format('Y-m-d') : null;
+            $tgl_mulai = $mitra->tgl_mulai ? Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') : null;
+            $tgl_selesai = $mitra->tgl_selesai ? Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') : null;
 
             return response()->json([
                 'id' => $mitra->id,
@@ -142,6 +143,7 @@ class MitraMagangController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
+
 
 
     public function update(Request $request, Mitra $mitra)

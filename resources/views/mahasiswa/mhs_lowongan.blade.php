@@ -158,15 +158,7 @@
 
      });
 
-     $(document).on('click', '.edit', function() {
-          var id = $(this).data('id'); // Ambil ID dari atribut data-id
-          editMitra(id);
-      });
-
-      $(document).on('click', '.delete', function() {
-          var id = $(this).data('id'); // Ambil ID dari atribut data-id
-          deleteMitra(id);
-      });
+     
 
     function loadData() {
          return $('#lowongan').DataTable({
