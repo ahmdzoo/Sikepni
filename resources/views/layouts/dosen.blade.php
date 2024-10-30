@@ -28,7 +28,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/dosen.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- CKEditor -->
@@ -137,24 +137,24 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ route('dosen.dashboard') }}" class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dosen.dashboard') }}" class="nav-link {{ request()->is('dosen/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
             </a>
           </li>   
           <li class="nav-item">
-            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/lamarans') ? 'active' : '' }}">
+            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/dosen_lamaran') ? 'active' : '' }}">
               <i class="nav-icon fas fa-handshake"></i>
               <p>Lamaran Magang</p>
             </a>
           </li>
           
-          {{-- <li class="nav-item">
-            <a href="{{ route('dosen_laporan') }}" class="nav-link {{ request()->is('dosen.dosen_laporan') ? 'active' : '' }}">
+          <li class="nav-item">
+            <a href="{{ route('dosen.laporan') }}" class="nav-link {{ request()->is('dosen/dosen_laporan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
                   <p>Laporan Magang</p>
             </a>
-          </li>    --}}
+          </li>   
         </ul>
       </nav>
     </div>

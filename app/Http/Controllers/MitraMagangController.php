@@ -122,12 +122,13 @@ class MitraMagangController extends Controller
     /**
      * Menampilkan form edit mitra.
      */
+ 
+
     public function edit(Mitra $mitra)
     {
-        // Pastikan tgl_mulai dan tgl_selesai tidak null
         try {
-            $tgl_mulai = $mitra->tgl_mulai ? $mitra->tgl_mulai->format('Y-m-d') : null;
-            $tgl_selesai = $mitra->tgl_selesai ? $mitra->tgl_selesai->format('Y-m-d') : null;
+            $tgl_mulai = $mitra->tgl_mulai ? Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') : null;
+            $tgl_selesai = $mitra->tgl_selesai ? Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') : null;
 
             return response()->json([
                 'id' => $mitra->id,
@@ -142,6 +143,7 @@ class MitraMagangController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
+
 
 
     public function update(Request $request, Mitra $mitra)
@@ -185,19 +187,5 @@ class MitraMagangController extends Controller
         return redirect()->route('data_mitra')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
-    public function showMitra(Request $request)
-    {
-        $query = Mitra::with(['mitraUser', 'dosenPembimbing', 'jurusan']);
-
-        // Jika jurusan_id di request
-        if ($request->has('jurusan_id') && $request->jurusan_id != '') {
-            $query->where('jurusan_id', $request->jurusan_id);
-        }
-
-        $mitras = $query->get();
-        $jurusanList = Jurusan::all();
-
-        return view('mahasiswa.mhs_lowongan', compact('mitras', 'jurusanList'));
-    }
-
+    
 }

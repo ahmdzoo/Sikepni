@@ -29,4 +29,9 @@ class Lamaran extends Model
     {
         return $this->belongsTo(Mitra::class, 'mitra_id');
     }
+
+    public function dosenPembimbing()
+    {
+        return $this->belongsTo(User::class, 'dosen_pembimbing_id'); // Relasi ke User
+    }
 }

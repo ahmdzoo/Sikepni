@@ -13,6 +13,11 @@ class DosenPembimbingController extends Controller
         return view('dosen.dashboard'); // Pastikan Anda memiliki view ini
     }
 
+    public function dosen_laporan()
+    {
+        return view('dosen.dosen_laporan'); // Pastikan Anda memiliki view ini
+    }
+
     // Di DosenPembimbingController
     public function dosen_lamaran()
     {
