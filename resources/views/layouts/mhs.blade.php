@@ -30,7 +30,9 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/mhs.css') }}">
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- CKEditor -->
@@ -156,10 +158,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('mhs_aktifitas') }}"
-              class="nav-link {{ request()->is('mahasiswa/mhs_aktifitas') ? 'active' : '' }}">
+            <a href="{{ route('mahasiswa.magang') }}"
+              class="nav-link {{ request()->is('mahasiswa/magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
-              <p>Aktifitas Magang</p>
+              <p>Laporan Magang</p>
             </a>
           </li>
           <li class="nav-item">
