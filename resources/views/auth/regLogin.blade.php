@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sikepni - Register</title>
-    <link rel="stylesheet" href="{{ asset('css/regLogin') }}" />
+    <link rel="stylesheet" href="{{ asset('css/regLogin.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
@@ -35,8 +35,6 @@
               <div class="heading">
 
                 <h2>Registrasi</h2>
-                <h6>Sudah Mempunyai akun?</h6>
-                <a href="{{ route('loginReg') }}" class="toggle">Login</a>
               </div>
 
               <div class="actual-form">
@@ -102,6 +100,10 @@
                   <label>Pilih Role</label>
                 </div>
 
+                <div class="heading">
+                  <h6>Sudah Mempunyai akun?</h6>
+                <a href="{{ route('loginReg') }}" class="toggle">Login</a>
+                </div>
                 <input type="submit" value="Sign Up" class="sign-btn" />
               </div>
             </form>
