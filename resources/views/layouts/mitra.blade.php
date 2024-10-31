@@ -32,7 +32,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mitra.css') }}">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- CKEditor -->
@@ -165,6 +166,11 @@
                                 <i class="nav-icon fas fa-handshake"></i>
                                 <p>Lamaran Magang</p>
                             </a>
+                        </li>
+
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>Lamaran Magang</p>
+                        </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('mitra_laporan') }}"

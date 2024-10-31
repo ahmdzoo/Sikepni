@@ -64,4 +64,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lamaran::class, 'user_id'); // Relasi ke model Lamaran
     }
+
+    public function komentars()
+    {
+        return $this->hasMany(Komentar::class);
+    }
+
 }
