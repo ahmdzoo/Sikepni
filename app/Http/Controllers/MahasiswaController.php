@@ -71,14 +71,11 @@ class MahasiswaController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-<<<<<<< HEAD
+
                 ->addColumn('no', function ($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
-                ->addColumn('no_pks', function ($data) {
-=======
                 ->addColumn('no_pks', function($data) {
->>>>>>> 6236a641c2fa8231de7a3f7b632c2e9c5957f433
                     return $data->no_pks;
                 })
                 ->editColumn('tgl_mulai', function ($mitra) {
@@ -116,4 +113,5 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    
 }
