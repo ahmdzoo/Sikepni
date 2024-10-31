@@ -6,6 +6,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Mitra;
 use App\Models\User;
+use App\Models\Laporan;
 use App\Models\Lamaran;
 use App\Models\Jurusan;
 use Carbon\Carbon;
@@ -14,19 +15,24 @@ use App\Http\Controllers\LamaranController;
 class MahasiswaController extends Controller
 {
     // Menampilkan dashboard mahasiswa
-    public function dashboard()
-    {
-        $mahasiswaId = auth()->id(); // Mendapatkan ID mahasiswa yang sedang login
+public function dashboard()
+{
+    $mahasiswaId = auth()->id(); // Mendapatkan ID mahasiswa yang sedang login
 
-        // Mengambil mitra yang menerima lamaran mahasiswa
-        $mitras = Mitra::whereHas('lamaran', function ($query) use ($mahasiswaId) {
-            $query->where('user_id', $mahasiswaId)->where('status', 'diterima');
-        })->with(['mitraUser', 'jurusan', 'dosenPembimbing'])->get(); // Menyertakan relasi
+    // Mengambil mitra yang menerima lamaran mahasiswa
+    $mitras = Mitra::whereHas('lamaran', function ($query) use ($mahasiswaId) {
+        $query->where('user_id', $mahasiswaId)->where('status', 'diterima');
+    })->with(['mitraUser', 'jurusan', 'dosenPembimbing'])->get(); // Menyertakan relasi
 
-        return view('mahasiswa.dashboard', [
-            'mitras' => $mitras,
-        ]);
-    }
+    // Menghitung total laporan yang dimiliki mahasiswa
+    $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
+
+    return view('mahasiswa.dashboard', [
+        'mitras' => $mitras,
+        'totalLaporan' => $totalLaporan, // Menambahkan total laporan ke view
+    ]);
+}
+
 
 
     // Menampilkan daftar mitra magang
@@ -71,10 +77,11 @@ class MahasiswaController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+
                 ->addColumn('no', function ($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
-                ->addColumn('no_pks', function ($data) {
+                ->addColumn('no_pks', function($data) {
                     return $data->no_pks;
                 })
                 ->editColumn('tgl_mulai', function ($mitra) {
@@ -112,4 +119,5 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    
 }

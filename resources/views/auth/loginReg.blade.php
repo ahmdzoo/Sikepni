@@ -34,8 +34,6 @@
               @csrf
               <div class="heading">
                 <h2>Login</h2>
-                <h6>Belum memiliki akun?</h6>
-                <a href="{{ route('regLogin') }}" class="toggle">Registrasi Sekarang</a>
               </div>
 
               <div class="actual-form">
@@ -61,6 +59,10 @@
                     required
                   />
                   <label>Password</label>
+                </div>
+                <div class="heading">
+                  <h6>Belum memiliki akun?</h6>
+                  <a href="{{ route('regLogin') }}" class="toggle">Registrasi Sekarang</a>
                 </div>
 
                 <input type="submit" value="Sign In" class="sign-btn" />

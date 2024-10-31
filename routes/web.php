@@ -148,9 +148,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('mitras', MitraMagangController::class);
 
@@ -163,4 +160,3 @@ Route::get('/moa/data', [MitraController::class, 'getData'])->name('mitra.data')
 //COMMENT LAPORAN MAGANG
 Route::post('/laporan/{laporanId}/komentar', [LaporanController::class, 'storeKomentar'])->name('laporan.komentar.store');
 Route::delete('/laporan/{laporan}/komentar/{komentar}', [LaporanController::class, 'destroyKomentar'])->name('laporan.komentar.destroy');
-
