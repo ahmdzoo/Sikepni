@@ -67,7 +67,8 @@
                         <div class="icon">
                             <i class="fas fa-file-alt"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat Laporan <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Lihat Laporan <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>

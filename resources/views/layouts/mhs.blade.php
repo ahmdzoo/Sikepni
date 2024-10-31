@@ -156,7 +156,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('mahasiswa.aktifitas') }}"
+              <a href=C
                 class="nav-link {{ request()->is('mahasiswa/mhs_aktifitas') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Aktifitas Magang</p>
