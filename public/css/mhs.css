@@ -176,3 +176,45 @@
 .btn-delete-icon:hover {
     color: red; /* Opsional */
 }
+
+/* Table wrapper for scroll */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Tabel yang lebih kecil dan teks menyesuaikan */
+.table {
+  font-size: 0.9rem;
+}
+
+/* Memperpendek padding dan margin tabel */
+.table th, .table td {
+  padding: 8px;
+  vertical-align: middle;
+}
+
+/* Pengaturan tampilan tabel lebih kecil di layar kecil */
+@media (max-width: 768px) {
+  .table th, .table td {
+      font-size: 8px; /* Ukuran font lebih kecil */
+      padding: 4px;    /* Padding lebih kecil */
+  }
+}
+
+/* Untuk layar yang sangat kecil, teks lebih kecil lagi */
+@media (max-width: 576px) {
+  .table th, .table td {
+      padding: 4px;
+      font-size: 0.75rem;
+  }
+}
+
+/* CSS Dropdown yang lebih rata */
+.dropdown-menu {
+  left: auto;
+  right: 0;
+  width: 100%;
+  max-width: 180px; /* Sesuaikan jika perlu */
+  padding: 0.5rem;
+  border-radius: 5px;
+}

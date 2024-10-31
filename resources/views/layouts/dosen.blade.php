@@ -150,7 +150,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="{{ route('dosen.laporan') }}" class="nav-link {{ request()->is('dosen/dosen_laporan') ? 'active' : '' }}">
+            <a href="{{ route('dosen.magang_mhs') }}" class="nav-link {{ request()->is('dosen/magang_mhs') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
                   <p>Laporan Magang</p>
             </a>

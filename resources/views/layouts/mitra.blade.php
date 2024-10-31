@@ -163,8 +163,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('mitra.laporan') }}"
-                class="nav-link {{ request()->is('mitra/mitra_laporan') ? 'active' : '' }}">
+              <a href="{{ route('mitra.mahasiswa_diterima') }}"
+                class="nav-link {{ request()->is('mitra/mahasiswa_diterima') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-folder-open"></i>
                 <p>Laporan Magang</p>
               </a>

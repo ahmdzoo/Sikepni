@@ -48,8 +48,8 @@
 
         <!-- Daftar Laporan Section -->
         <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h3 class="mb-0">Daftar Laporan Magang</h3>
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title mb-0"> Daftar Laporan Magang</h2>
             </div>
             <div class="card-body">
                 @if($laporans->isEmpty())
@@ -61,8 +61,8 @@
                         <thead class="table-primary">
                             <tr>
                                 <th style="width: 5%; text-align: center;">No</th>
-                                <th>Nama Laporan</th>
-                                <th style="width: 20%; text-align: center;">Tanggal Upload</th>
+                                <th>Laporan</th>
+                                <th style="width: 20%; text-align: center;">Tanggal</th>
                                 <th style="width: 20%; text-align: center;">Aksi</th>
                             </tr>
                         </thead>
@@ -70,7 +70,11 @@
                             @foreach($laporans as $index => $laporan)
                                 <tr>
                                     <td class="text-center">{{ $index + 1 }}</td>
-                                    <td>{{ basename($laporan->file_path) }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $laporan->file_path) }}" target="_blank">
+                                        {{ basename($laporan->file_path) }}
+                                        </a>
+                                    </td>
                                     <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
                                     <td class="text-center">
                                         <!-- Dropdown Action -->
@@ -78,10 +82,8 @@
                                             <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton-{{ $laporan->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="bi bi-three-dots"></i>
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ $laporan->id }}">
-                                                <a href="{{ asset('storage/' . $laporan->file_path) }}" target="_blank" class="dropdown-item">
-                                                    <i class="fas fa-eye"></i> Lihat
-                                                </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton-{{ $laporan->id }}">
+                                                
                                                 <button class="dropdown-item" data-toggle="modal" data-target="#editLaporanModal-{{ $laporan->id }}">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
@@ -97,6 +99,7 @@
                                                 </button>
                                             </div>
                                         </div>
+
                                     </td>
                                 </tr>
 
@@ -134,6 +137,10 @@
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success mt-2">Kirim Komentar</button>
                                             </form>
+                                            <!-- Tombol untuk menutup komentar -->
+                                            <button type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
+                                                Close
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -171,5 +178,10 @@
         </div>
     </div>
 </div>
+<!-- CSS untuk responsivitas -->
+<style>
+    
+
+</style>
 @include('layouts/footer')
 @endsection

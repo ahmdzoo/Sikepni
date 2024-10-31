@@ -7,6 +7,7 @@ use App\Models\Lamaran;
 use App\Models\Laporan;
 use App\Models\Mitra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
@@ -17,7 +18,7 @@ class LaporanController extends Controller
         return view('mahasiswa.mhs_aktifitas', compact('laporans'));
     }
 
-    public function dosenLaporan()
+    public function dosenLaporan($mahasiswa_id)
     {
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
     
@@ -25,25 +26,31 @@ class LaporanController extends Controller
         $mitras = Mitra::where('dosen_pembimbing_id', $dosenId)->pluck('id');
     
         $laporans = Laporan::with('mahasiswa')
-            ->whereIn('mitra_id', $mitras) // Ambil laporan dari mitra yang diawasi oleh dosen
+            ->where('user_id', $mahasiswa_id) // Ambil laporan dari mitra yang diawasi oleh dosen
+            ->with('mahasiswa')
             ->get();
         
         return view('dosen.dosen_laporan', compact('laporans'));
     }
     
 
-    public function mitraLaporan()
-{
-    $mitraId = auth()->user()->id; // Ambil ID mitra yang login
+    public function mitraLaporan($mahasiswa_id)
+    {
+        $mitraId = auth()->user()->id; // ID mitra yang login
 
-    // Ambil mitra yang terkait dengan dosen
-    $mitras = Mitra::where('nama_mitra_id', $mitraId)->pluck('id');
+        // Ambil mitra terkait user
+        $mitras = Mitra::where('nama_mitra_id', $mitraId)->pluck('id');
 
-    $laporans = Laporan::with('mahasiswa')
-        ->where('mitra_id', $mitras) // Ambil laporan yang terkait dengan mitra
-        ->get();
-    return view('mitra.mitra_laporan', compact('laporans'));
-}
+        // Ambil laporan yang sesuai dengan mitra dan mahasiswa tertentu
+        $laporans = Laporan::whereIn('mitra_id', $mitras)
+            ->where('user_id', $mahasiswa_id)
+            ->with('mahasiswa')
+            ->get();
+
+        return view('mitra.mitra_laporan', compact('laporans'));
+    }
+
+
 
 
 
@@ -158,6 +165,51 @@ class LaporanController extends Controller
 
         return view('mahasiswa.magang', compact('lamaran'));
     }
+
+    public function mahasiswaDiterima()
+    {
+        $mahasiswaDiterima = Lamaran::where('status', 'diterima')
+            ->whereHas('mitra', function ($query) {
+                $query->where('nama_mitra_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
+            })
+            ->with('mahasiswa')
+            ->get();
+
+        // Debugging output ke log untuk memastikan data tidak kosong
+        if ($mahasiswaDiterima->isEmpty()) {
+            Log::info('Tidak ada mahasiswa diterima untuk mitra dengan ID: ' . auth()->id());
+        } else {
+            Log::info('Jumlah mahasiswa diterima: ' . $mahasiswaDiterima->count());
+            foreach ($mahasiswaDiterima as $lamaran) {
+                Log::info('Mahasiswa diterima: ' . $lamaran->mahasiswa->name);
+            }
+        }
+
+        return view('mitra.mahasiswa_diterima', compact('mahasiswaDiterima'));
+    }
+
+    public function magang_mhs()
+    {
+        $mahasiswaDiterima = Lamaran::where('status', 'diterima')
+            ->whereHas('mitra', function ($query) {
+                $query->where('dosen_pembimbing_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
+            })
+            ->with('mahasiswa')
+            ->get();
+
+        // Debugging output ke log untuk memastikan data tidak kosong
+        if ($mahasiswaDiterima->isEmpty()) {
+            Log::info('Tidak ada mahasiswa diterima untuk mitra dengan ID: ' . auth()->id());
+        } else {
+            Log::info('Jumlah mahasiswa diterima: ' . $mahasiswaDiterima->count());
+            foreach ($mahasiswaDiterima as $lamaran) {
+                Log::info('Mahasiswa diterima: ' . $lamaran->mahasiswa->name);
+            }
+        }
+
+        return view('dosen.magang_mhs', compact('mahasiswaDiterima'));
+    }
+
 
 
 
