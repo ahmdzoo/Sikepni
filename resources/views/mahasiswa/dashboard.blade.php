@@ -20,14 +20,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 mx-auto">
                     <div class="small-box">
                         <div class="inner">
-                            <h2>
-                                @if ($mitras->isNotEmpty())
+                            <h3>
+                                @if (isset($mitras) && $mitras->isNotEmpty())
                                 {{ $mitras->first()->mitraUser->name }}
-                                <!-- Menampilkan nama mitra pertama -->
                                 @else
                                 Tidak ada mitra
                                 @endif
-                            </h2>
+                            </h3>
                             <p>Nama Mitra</p>
                         </div>
                         <div class="icon">
@@ -41,14 +40,14 @@
                 <div class="col-lg-4 col-md-6 mb-4 mx-auto">
                     <div class="small-box">
                         <div class="inner">
-                            <h2>
-                                @if ($mitras->isNotEmpty())
+                            <h3>
+                                @if (isset($mitras) && $mitras->isNotEmpty())
                                 {{ $mitras->first()->dosenPembimbing->name }}
                                 <!-- Menampilkan nama dosen pembimbing pertama -->
                                 @else
                                 Tidak ada dosen
                                 @endif
-                            </h2>
+                            </h3>
                             <p>Dosen Pembimbing</p>
                         </div>
                         <div class="icon">
@@ -58,17 +57,17 @@
                     </div>
                 </div>
 
-                <!-- Log Magang -->
+                <!-- Total Laporan Magang -->
                 <div class="col-lg-4 col-md-6 mb-4 mx-auto">
                     <div class="small-box">
                         <div class="inner">
-                            <h2>Log Magang</h2>
-                            <p>Tampilkan log magang di sini</p>
+                            <h3>{{ $totalLaporan }}</h3>
+                            <p>Total Laporan Magang</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-file-alt"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">Lihat Laporan <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
