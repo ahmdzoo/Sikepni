@@ -12,43 +12,66 @@ use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
-    public function mahasiswaAktifitas()
+    public function mahasiswaAktifitas(Request $request)
     {
-        $laporans = Laporan::where('user_id', auth()->id())->get(); // Hanya ambil laporan milik mahasiswa yang login
+        $query = Laporan::query();
+    
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+    
+        $laporans = $query->where('user_id', auth()->id())->paginate(10); // Pastikan hanya menampilkan laporan mahasiswa yang sedang login
+
         return view('mahasiswa.mhs_aktifitas', compact('laporans'));
     }
 
-    public function dosenLaporan($mahasiswa_id)
+    public function dosenLaporan(Request $request, $mahasiswa_id)
     {
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
     
         // Ambil mitra yang terkait dengan dosen
         $mitras = Mitra::where('dosen_pembimbing_id', $dosenId)->pluck('id');
     
-        $laporans = Laporan::with('mahasiswa')
-            ->where('user_id', $mahasiswa_id) // Ambil laporan dari mitra yang diawasi oleh dosen
-            ->with('mahasiswa')
-            ->get();
+        // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
+            $query = Laporan::whereIn('mitra_id', $mitras)
+            ->where('user_id', $mahasiswa_id)
+            ->with('mahasiswa');
+
+        // Tambahkan filter jenis laporan jika tersedia
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+
+        // Paginasi hasil dengan 10 laporan per halaman
+        $laporans = $query->paginate(10);
         
         return view('dosen.dosen_laporan', compact('laporans'));
     }
     
 
-    public function mitraLaporan($mahasiswa_id)
+    public function mitraLaporan(Request $request, $mahasiswa_id)
     {
         $mitraId = auth()->user()->id; // ID mitra yang login
 
         // Ambil mitra terkait user
         $mitras = Mitra::where('nama_mitra_id', $mitraId)->pluck('id');
 
-        // Ambil laporan yang sesuai dengan mitra dan mahasiswa tertentu
-        $laporans = Laporan::whereIn('mitra_id', $mitras)
+        // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
+        $query = Laporan::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
-            ->with('mahasiswa')
-            ->get();
+            ->with('mahasiswa');
 
-        return view('mitra.mitra_laporan', compact('laporans'));
+        // Tambahkan filter jenis laporan jika tersedia
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+
+        // Paginasi hasil dengan 10 laporan per halaman
+        $laporans = $query->paginate(10);
+
+        return view('mitra.mitra_laporan', compact('laporans','mahasiswa_id'));
     }
+
 
 
 
@@ -77,6 +100,7 @@ class LaporanController extends Controller
                     'user_id' => auth()->id(),
                     'mitra_id' => $lamaran->mitra_id, // Simpan ID mitra yang menerima lamaran
                     'file_path' => $path,
+                    'jenis_laporan' => $request->input('jenis_laporan', 'Harian'), // Default ke 'Harian' jika tidak ada input
                 ]);
             }
             
@@ -121,28 +145,23 @@ class LaporanController extends Controller
 
 
     public function destroy($id)
-    {
-        $laporan = Laporan::findOrFail($id);
-        Storage::delete($laporan->file_path); // Hapus file dari storage
-        $laporan->delete();
+{
+    $laporan = Laporan::findOrFail($id);
+    $laporan->delete();
 
-        return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
+    // Periksa jumlah data di halaman saat ini
+    $page = request()->input('page', 1); // Ambil halaman saat ini
+    $laporanCount = Laporan::paginate(10, ['*'], 'page', $page)->count();
+
+    if ($laporanCount == 0 && $page > 1) {
+        return redirect()->route('mahasiswa.aktifitas', ['page' => $page - 1])
+                         ->with('success', 'Laporan berhasil dihapus');
     }
 
-    public function storeKomentar(Request $request, $laporanId)
-    {
-        $request->validate([
-            'content' => 'required|string',
-        ]);
+    return redirect()->route('mahasiswa.aktifitas')
+                     ->with('success', 'Laporan berhasil dihapus');
+}
 
-        Komentar::create([
-            'laporan_id' => $laporanId,
-            'user_id' => auth()->id(),
-            'content' => $request->input('content'),
-        ]);
-
-        return redirect()->back()->with('success', 'Komentar berhasil ditambahkan.');
-    }
 
     public function destroyKomentar($laporanId, $komentarId)
     {

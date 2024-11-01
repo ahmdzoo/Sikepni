@@ -9,7 +9,9 @@ class Laporan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'mitra_id', 'file_path'];
+
+    protected $fillable = ['user_id', 'mitra_id', 'file_path', 'jenis_laporan'];
+
 
     public function mahasiswa()
     {

@@ -39,6 +39,15 @@
                                 <label for="file" class="form-label">Pilih File Laporan</label>
                                 <input type="file" class="form-control" id="file" name="file" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="jenis_laporan" class="form-label">Jenis Laporan</label>
+                                <select name="jenis_laporan" id="jenis_laporan" class="form-control" required>
+                                    <option value="Harian">Harian</option>
+                                    <option value="Mingguan">Mingguan</option>
+                                    <option value="Bulanan">Bulanan</option>
+                                </select>
+                            </div>
+                            
                             <button type="submit" class="btn btn-danger">Upload Laporan</button>
                         </form>
                     </div>
@@ -51,7 +60,24 @@
             <div class="card-header bg-primary text-white">
                 <h2 class="card-title mb-0"> Daftar Laporan Magang</h2>
             </div>
+
             <div class="card-body">
+                <!-- Filter Berdasarkan Jenis Laporan -->
+                <div class="filter-section mb-3 ml-3 text-left">
+                    <form method="GET" action="{{ route('mahasiswa.aktifitas') }}" class="d-inline-block">
+                        <div class="input-group" style="width: 250px; display: inline-flex;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-white"><i class="fas fa-filter"></i></span>
+                            </div>
+                            <select name="filter_jenis" id="filter_jenis" class="form-control" onchange="this.form.submit()" style="border-radius: 0 5px 5px 0;">
+                                <option value="">Semua Jenis</option>
+                                <option value="Harian" {{ request('filter_jenis') == 'Harian' ? 'selected' : '' }}>Harian</option>
+                                <option value="Mingguan" {{ request('filter_jenis') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+                                <option value="Bulanan" {{ request('filter_jenis') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
                 @if($laporans->isEmpty())
                     <div class="alert alert-warning text-center">
                         Tidak ada laporan magang yang diupload.
@@ -61,7 +87,8 @@
                         <thead class="table-primary">
                             <tr>
                                 <th style="width: 5%; text-align: center;">No</th>
-                                <th>Laporan</th>
+                                <th style="width: 20%; text-align: center;">Laporan</th>
+                                <th style="width: 20%; text-align: center;">Jenis Laporan</th>
                                 <th style="width: 20%; text-align: center;">Tanggal</th>
                                 <th style="width: 20%; text-align: center;">Aksi</th>
                             </tr>
@@ -69,12 +96,13 @@
                         <tbody>
                             @foreach($laporans as $index => $laporan)
                                 <tr>
-                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td class="text-center">{{ $laporans->firstItem() + $index }}</td>
                                     <td>
                                         <a href="{{ asset('storage/' . $laporan->file_path) }}" target="_blank">
                                         {{ basename($laporan->file_path) }}
                                         </a>
                                     </td>
+                                    <td class="text-center">{{ $laporan->jenis_laporan }}</td>
                                     <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
                                     <td class="text-center">
                                         <!-- Dropdown Action -->
@@ -173,15 +201,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $laporans->links('pagination::bootstrap-5') }}
+                    </div>
                 @endif
             </div>
         </div>
     </div>
 </div>
-<!-- CSS untuk responsivitas -->
-<style>
-    
-
-</style>
 @include('layouts/footer')
 @endsection
