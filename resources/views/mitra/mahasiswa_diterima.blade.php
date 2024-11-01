@@ -30,7 +30,7 @@
                                 <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>
                                 <p class="card-text text-muted" style="font-size: 14px;">Mahasiswa</p>
                                 <a href="{{ route('mitra.laporan', ['mahasiswa_id' => $item->mahasiswa->id]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang Harian &rsaquo;</a>
-                                <a href="#" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
+                                <a href="{{ route('mitra.LaporanAkhir', ['mahasiswa_id' => $item->mahasiswa->id]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
 
                             </div>
                         </div>

@@ -28,6 +28,8 @@
                     <i class="fas fa-user-graduate"></i> <!-- Anda bisa mengganti dengan ikon yang sesuai -->
                 </div>
                 <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Laporan Magang <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('mahasiswa.LaporanAkhir') }}" class="small-box-footer">Laporan Akhir <i class="fas fa-arrow-circle-right"></i></a>
+
             </div>
         @endif
     </div>

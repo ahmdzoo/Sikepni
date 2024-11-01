@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\LaporanAkhirController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UserController;
@@ -79,6 +80,12 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
     Route::get('/mahasiswa/magang', [LaporanController::class, 'magang'])->name('mahasiswa.magang');
 
+    Route::get('/mahasiswa/mhs_LaporanAkhir', [LaporanAkhirController::class, 'mhsLaporanAkhir'])->name('mahasiswa.LaporanAkhir');
+    Route::post('/LaporanAkhir', [LaporanAkhirController::class, 'store'])->name('LaporanAkhir.store');
+    Route::get('/LaporanAkhir/{id}/edit', [LaporanAkhirController::class, 'edit'])->name('LaporanAkhir.edit');
+    Route::put('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'update'])->name('LaporanAkhir.update');
+    Route::delete('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'destroy'])->name('LaporanAkhir.destroy');
+
 });
 
 // Rute untuk Dosen Pembimbing
@@ -88,7 +95,7 @@ Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
     Route::get('/dosen/dosen_laporan', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
     Route::get('/dosen/magang_mhs', [LaporanController::class, 'magang_mhs'])->name('dosen.magang_mhs');
     Route::get('/dosen/dosen_laporan/{mahasiswa_id}', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
-
+    Route::get('/dosen/dosen_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'dosenLaporanAkhir'])->name('dosen.LaporanAkhir');
 
 });
 
@@ -100,9 +107,9 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
     Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
     Route::post('/lamaran/acc/{id}', [LamaranController::class, 'acc'])->name('lamaran.acc');
-    //Route::get('/mitra/mitra_laporan', [LaporanController::class, 'mitraLaporan'])->name('mitra.laporan');
     Route::get('/mitra/mahasiswa_diterima', [LaporanController::class, 'mahasiswaDiterima'])->name('mitra.mahasiswa_diterima');
     Route::get('/mitra/mitra_laporan/{mahasiswa_id}', [LaporanController::class, 'mitraLaporan'])->name('mitra.laporan');
+    Route::get('/mitra/mitra_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'mitraLaporanAkhir'])->name('mitra.LaporanAkhir');
 
 
 
@@ -160,3 +167,7 @@ Route::get('/moa/data', [MitraController::class, 'getData'])->name('mitra.data')
 //COMMENT LAPORAN MAGANG
 Route::post('/laporan/{laporanId}/komentar', [LaporanController::class, 'storeKomentar'])->name('laporan.komentar.store');
 Route::delete('/laporan/{laporan}/komentar/{komentar}', [LaporanController::class, 'destroyKomentar'])->name('laporan.komentar.destroy');
+
+//COMMENT LAPORAN MAGANG AKHIR
+Route::post('/LaporanAkhir/{LaporanAkhirId}/komentar', [LaporanAkhirController::class, 'storeKomentar'])->name('LaporanAkhir.komentar.store');
+Route::delete('/LaporanAkhir/{LaporanAkhir}/komentar/{komentar}', [LaporanAkhirController::class, 'destroyKomentar'])->name('LaporanAkhir.komentar.destroy');
