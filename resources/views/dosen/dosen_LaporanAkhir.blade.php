@@ -1,4 +1,6 @@
 @extends('layouts.dosen')
+@section('title', 'Laporan Akhir Magang | SIKEPNI')
+
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">
     <div class="content-header">

@@ -106,8 +106,18 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control form-control-sm" id="password" name="password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control form-control-sm" id="password" name="password" required>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
+                            <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <small class="text-muted">Kata sandi harus memiliki minimal 6 karakter.</small>
+
             </div>
+            
         </div>
         
         <div class="modal-footer">
@@ -290,6 +300,21 @@ function deleteUser(id) {
     $('#deleteUserId').val(id);
     $('#deleteUserForm').attr('action', '/admin/users/' + id);
 }
+
+function togglePasswordVisibility(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
 
 
 

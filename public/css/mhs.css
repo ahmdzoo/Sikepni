@@ -220,3 +220,62 @@
 }
 
 
+    /* Meniru ukuran dan bentuk h3 untuk span */
+    .h3-like {
+        font-size: 1.75rem;  /* Meniru ukuran h3 */
+        font-weight: bold;   /* Meniru ketebalan h3 */
+        color: #007bff;        /* Meniru warna h3 */
+    }
+
+ /* Responsif Card */
+ @media (max-width: 768px) {
+  .small-box {
+      font-size: 20px;
+      padding: 15px;
+  }
+
+  .small-box .inner h3 {
+      font-size: 40px;
+  }
+
+  .small-box .inner p {
+      font-size: 22px;
+  }
+
+   /* Menambahkan font-size responsif untuk tulisan Mitra Magang dan Dosen Pembimbing */
+   .small-box .inner span.h3-like {
+      font-size: 20px; /* Ukuran font ini akan berubah pada ukuran layar lebih kecil */
+  }
+
+  .icon {
+      font-size: 25px;
+  }
+
+  .card-responsive .col {
+      margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .small-box {
+      font-size: 20px;
+      padding: 12px;
+  }
+
+  .small-box .inner h3 {
+      font-size: 48px;
+  }
+
+  .small-box .inner p {
+      font-size: 20px;
+  }
+
+  /* Menambahkan font-size responsif untuk tulisan Mitra Magang dan Dosen Pembimbing */
+  .small-box .inner span.h3-like {
+      font-size: 18px; /* Ukuran font ini akan berubah pada ukuran layar lebih kecil */
+  }
+
+  .icon {
+      font-size: 10px;
+  }
+}

@@ -10,43 +10,55 @@ use App\Models\Laporan;
 use App\Models\Lamaran;
 use App\Models\Jurusan;
 use Carbon\Carbon;
-use App\Http\Controllers\LamaranController;
 
 class MahasiswaController extends Controller
 {
-    // Menampilkan dashboard mahasiswa
-public function dashboard()
-{
-    $mahasiswaId = auth()->id(); // Mendapatkan ID mahasiswa yang sedang login
+    public function dashboard()
+    {
+        $mahasiswaId = auth()->id(); // Mendapatkan ID mahasiswa yang sedang login
+    
+        // Mengambil mitra yang menerima lamaran mahasiswa
+        $mitras = Mitra::whereHas('lamaran', function ($query) use ($mahasiswaId) {
+            $query->where('user_id', $mahasiswaId)->where('status', 'diterima');
+        })->with(['mitraUser', 'jurusan', 'dosenPembimbing'])->get(); // Menyertakan relasi
+    
+        // Menghitung total laporan yang dimiliki mahasiswa
+        $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
+    
+        // Menghitung total lamaran yang diajukan mahasiswa
+        $totalLamaran = Lamaran::where('user_id', $mahasiswaId)->count();
+    
+        // Menghitung jumlah lamaran yang berstatus pending
+        $totalLamaranPending = Lamaran::where('user_id', $mahasiswaId)->where('status', 'pending')->count();
+    
+        // Menghitung jumlah lamaran yang diterima
+        $totalLamaranDiterima = Lamaran::where('user_id', $mahasiswaId)->where('status', 'diterima')->count();
 
-    // Mengambil mitra yang menerima lamaran mahasiswa
-    $mitras = Mitra::whereHas('lamaran', function ($query) use ($mahasiswaId) {
-        $query->where('user_id', $mahasiswaId)->where('status', 'diterima');
-    })->with(['mitraUser', 'jurusan', 'dosenPembimbing'])->get(); // Menyertakan relasi
-
-    // Menghitung total laporan yang dimiliki mahasiswa
-    $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
-
-    return view('mahasiswa.dashboard', [
-        'mitras' => $mitras,
-        'totalLaporan' => $totalLaporan, // Menambahkan total laporan ke view
-    ]);
-}
-
-
-
-    // Menampilkan daftar mitra magang
-
+        // Menghitung jumlah mitra yang ada
+        $totalMitra = Mitra::count();
+    
+        return view('mahasiswa.dashboard', [
+            'mitras' => $mitras,
+            'totalLaporan' => $totalLaporan, // Menambahkan total laporan ke view
+            'totalLamaran' => $totalLamaran,
+            'totalMitra' => $totalMitra,
+            'totalLamaranPending' => $totalLamaranPending,
+            'totalLamaranDiterima' => $totalLamaranDiterima,
+        ]);
+    }
+    
     // Menampilkan aktivitas mahasiswa
     public function mhs_aktifitas()
     {
         return view('mahasiswa.mhs_aktifitas');
     }
 
+    // Menampilkan daftar mitra magang
     public function mhs_lowongan()
     {
         return view('mahasiswa.mhs_lowongan');
     }
+
     public function showMitra(Request $request)
     {
         if ($request->ajax()) {
@@ -77,7 +89,6 @@ public function dashboard()
 
             return DataTables::of($data)
                 ->addIndexColumn()
-
                 ->addColumn('no', function ($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
@@ -102,8 +113,8 @@ public function dashboard()
                 ->addColumn('action', function ($data) {
                     return '
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#lamaranModal-' . $data->id . '">
-                    Ajukan Lamaran
-                </button>
+                            Ajukan Lamaran
+                        </button>
                     ';
                 })
                 ->rawColumns(['action'])
@@ -118,6 +129,4 @@ public function dashboard()
             'dosen_pembimbing' => User::where('role', 'dosen_pembimbing')->get(),
         ]);
     }
-
-    
 }

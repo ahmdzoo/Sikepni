@@ -6,7 +6,7 @@
   
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
-  <title>@yield('title', 'Dashboard Admin | SIKEPNI')</title>
+  <title>@yield('title', 'Dashboard | SIKEPNI')</title>
 
 
   <!-- Google Font: Source Sans Pro -->
@@ -71,7 +71,6 @@
     </ul>
   </nav>
 
-  <!-- Modal Ubah Password -->
 <!-- Modal Ubah Password -->
 <div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

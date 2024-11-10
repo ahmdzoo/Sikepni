@@ -1,13 +1,14 @@
 @extends('layouts.mhs')
 
 @section('content')
+
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #fff); min-height: 100vh;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Dashboard Mahasiswa</h1>
+                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Dashboard Mahasiswa</h1>
                 </div>
             </div>
         </div>
@@ -15,65 +16,118 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="row m-4">
-                <!-- Nama Mitra -->
-                <div class="col-lg-4 col-md-6 mb-4 mx-auto">
+            <div class="row row-cols-1 row-cols-md-3 g-4 m-4 card-responsive">
+                <!-- Row for Mitra Magang and Dosen Pembimbing -->
+                <div class="col-md-6">
                     <div class="small-box">
                         <div class="inner">
-                            <h3>
+                            <span class="h3-like">
                                 @if (isset($mitras) && $mitras->isNotEmpty())
-                                {{ $mitras->first()->mitraUser->name }}
+                                    {{ $mitras->first()->mitraUser->name }}
                                 @else
-                                Tidak ada mitra
+                                    Tidak ada mitra
                                 @endif
-                            </h3>
-                            <p>Nama Mitra</p>
+                            </span>
+                            <p>
+                                Mitra Magang
+                            </p>
                         </div>
-                        <div class="icon">
+                        <div class="icon" style="opacity: 0.5;">
                             <i class="fas fa-handshake"></i>
                         </div>
-                        <a href="" class="small-box-footer"><i class="fa fa-minus"></i></a>
                     </div>
                 </div>
 
-                <!-- Nama Dosen Pembimbing -->
-                <div class="col-lg-4 col-md-6 mb-4 mx-auto">
+                <div class="col-md-6">
                     <div class="small-box">
                         <div class="inner">
-                            <h3>
+                            <span class="h3-like">
                                 @if (isset($mitras) && $mitras->isNotEmpty())
-                                {{ $mitras->first()->dosenPembimbing->name }}
-                                <!-- Menampilkan nama dosen pembimbing pertama -->
+                                    {{ $mitras->first()->dosenPembimbing->name }}
                                 @else
-                                Tidak ada dosen
+                                    Tidak ada dosen
                                 @endif
-                            </h3>
-                            <p>Dosen Pembimbing</p>
+                            </span>
+                            <p>
+                                Dosen Pembimbing
+                            </p>
                         </div>
-                        <div class="icon">
+                        <div class="icon" style="opacity: 0.5;">
                             <i class="fas fa-user-tie"></i>
                         </div>
-                        <a href="" class="small-box-footer"><i class="fa fa-minus"></i></a>
                     </div>
                 </div>
+            </div>
 
+            <!-- Row for the remaining cards -->
+            <div class="row row-cols-1 row-cols-md-3 g-4 m-4">
+                
+                <!-- Total Lamaran Diajukan -->
+                <div class="col">
+                    <div class="small-box">
+                        <div class="inner">
+                            <h3>{{ $totalMitra }}</h3>
+                            <p>Lowongan Magang</p>
+                        </div>
+                        <div class="icon" style="opacity: 0.5;">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <a href="{{ route('mhs_lowongan') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Total Lamaran Pending -->
+                <div class="col">
+                    <div class="small-box">
+                        <div class="inner">
+                            <h3>{{ $totalLamaranPending }}</h3>
+                            <p>Pengajuan Lamaran</p>
+                        </div>
+                        <div class="icon" style="opacity: 0.5;">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <a href="{{ route('mahasiswa.status_lamaran') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Total Lamaran Diterima -->
+                <div class="col">
+                    <div class="small-box">
+                        <div class="inner">
+                            <h3>{{ $totalLamaranDiterima }}</h3>
+                            <p>Total Lamaran Diterima</p>
+                        </div>
+                        <div class="icon" style="opacity: 0.5;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <a href="{{ route('mahasiswa.status_lamaran') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
                 <!-- Total Laporan Magang -->
-                <div class="col-lg-4 col-md-6 mb-4 mx-auto">
+                <div class="col">
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{ $totalLaporan }}</h3>
                             <p>Total Laporan Magang</p>
                         </div>
-                        <div class="icon">
+                        <div class="icon" style="opacity: 0.5;">
                             <i class="fas fa-file-alt"></i>
                         </div>
-                        <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Lihat Laporan <i
-                                class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Lihat Laporan <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+
 @include('layouts.footer')
+
 @endsection
+
+@push('styles')
+<style>
+   
+</style>
+@endpush
+

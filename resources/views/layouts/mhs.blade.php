@@ -6,7 +6,7 @@
   
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
-  <title>@yield('title', 'Dashboard Admin | SIKEPNI')</title>
+  <title>@yield('title', 'Dashboard | SIKEPNI')</title>
 
 
   <!-- Google Font: Source Sans Pro -->

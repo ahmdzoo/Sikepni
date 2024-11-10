@@ -206,6 +206,7 @@ class LaporanController extends Controller
             ->whereHas('mitra', function ($query) {
                 $query->where('nama_mitra_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
+            ->orderBy('updated_at', 'desc')
             ->with('mahasiswa')
             ->get();
 
@@ -228,6 +229,7 @@ class LaporanController extends Controller
             ->whereHas('mitra', function ($query) {
                 $query->where('dosen_pembimbing_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
+            ->orderBy('updated_at', 'desc')
             ->with('mahasiswa')
             ->get();
 
