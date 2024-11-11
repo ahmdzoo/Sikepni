@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Laporan extends Model
+class LaporanAkhir extends Model
 {
     use HasFactory;
 
-
-    protected $fillable = ['user_id', 'mitra_id', 'file_path', 'jenis_laporan'];
+    protected $fillable = ['user_id', 'mitra_id', 'file_path'];
 
 
     public function mahasiswa()
@@ -23,10 +22,9 @@ class Laporan extends Model
         return $this->belongsTo(Mitra::class);
     }
 
-    public function komentars()
+    public function komentar_akhirs()
     {
-        return $this->hasMany(Komentar::class);
+        return $this->hasMany(KomentarAkhir::class);
     }
 
 }
-

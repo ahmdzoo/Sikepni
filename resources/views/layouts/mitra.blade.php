@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
-    <title>@yield('title', 'Dashboard Mitra | SIKEPNI')</title>
+    <title>@yield('title', 'Dashboard | SIKEPNI')</title>
 
 
     <!-- Google Font: Source Sans Pro -->
@@ -77,113 +77,103 @@
                 </li>
             </ul>
 
-        </nav>
-        <!-- Modal Ubah Password -->
-        <div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ubahPasswordLabel">Ubah Password</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            onclick="clearErrors()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
-                        <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+    </nav>
+    <!-- Modal Ubah Password -->
+    <div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ubahPasswordLabel">Ubah Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearErrors()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+            <div id="successMessage" class="alert alert-success" style="display: none;"></div>
 
-                        <form id="resetPasswordForm" method="POST" action="{{ route('password.update') }}">
-                            @csrf
-                            <div class="form-group">
-                                <label for="currentPassword">Password Saat Ini</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="currentPassword"
-                                        name="current_password" required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePasswordVisibility('currentPassword')">
-                                            <i class="fas fa-eye" id="currentPasswordToggle"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword">Password Baru</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="newPassword" name="new_password"
-                                        required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePasswordVisibility('newPassword')">
-                                            <i class="fas fa-eye" id="newPasswordToggle"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPassword">Konfirmasi Password Baru</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="confirmPassword"
-                                        name="new_password_confirmation" required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePasswordVisibility('confirmPassword')">
-                                            <i class="fas fa-eye" id="confirmPasswordToggle"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Reset Password</button>
-                        </form>
-
-                    </div>
+            <form id="resetPasswordForm" method="POST" action="{{ route('password.update') }}">
+              @csrf
+              <div class="form-group">
+                <label for="currentPassword">Password Saat Ini</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="currentPassword" name="current_password" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                      onclick="togglePasswordVisibility('currentPassword')">
+                      <i class="fas fa-eye" id="currentPasswordToggle"></i>
+                    </button>
+                  </div>
                 </div>
-            </div>
+              </div>
+              <div class="form-group">
+                <label for="newPassword">Password Baru</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                      onclick="togglePasswordVisibility('newPassword')">
+                      <i class="fas fa-eye" id="newPasswordToggle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Konfirmasi Password Baru</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="confirmPassword" name="new_password_confirmation"
+                    required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                      onclick="togglePasswordVisibility('confirmPassword')">
+                      <i class="fas fa-eye" id="confirmPasswordToggle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Reset Password</button>
+            </form>
+
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-primary elevation-4">
-            <a href="{{ route('mitra.dashboard') }}" class="brand-link">
-                <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
-            </a>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-light-primary elevation-4">
+      <a href="{{ route('mitra.dashboard') }}" class="brand-link">
+        <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
+      </a>
 
-            <div class="sidebar mt-3 pb-3 mb-3 d-flex">
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route('mitra.dashboard') }}"
-                                class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-home"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('mitra_lamaran') }}"
-                                class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-handshake"></i>
-                                <p>Lamaran Magang</p>
-                            </a>
-                        </li>
-
-                        <i class="nav-icon fas fa-file-alt"></i>
-                        <p>Lamaran Magang</p>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('mitra_laporan') }}"
-                                class="nav-link {{ request()->is('mitra/mitra_laporan') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-folder-open"></i>
-                                <p>Laporan Magang</p>
-                            </a>
-                        </li>
-                    </ul>
-
-                </nav>
-            </div>
-        </aside>
+      <div class="sidebar mt-3 pb-3 mb-3 d-flex">
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="{{ route('mitra.dashboard') }}"
+                class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-home"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-handshake"></i>
+                <p>Lamaran Magang</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('mitra.mahasiswa_diterima') }}"
+                class="nav-link {{ request()->is('mitra/mahasiswa_diterima') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-folder-open"></i>
+                <p>Laporan Magang</p>
+              </a>
+            </li>
+          </ul>
+          
+        </nav>
+      </div>
+    </aside>
 
 
         <!-- Content Wrapper. Contains page content -->

@@ -1,4 +1,5 @@
 @extends('layouts.mhs')
+@section('title', 'Status Lamaran Magang | SIKEPNI')
 
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">

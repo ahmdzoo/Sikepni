@@ -34,4 +34,18 @@ class Lamaran extends Model
     {
         return $this->belongsTo(User::class, 'dosen_pembimbing_id'); // Relasi ke User
     }
+    
+    public function mahasiswa()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Pastikan 'user_id' adalah nama kolom yang menyimpan ID mahasiswa
+    }
+
+    public function laporan()
+{
+    return $this->hasMany(Laporan::class, 'mahasiswa_id'); // Pastikan kolom 'mahasiswa_id' sesuai di tabel laporans
+}
+
+
+
+    
 }

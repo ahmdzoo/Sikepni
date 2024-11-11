@@ -100,7 +100,7 @@ class AdminController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'role' => 'required|string',
-                'password' => 'required|string|min:8',
+                'password' => 'required|string|min:6',
             ]);
     
             User::create([

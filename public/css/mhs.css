@@ -176,3 +176,106 @@
 .btn-delete-icon:hover {
     color: red; /* Opsional */
 }
+
+/* Table wrapper for scroll */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Tabel yang lebih kecil dan teks menyesuaikan */
+.table {
+  font-size: 0.9rem;
+}
+
+/* Memperpendek padding dan margin tabel */
+.table th, .table td {
+  padding: 8px;
+  vertical-align: middle;
+}
+
+/* Pengaturan tampilan tabel lebih kecil di layar kecil */
+@media (max-width: 768px) {
+  .table th, .table td {
+      font-size: 8px; /* Ukuran font lebih kecil */
+      padding: 4px;    /* Padding lebih kecil */
+  }
+}
+
+/* Untuk layar yang sangat kecil, teks lebih kecil lagi */
+@media (max-width: 576px) {
+  .table th, .table td {
+      padding: 4px;
+      font-size: 0.75rem;
+  }
+}
+
+/* CSS Dropdown yang lebih rata */
+.dropdown-menu {
+  left: auto;
+  right: 0;
+  width: 100%;
+  max-width: 180px; /* Sesuaikan jika perlu */
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+
+    /* Meniru ukuran dan bentuk h3 untuk span */
+    .h3-like {
+        font-size: 1.75rem;  /* Meniru ukuran h3 */
+        font-weight: bold;   /* Meniru ketebalan h3 */
+        color: #007bff;        /* Meniru warna h3 */
+    }
+
+ /* Responsif Card */
+ @media (max-width: 768px) {
+  .small-box {
+      font-size: 20px;
+      padding: 15px;
+  }
+
+  .small-box .inner h3 {
+      font-size: 40px;
+  }
+
+  .small-box .inner p {
+      font-size: 22px;
+  }
+
+   /* Menambahkan font-size responsif untuk tulisan Mitra Magang dan Dosen Pembimbing */
+   .small-box .inner span.h3-like {
+      font-size: 20px; /* Ukuran font ini akan berubah pada ukuran layar lebih kecil */
+  }
+
+  .icon {
+      font-size: 25px;
+  }
+
+  .card-responsive .col {
+      margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .small-box {
+      font-size: 20px;
+      padding: 12px;
+  }
+
+  .small-box .inner h3 {
+      font-size: 48px;
+  }
+
+  .small-box .inner p {
+      font-size: 20px;
+  }
+
+  /* Menambahkan font-size responsif untuk tulisan Mitra Magang dan Dosen Pembimbing */
+  .small-box .inner span.h3-like {
+      font-size: 18px; /* Ukuran font ini akan berubah pada ukuran layar lebih kecil */
+  }
+
+  .icon {
+      font-size: 10px;
+  }
+}

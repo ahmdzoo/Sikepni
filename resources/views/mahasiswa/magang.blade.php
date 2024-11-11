@@ -1,4 +1,6 @@
 @extends('layouts.mhs')
+@section('title', 'Aktifitas Magang | SIKEPNI')
+
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">
     <div class="content-header">
@@ -28,6 +30,8 @@
                     <i class="fas fa-user-graduate"></i> <!-- Anda bisa mengganti dengan ikon yang sesuai -->
                 </div>
                 <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Laporan Magang <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('mahasiswa.LaporanAkhir') }}" class="small-box-footer">Laporan Akhir <i class="fas fa-arrow-circle-right"></i></a>
+
             </div>
         @endif
     </div>

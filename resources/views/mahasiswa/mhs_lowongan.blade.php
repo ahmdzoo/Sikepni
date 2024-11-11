@@ -1,5 +1,5 @@
 @extends('layouts.mhs')
-@section('title', 'Data Mitra | SIKEPNI')
+@section('title', 'Program Magang | SIKEPNI')
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
 @endsection

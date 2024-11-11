@@ -1,4 +1,5 @@
 @extends('layouts.dosen') <!-- Pastikan menggunakan layout yang sesuai dengan project Anda -->
+@section('title', 'Lamaran Magang | SIKEPNI')
 
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">

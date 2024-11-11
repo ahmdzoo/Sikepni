@@ -1,5 +1,5 @@
 @extends('layouts.mhs')
-@section('title', 'Laporan Magang | SIKEPNI')
+@section('title', 'Laporan Akhir Magang | SIKEPNI')
 
 @section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">
@@ -35,21 +35,12 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('LaporanAkhir.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="file" class="form-label">Pilih File Laporan</label>
                                 <input type="file" class="form-control" id="file" name="file" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="jenis_laporan" class="form-label">Jenis Laporan</label>
-                                <select name="jenis_laporan" id="jenis_laporan" class="form-control" required>
-                                    <option value="Harian">Harian</option>
-                                    <option value="Mingguan">Mingguan</option>
-                                    <option value="Bulanan">Bulanan</option>
-                                </select>
-                            </div>
-                            
                             <button type="submit" class="btn btn-danger">Upload Laporan</button>
                         </form>
                     </div>
@@ -64,23 +55,7 @@
             </div>
 
             <div class="card-body">
-                <!-- Filter Berdasarkan Jenis Laporan -->
-                <div class="filter-section mb-3 ml-3 text-left">
-                    <form method="GET" action="{{ route('mahasiswa.aktifitas') }}" class="d-inline-block">
-                        <div class="input-group" style="width: 250px; display: inline-flex;">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-white"><i class="fas fa-filter"></i></span>
-                            </div>
-                            <select name="filter_jenis" id="filter_jenis" class="form-control" onchange="this.form.submit()" style="border-radius: 0 5px 5px 0;">
-                                <option value="">Semua Jenis</option>
-                                <option value="Harian" {{ request('filter_jenis') == 'Harian' ? 'selected' : '' }}>Harian</option>
-                                <option value="Mingguan" {{ request('filter_jenis') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-                                <option value="Bulanan" {{ request('filter_jenis') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                @if($laporans->isEmpty())
+                @if($LaporanAkhirs->isEmpty())
                     <div class="alert alert-warning text-center">
                         Tidak ada laporan magang yang diupload.
                     </div>
@@ -90,21 +65,19 @@
                             <tr>
                                 <th style="width: 5%; text-align: center;">No</th>
                                 <th style="width: 20%; text-align: center;">Laporan</th>
-                                <th style="width: 20%; text-align: center;">Jenis Laporan</th>
                                 <th style="width: 20%; text-align: center;">Tanggal</th>
                                 <th style="width: 20%; text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($laporans as $index => $laporan)
+                            @foreach($LaporanAkhirs as $index => $laporan)
                                 <tr>
-                                    <td class="text-center">{{ $laporans->firstItem() + $index }}</td>
+                                    <td class="text-center">{{ $LaporanAkhirs->firstItem() + $index }}</td>
                                     <td>
                                         <a href="{{ asset('storage/' . $laporan->file_path) }}" target="_blank">
                                         {{ basename($laporan->file_path) }}
                                         </a>
                                     </td>
-                                    <td class="text-center">{{ $laporan->jenis_laporan }}</td>
                                     <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
                                     <td class="text-center">
                                         <!-- Dropdown Action -->
@@ -117,7 +90,7 @@
                                                 <button class="dropdown-item" data-toggle="modal" data-target="#editLaporanModal-{{ $laporan->id }}">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                                <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST" style="display:inline;">
+                                                <form action="{{ route('LaporanAkhir.destroy', $laporan->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="dropdown-item">
@@ -138,16 +111,16 @@
                                     <td colspan="6" class="collapse" id="komentar-{{ $laporan->id }}">
                                         <div class="p-3">
                                             <h5>Komentar</h5>
-                                            @if($laporan->komentars->isEmpty())
+                                            @if($laporan->komentar_akhirs->isEmpty())
                                                 <p>Belum ada komentar.</p>
                                             @else
                                             <ul>
-                                                @foreach($laporan->komentars as $komentar)
+                                                @foreach($laporan->komentar_akhirs as $komentar)
                                                     <li class="comment-item">
                                                         <div>
                                                             <strong>{{ $komentar->user->name }}:</strong> {{ $komentar->content }}
                                                         </div>
-                                                        <form action="{{ route('laporan.komentar.destroy', ['laporan' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
+                                                        <form action="{{ route('LaporanAkhir.komentar.destroy', ['LaporanAkhir' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn-delete-icon">
@@ -158,16 +131,13 @@
                                                 @endforeach
                                             </ul>
                                             @endif
-
-                                            <!-- Form untuk Menambahkan Komentar -->
-                                            <form action="{{ route('laporan.komentar.store', $laporan->id) }}" method="POST">
+                                            <form action="{{ route('LaporanAkhir.komentar.store', $laporan->id) }}" method="POST">
                                                 @csrf
                                                 <div class="form-group">
                                                     <textarea name="content" class="form-control" placeholder="Tulis komentar..." required></textarea>
                                                 </div>
-                                                <button type="submit" class="btn btn-sm btn-success mt-2">Kirim Komentar</button>
+                                                <button type="submit" class="btn btn-sm btn-success mt-2">Kirim</button>
                                             </form>
-                                            <!-- Tombol untuk menutup komentar -->
                                             <button type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
                                                 Close
                                             </button>
@@ -186,7 +156,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('laporan.update', $laporan->id) }}" method="POST" enctype="multipart/form-data">
+                                                <form action="{{ route('LaporanAkhir.update', $laporan->id) }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="mb-3">
@@ -205,7 +175,7 @@
                     </table>
                     <!-- Pagination Links -->
                     <div class="d-flex justify-content-center mt-4">
-                        {{ $laporans->links('pagination::bootstrap-5') }}
+                        {{ $LaporanAkhirs->links('pagination::bootstrap-5') }}
                     </div>
                 @endif
             </div>

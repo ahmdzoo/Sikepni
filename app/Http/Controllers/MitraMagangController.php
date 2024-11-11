@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Mitra;
 use App\Models\User;
 use App\Models\Jurusan;
+use App\Models\Lamaran;
+use App\Models\Laporan;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -15,8 +17,52 @@ class MitraMagangController extends Controller
 {
     public function dashboard()
     {
-        return view('mitra.dashboard'); // Pastikan Anda memiliki view ini
+        $dosenId = auth()->user()->id; // ID dosen yang sedang login
+
+        // Ambil semua ID mitra yang dibimbing oleh dosen ini
+        $mitraIds = Mitra::where('nama_mitra_id', $dosenId)->pluck('id');
+
+        // Hitung jumlah total lamaran masuk yang terkait dengan mitra dari dosen pembimbing ini
+        $jumlahLamaran = Lamaran::whereHas('mitra', function ($query) use ($dosenId) {
+            $query->where('nama_mitra_id', $dosenId);
+        })
+        ->where('status', 'pending')
+        ->count();
+
+        // Hitung jumlah mahasiswa yang diterima oleh mitra terkait dosen pembimbing
+        $jumlahMahasiswaDiterima = Lamaran::where('status', 'diterima')
+            ->whereHas('mitra', function ($query) use ($dosenId) {
+                $query->where('nama_mitra_id', $dosenId);
+            })->count();
+
+
+        // Ambil laporan magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
+        $laporanMagang = Laporan::whereIn('mitra_id', $mitraIds)
+            ->where('jenis_laporan', '!=', 'Akhir')
+            ->with('mahasiswa')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // Ambil laporan akhir magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
+        $laporanAkhir = Laporan::whereIn('mitra_id', $mitraIds)
+            ->where('jenis_laporan', 'Akhir')
+            ->with('mahasiswa')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // Ambil mahasiswa yang lamarannya diterima dan diampu oleh dosen ini
+        $mahasiswaDiterima = Lamaran::whereIn('mitra_id', $mitraIds)
+            ->where('status', 'diterima') // Pastikan statusnya diterima
+            ->with('mahasiswa') // Mengambil data mahasiswa yang melamar
+            ->orderBy('updated_at', 'desc') // Urutkan berdasarkan tanggal lamaran
+            ->take(5) // Batasi 5 data terbaru
+            ->get();
+
+        return view('mitra.dashboard', compact('jumlahLamaran', 'jumlahMahasiswaDiterima', 'laporanMagang', 'laporanAkhir', 'mahasiswaDiterima'));
     }
+
 
 
     public function mitra_lamaran()
