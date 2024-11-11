@@ -13,7 +13,15 @@
   <body>
     <main class="sign-up-mode">
       <div class="box">
-        <!-- Pesan Sukses -->
+        <div class="inner-box">
+          <div class="forms-wrap">
+            <form method="POST" action="{{ route('regLogin') }}" autocomplete="off" class="sign-up-form">
+              @csrf
+              <div class="heading">
+                <h2>Registrasi</h2>
+              </div>
+
+              <!-- Pesan Sukses -->
         @if (session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
@@ -30,14 +38,6 @@
         </ul>
       </div>
     @endif
-        <div class="inner-box">
-          <div class="forms-wrap">
-            <form method="POST" action="{{ route('regLogin') }}" autocomplete="off" class="sign-up-form">
-              @csrf
-              <div class="heading">
-
-                <h2>Registrasi</h2>
-              </div>
 
               <div class="actual-form">
                 <div class="input-wrap">

@@ -38,6 +38,29 @@ main {
   box-sizing: border-box;
 }
 
+.logo {
+  position: absolute;
+  top: -30px; /* Mengatur posisi di atas box */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px; /* Ukuran logo */
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%; /* Membuat bentuk lingkaran */
+  border: 1px solid #fff; /* Border putih agar terlihat menonjol */
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  /* object-fit: contain;
+  border-radius: 50%; */
+}
+
+
 .inner-box {
   position: absolute;
   width: calc(100% - 4.1rem);
@@ -47,11 +70,12 @@ main {
 }
 
 .heading h2 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: #151111;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 35px;
+  margin-top: 5px;
 }
 
 .heading h6 {
@@ -77,31 +101,54 @@ main {
 /* Validasi Login */
 .alert-success {
   position: absolute;
-  top: 25px;
-  left: 35px;
-  right: 35px;
-  background-color: #56cc71;
-  color: white;
-  padding: 10px;
-  border-radius: 0.8rem;
+  top: 35px;
+  left: 1px;
+  right: 1px;
+  background-color: #e9f7ee;
+  color: #3c9c3c;
+  padding: 5px;
+  border-radius: 0.4rem;
   text-align: left;
   z-index: 10;
   box-sizing: border-box;
+  font-size: 0.75rem;
 }
 
 .alert-danger {
   position: absolute;
-  top: 25px;
-  left: 35px;
-  right: 35px;
-  background-color: #FF6F61;
-  color: white;
-  padding: 10px;
-  border-radius: 0.8rem;
+  top: 35px;
+  left: 1px;
+  right: 1px;
+  background-color: #ffece9;
+  color: #D24545;
+  padding: 5px;
+  border-radius: 0.4rem;
   text-align: left;
   z-index: 10;
   box-sizing: border-box;
+  font-size: 0.75rem;
 }
+
+.alert-danger ul {
+  list-style-type: none; 
+  padding-left: 0;      
+  margin: 0;             
+}
+
+.alert-danger li {
+  text-decoration: none; 
+}
+
+.alert-success ul {
+  list-style-type: none; 
+  padding-left: 0;      
+  margin: 0;             
+}
+
+.alert-success li {
+  text-decoration: none; 
+}
+
 
 /* Icons */
 .toggle-icon {
@@ -142,8 +189,8 @@ main {
 label {
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 10%;
+  transform: translateY(-10%);
   font-size: 0.95rem;
   color: #bbb;
   pointer-events: none;
@@ -177,7 +224,7 @@ label {
   background-color: #8371fd;
 }
 
-@media (max-width: 850px) {
+/* @media (max-width: 850px) {
   .box {
     height: auto;
     max-width: 550px;
@@ -217,7 +264,56 @@ label {
   .text-slider {
     width: 100%;
   }
+} */
+
+@media (max-width: 850px) {
+  .box {
+    height: auto; 
+    max-width: 90%; 
+    padding-top: 10px; 
+  }
+
+  .logo {
+    width: 60px; 
+    height: 60px;
+    top: -30px;
+  }
+
+  .inner-box {
+    position: static; 
+    transform: none; 
+    width: 100%; 
+    padding: 1.3rem; 
+  }
+
+  form {
+    max-width: 100%; 
+    padding: 1.3rem; 
+    transition: transform 0.8s ease-in-out, opacity 0.45s linear;
+  }
+
+  .heading {
+    margin: 1rem 0; 
+    text-align: center; 
+  }
+
+  form.sign-up-form {
+    transform: translateX(100%); 
+  }
+
+  main.sign-up-mode form.sign-in-form {
+    transform: translateX(-100%); 
+  }
+
+  main.sign-up-mode form.sign-up-form {
+    transform: translateX(0); 
+  }
+
+  .text-slider {
+    width: 100%; 
+  }
 }
+
 
 @media (max-width: 530px) {
   main {

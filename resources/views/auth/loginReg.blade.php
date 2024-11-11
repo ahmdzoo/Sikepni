@@ -13,7 +13,20 @@
   <body>
     <main class="sign-in-mode">
       <div class="box">
-        <!-- Pesan Sukses -->
+        {{-- Logo --}}
+    <div class="logo">
+      <img src="{{ asset('gambar/polindraa.png') }}" alt="">
+    </div>
+        <div class="inner-box">
+          <div class="forms-wrap">
+            {{-- Forms Login --}}
+            <form method="POST" action="{{ route('loginReg') }}" autocomplete="off" class="sign-in-form">
+              @csrf
+              <div class="heading">
+                <h2>Login</h2>
+              </div>
+
+              <!-- Pesan Sukses -->
         @if (session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
@@ -30,13 +43,6 @@
         </ul>
       </div>
     @endif
-        <div class="inner-box">
-          <div class="forms-wrap">
-            <form method="POST" action="{{ route('loginReg') }}" autocomplete="off" class="sign-in-form">
-              @csrf
-              <div class="heading">
-                <h2>Login</h2>
-              </div>
 
               <div class="actual-form">
                 <div class="input-wrap">
@@ -64,7 +70,7 @@
                 </div>
                 <div class="heading">
                   <h6>Belum memiliki akun?</h6>
-                  <a href="{{ route('regLogin') }}" class="toggle">Registrasi Sekarang</a>
+                  <a href="{{ route('regLogin') }}" class="toggle">Registrasi</a>
                 </div>
 
                 <input type="submit" value="Sign In" class="sign-btn" />
