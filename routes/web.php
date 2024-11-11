@@ -42,6 +42,7 @@ Route::get('/', function () {
 });
 
 #ROUTE LINK NAV
+Route::get('/homepage/landing-page', [homepageController::class, 'show_homepage'])->name('homepage.landing-page');
 Route::get('/moa', [homepageController::class, 'show_moa'])->name('homepage.moa');
 Route::get('/mou', [homepageController::class, 'show_mou'])->name('homepage.mou');
 Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');

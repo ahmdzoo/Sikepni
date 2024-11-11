@@ -63,6 +63,7 @@
                   <label>Email</label>
                 </div>
 
+                <small class="text-muted">Kata sandi harus terdiri dari minimal 6 karakter.</small>
                 <div class="input-wrap">
                   <input
                     type="password"
@@ -91,17 +92,6 @@
                   <i class="fas fa-eye toggle-icon" id="togglePassword_confirmation" onclick="togglePasswordConfirmationVisibility()"></i>
                 </div>
 
-                <div class="input-wrap">
-                  <select name="role" id="role" class="input-field" required>
-                    <option value="" disabled selected hidden></option>
-                    <option value="mahasiswa">Mahasiswa</option>
-                    <option value="dosen_pembimbing">Dosen Pembimbing</option>
-                    <option value="mitra_magang">Mitra Magang</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                  <label>Pilih Role</label>
-                </div>
-
                 <div class="heading">
                   <h6>Sudah Mempunyai akun?</h6>
                 <a href="{{ route('loginReg') }}" class="toggle">Login</a>
@@ -110,7 +100,7 @@
               </div>
               <div>
                 <div class="heading">
-                  <a href="{{ route('homepage.ia') }}" class="toggle">
+                  <a href="{{ route('homepage.landing-page') }}" class="toggle">
                   <i class="fa-solid fa-arrow-left"></i> Kembali
                   </a>
               </div>
