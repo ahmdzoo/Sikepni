@@ -67,7 +67,11 @@
 
                 <input type="submit" value="Sign In" class="sign-btn" />
                 <div>
-
+                  <div class="heading">
+                    <a href="{{ route('homepage.ia') }}" class="toggle">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                    </a>
+                  </div>                  
                 </div>
               </div>
             </form>
