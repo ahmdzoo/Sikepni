@@ -19,7 +19,7 @@ main {
   overflow: hidden;
   padding: 2rem;
   display: flex;
-  background: #e0efff;
+  background: #d9eaee;
   align-items: center;
   justify-content: center;
 }
@@ -52,7 +52,6 @@ main {
   color: #151111;
   text-align: center;
   margin-bottom: 35px;
-  margin-bottom: 5px;
 }
 
 .heading h6 {

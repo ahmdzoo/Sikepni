@@ -63,20 +63,20 @@
                   <label>Email</label>
                 </div>
 
-                <small class="text-muted">Kata sandi harus terdiri dari minimal 6 karakter.</small>
                 <div class="input-wrap">
                   <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    minlength="4"
-                    class="input-field"
-                    autocomplete="off"
-                    required
+                  type="password"
+                  name="password"
+                  id="password"
+                  minlength="4"
+                  class="input-field"
+                  autocomplete="off"
+                  required
                   />
                   <label>Kata Sandi</label>
                   <i class="fas fa-eye toggle-icon" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                 </div>
+                <small class="text-muted">*Kata sandi harus terdiri dari minimal 6 karakter.</small>
 
                 <div class="input-wrap">
                   <input

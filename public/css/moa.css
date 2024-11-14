@@ -44,9 +44,9 @@
 
 .main {
   flex: 1;
-  padding-top: 80px; /* Tinggi header */
-  padding-bottom: 60px; /* Beri ruang untuk footer */
-  background-color: #e0efff;
+  padding-top: 80px; 
+  padding-bottom: 60px; 
+  background-color: #d9eaee;
 }
 
 
