@@ -2,6 +2,11 @@
 @section('title', 'Data Mitra | SIKEPNI')
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    
+</style>
+
 @endsection
 
 @section('content')
@@ -86,7 +91,7 @@
 </div>
 
 <!-- Modal Add Mitra -->
-<div class="modal fade" id="addMitraModal" tabindex="-1" role="dialog" aria-labelledby="addMitraModalLabel" aria-hidden="true">
+<div class="modal fade" id="addMitraModal" role="dialog" aria-labelledby="addMitraModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -99,9 +104,9 @@
           @csrf
           <div class="modal-body">
             <div class="form-group">
-              <label for="nama_mitra_id">Nama Mitra</label>
-              <select class="form-control" id="nama_mitra_id" name="nama_mitra_id" required>
-                <option value="" disabled selected>Pilih Mitra</option>
+                <label for="nama_mitra_id">Nama Mitra</label>
+                <select class="form-control select2" id="nama_mitra_id" name="nama_mitra_id" required>
+                  <option value="" disabled selected>Pilih Mitra</option>
                 @foreach($mitrasMagang as $user)
                   <option value="{{ $user->id }}">{{ $user->name }}</option>
                 @endforeach
@@ -122,7 +127,7 @@
             <div class="form-group">
               <label for="jurusan_id">Jurusan</label>
               <div class="input-group">
-                <select class="form-control" id="jurusan_id" name="jurusan_id" required>
+                <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
                   <option value="" disabled selected>Pilih Jurusan</option>
                   @foreach($jurusans as $jurusan)
                     <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
@@ -132,7 +137,7 @@
             </div>
             <div class="form-group">
               <label for="dosen_pembimbing_id">Dosen Pendamping</label>
-              <select class="form-control" id="dosen_pembimbing_id" name="dosen_pembimbing_id" required>
+              <select class="form-control select2" id="dosen_pembimbing_id" name="dosen_pembimbing_id" required>
                 <option value="" disabled selected>Pilih Dosen Pendamping</option>
                 @foreach($dosen_pembimbing as $dosen)
                   <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
@@ -177,7 +182,7 @@
   </div>
 
     <!-- Modal Edit Mitra -->
-<div class="modal fade" id="editMitraModal" tabindex="-1" role="dialog" aria-labelledby="editMitraModalLabel" aria-hidden="true">
+<div class="modal fade" id="editMitraModal"  role="dialog" aria-labelledby="editMitraModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -193,7 +198,7 @@
                     <input type="hidden" id="editMitraId" name="id"> <!-- Menyimpan ID Mitra yang akan diedit -->
                     <div class="form-group">
                         <label for="edit_nama_mitra_id">Nama Mitra</label>
-                        <select class="form-control" id="edit_nama_mitra_id" name="nama_mitra_id" required>
+                        <select class="form-control select2" id="edit_nama_mitra_id" name="nama_mitra_id" required>
                             <option value="" disabled>Pilih Mitra</option>
                             @foreach($mitrasMagang as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -215,7 +220,7 @@
                     <div class="form-group">
                         <label for="edit_jurusan_id">Jurusan</label>
                         <div class="input-group">
-                            <select class="form-control" id="edit_jurusan_id" name="jurusan_id" required>
+                            <select class="form-control select2" id="edit_jurusan_id" name="jurusan_id" required>
                                 <option value="" disabled>Pilih Jurusan</option>
                                 @foreach($jurusans as $jurusan)
                                     <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
@@ -225,7 +230,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit_dosen_pembimbing_id">Dosen Pendamping</label>
-                        <select class="form-control" id="edit_dosen_pembimbing_id" name="dosen_pembimbing_id" required>
+                        <select class="form-control select2" id="edit_dosen_pembimbing_id" name="dosen_pembimbing_id" required>
                             <option value="" disabled>Pilih Dosen Pendamping</option>
                             @foreach($dosen_pembimbing as $dosen)
                                 <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
@@ -280,8 +285,10 @@
 @endpush
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.7/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.min.js"></script>
+
 
 <script>
     // Setup AJAX dengan CSRF token
@@ -295,6 +302,21 @@
         edit: "{{ url('/admin/mitra') }}/", // Base URL untuk edit
         destroy: "{{ url('/admin/mitra') }}/", // Base URL untuk delete
     };
+
+    $(document).ready(function() {
+        $('#addMitraModal').on('shown.bs.modal', function () {
+            $('.select2').select2({
+            });
+        });
+    });
+
+    $(document).ready(function() {
+        $('#editMitraModal').on('shown.bs.modal', function () {
+            $('.select2').select2({
+            });
+        });
+    });
+
 
     $(document).ready(function () {
          var table = loadData();
@@ -313,6 +335,7 @@
               // Berikut adalah contoh reload halaman
               location.reload();
           });
+
 
      });
 

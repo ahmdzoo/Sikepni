@@ -47,10 +47,6 @@ Route::get('/moa', [homepageController::class, 'show_moa'])->name('homepage.moa'
 Route::get('/mou', [homepageController::class, 'show_mou'])->name('homepage.mou');
 Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 
-#ROUTE REGISTRASI
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
-Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
 
 #ROUTE LOGIN BARU
 Route::get('/loginReg', [LoginRegController::class, 'showLogin'])->name('loginReg');
@@ -60,7 +56,7 @@ Route::post('/logout', [LoginRegController::class, 'logout'])->name('logout');
 #ROUTE REGISTRASI BARU
 Route::get('/regLogin', [RegLoginController::class, 'showRegistration'])->name('regLogin');
 Route::post('/regLogin', [RegLoginController::class, 'regLogin']);
-Route::post('/password/update', [RegLoginController::class, 'updatePassword'])->name('password.update');
+Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
 
 
 // Rute untuk Mahasiswa

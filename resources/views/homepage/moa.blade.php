@@ -72,12 +72,12 @@
     <script>
     $(document).ready(function() {
     var table = $('#mitra-table-body').DataTable({
-        processing: false,
+        processing: true,
         pagination: true,
         responsive: true,
         serverSide: true,
         searching: true,
-        ordering: true,
+        ordering: false,
         ajax: {
             url: '{{ route("mitra.data") }}',
             data: function(d) {

@@ -153,3 +153,10 @@ font-size: 0.8rem; /* Ukuran ikon lebih kecil */
 }
 
 
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  padding-left: 0;
+  height: auto;
+  margin-top: -8px;
+
+  
+}

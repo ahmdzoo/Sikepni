@@ -8,7 +8,7 @@
             <div class="row mb-4">
                 <div class="col-sm-12 text-left">
                     <h1 class="m-4" style="font-size: 40px; color: #fff; font-weight: bold; text-shadow: 1px 1px 2px #333;">
-                        Laporan Magang
+                        Laporan Akhir Magang
                     </h1>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <!-- Daftar Laporan Section -->
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h2 class="card-title mb-0"> Daftar Laporan Magang</h2>
+                <h2 class="card-title mb-0"> Daftar Laporan  Akhir Magang</h2>
             </div>
 
             <div class="card-body">
