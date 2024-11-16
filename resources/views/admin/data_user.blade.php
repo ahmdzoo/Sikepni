@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
 @endsection
 @section('content')
-<div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #fff ); min-height: 100vh;">
+<div class="content-wrapper" style="min-height: 100vh;">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">

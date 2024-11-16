@@ -47,6 +47,8 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #b7dae2;
+
 }
 
 
@@ -313,7 +315,6 @@ a {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #d9eaee;
   text-align: center;
   /* padding: 20px; */
 

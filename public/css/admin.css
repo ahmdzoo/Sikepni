@@ -1,8 +1,9 @@
-
-
+.content-wrapper{
+  background-color: #b7dae2 !important;
+}
 /* Make navbar blend with the background */
 .main-header {
-  background-color: #80b8c7 !important; /* Ensure the background matches the content */
+  background-color: #b7dae2 !important; /* Ensure the background matches the content */
   border-bottom: none !important;
   box-shadow: none !important;
 }

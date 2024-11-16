@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #fff ); min-height: 100vh;">
+<div class="content-wrapper" style="min-height: 100vh;">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">

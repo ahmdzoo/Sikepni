@@ -1,4 +1,4 @@
-<footer class="footer-custom mt-5" style="background: #80b8c7 ">
+<footer class="footer-custom" style="background: #80b8c7 ">
     <p class="text-center">&copy; 2024 Politeknik Negeri Indramayu. All rights reserved.</p>
 </footer>
 
