@@ -47,13 +47,15 @@
               <div class="actual-form">
                 <div class="input-wrap">
                   <input
-                    type="text"
-                    name="email"
-                    minlength="4"
-                    class="input-field"
-                    autocomplete="off"
-                    required
+                      type="text"
+                      name="email"
+                      minlength="4"
+                      class="input-field"
+                      autocomplete="off"
+                      required
+                      oninput="removeSpecialChars(this)"
                   />
+
                   <label>Email</label>
                 </div>
 
@@ -65,6 +67,8 @@
                     class="input-field"
                     autocomplete="off"
                     required
+                    oninput="removeSpecialChars(this)"
+
                   />
                   <label>Password</label>
                 </div>

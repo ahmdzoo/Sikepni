@@ -41,6 +41,11 @@ function togglePasswordConfirmationVisibility() {
   }
 }
 
+function removeSpecialChars(input) {
+  input.value = input.value.replace(/[<>{}]/g, ''); // Hapus karakter <, >, {, }
+}
+
+
 // const inputs = document.querySelectorAll(".input-field");
 // const toggle_btn = document.querySelectorAll(".toggle");
 // const main = document.querySelector("main");

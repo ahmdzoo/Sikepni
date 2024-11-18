@@ -144,7 +144,7 @@ main {
 .input-wrap {
   position: relative;
   height: 37px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .input-field {
@@ -265,4 +265,12 @@ label {
   form {
     padding: 1rem 2rem 1.5rem;
   }
+}
+
+.password-hint {
+  display: block;
+  font-size: 10px; /* Ukuran teks sangat kecil */
+  color: #bbb; /* Warna teks abu-abu */
+  margin-top: -5px; /* Jarak sangat dekat ke garis bawah input */
+  margin-bottom: 10px; /* Memberikan ruang kecil sebelum elemen berikutnya */
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginRegController extends Controller
 {
@@ -53,6 +54,18 @@ class LoginRegController extends Controller
             'email' => 'Email atau password salah.',
         ])->withInput($request->only('email'));
     }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:6', 'confirmed', 'not_regex:/[<>{}]/'], // Mencegah simbol tertentu
+        ], [
+            'name.not_regex' => 'Nama tidak boleh mengandung karakter khusus seperti <, >, {, atau }.',
+            'password.not_regex' => 'Kata sandi tidak boleh mengandung karakter khusus seperti <, >, {, atau }.',
+        ]);
+    }
+
 
     // Logout
     public function logout(Request $request)

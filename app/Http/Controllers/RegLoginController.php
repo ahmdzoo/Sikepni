@@ -38,11 +38,15 @@ class RegLoginController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'      => ['required', 'string', 'max:255'],
+            'name'      => ['required', 'string', 'max:255', 'not_regex:/[<>{}]/'], // Mencegah simbol tertentu
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'  => ['required', 'string', 'min:6', 'confirmed'],
+            'password'  => ['required', 'string', 'min:6', 'confirmed', 'not_regex:/[<>{}]/'], // Mencegah simbol tertentu
+        ], [
+            'name.not_regex' => 'Nama tidak boleh mengandung karakter khusus seperti <, >, {, atau }.',
+            'password.not_regex' => 'Kata sandi tidak boleh mengandung karakter khusus seperti <, >, {, atau }.',
         ]);
     }
+
 
     // Create Pengguna baru
     protected function create(array $data)
