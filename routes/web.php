@@ -49,13 +49,13 @@ Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 
 
 #ROUTE LOGIN BARU
-Route::get('/loginReg', [LoginRegController::class, 'showLogin'])->name('loginReg');
-Route::post('/loginReg', [LoginRegController::class, 'loginReg']);
+Route::get('/login', [LoginRegController::class, 'showLogin'])->name('loginReg');
+Route::post('/login', [LoginRegController::class, 'loginReg']);
 Route::post('/logout', [LoginRegController::class, 'logout'])->name('logout');
 
 #ROUTE REGISTRASI BARU
-Route::get('/regLogin', [RegLoginController::class, 'showRegistration'])->name('regLogin');
-Route::post('/regLogin', [RegLoginController::class, 'regLogin']);
+Route::get('/register', [RegLoginController::class, 'showRegistration'])->name('regLogin');
+Route::post('/register', [RegLoginController::class, 'regLogin']);
 Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
 
 
