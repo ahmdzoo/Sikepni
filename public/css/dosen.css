@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+body{
+  background-color: #b7dae2 !important;
+  font-family: 'Poppins', sans-serif;
+
+}
+
 .content-wrapper{
   background-color: #b7dae2 !important;
 }
@@ -70,7 +79,16 @@
   }
   
   .small-box .inner p {
+    color: #333;
     font-size: 18px;
+  }
+
+  .small-box .inner a {
+    color: #333;
+  }
+
+  .small-box .inner a:hover {
+    color: #333 !important;
   }
   
   .small-box .icon {
@@ -192,6 +210,7 @@
 }
 
 .no-data-container {
+  font-size: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,12 +220,12 @@
 }
 
 .no-data-image {
-  width: 150px;
+  width: 120px;
   height: auto;
 }
 
 .no-data-text {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   color: #666;
   margin-top: 20px;
   font-weight: bold;
@@ -308,3 +327,41 @@
       width: 100% !important;
   }
 }
+
+/* Media query untuk ukuran layar yang lebih kecil */
+@media (max-width: 768px) {
+  /* Mengurangi ukuran font pada tabel */
+  .table-responsive table th, 
+  .table-responsive table td {
+      font-size: 12px;
+      padding: 8px;
+  }
+
+  /* Mengatur ulang padding pada card dan judul */
+  .card-header h5 {
+      font-size: 16px;
+  }
+  
+  .card-body {
+      padding: 10px;
+  }
+  
+  /* Mengatur ulang margin pada row */
+  .row.m-4 {
+      margin: 0 5px;
+  }
+
+  /* Membuat tombol lebih kecil */
+  .btn-sm {
+      font-size: 10px;
+      padding: 5px 8px;
+  }
+
+  /* Mengatur lebar card pada layar kecil */
+  .col-sm-12 {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
+
+

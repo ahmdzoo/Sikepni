@@ -11,7 +11,7 @@
         }
 
         /* Mengatur ulang padding pada card dan judul */
-        .card-header h4 {
+        .card-header h5 {
             font-size: 16px;
         }
         
@@ -38,7 +38,7 @@
     }
 </style>
 
-<div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #fff ); min-height: 100vh;">
+<div class="content-wrapper" style="min-height: 100vh;">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -54,19 +54,21 @@
             <div class="row m-4">
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
                     <div class="small-box">
+                        <a href="{{ route('mitra.mahasiswa_diterima') }}"> 
                         <div class="inner">
                             <h3>{{ $jumlahMahasiswaDiterima }}</h3>
                             <p>Mahasiswa Magang</p>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-user-tie"></i>
+                            <i class="fas fa-user-graduate"></i>
                         </div>
-                        <a href="{{ route('mitra.mahasiswa_diterima') }}" class="small-box-footer">Lihat<i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
                     <div class="small-box">
+                        <a href="{{ route('mitra_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $jumlahLamaran }}</h3>
                             <p>Lamaran Masuk</p>
@@ -74,7 +76,7 @@
                         <div class="icon">
                             <i class="fas fa-file-alt"></i>
                         </div>
-                        <a href="{{ route('mitra_lamaran') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -83,7 +85,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-header">
-                            <h4>Laporan Magang Terbaru</h4>
+                            <h5>Laporan Magang Terbaru</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -97,14 +99,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($laporanMagang as $index => $laporan)
+                                        @forelse($laporanMagang as $index => $laporan)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
                                                 <td><a href="{{ route('mitra.laporan', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
-                                              </tr>
-                                        @endforeach
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">Belum Ada Laporan Magang</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -115,7 +121,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-header">
-                            <h4>Laporan Akhir Terbaru</h4>
+                            <h5>Laporan Akhir Terbaru</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -129,14 +135,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($laporanAkhir as $index => $laporan)
+                                        @forelse($laporanAkhir as $index => $laporan)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
                                                 <td><a href="{{ route('mitra.LaporanAkhir', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">Belum Ada Laporan Akhir Magang</td>
                                             </tr>
-                                        @endforeach
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -147,7 +156,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-header">
-                            <h4>Mahasiswa Magang</h4>
+                            <h5>Mahasiswa Magang</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -159,12 +168,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($mahasiswaDiterima as $index => $lamaran)
+                                        @forelse($mahasiswaDiterima as $index => $lamaran)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $lamaran->mahasiswa->name }}</td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">Belum Ada Mahasiswa Magang</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 <a href="{{ route('mitra.mahasiswa_diterima') }}" class="small-box-footer">Lihat Semua</a>

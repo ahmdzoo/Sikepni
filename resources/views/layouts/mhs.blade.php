@@ -137,7 +137,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <a href="{{ route('mhs.dashboard') }}" class="brand-link">
-      <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
+      <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:70%; height: 10%;" />
     </a>
   
     <div class="sidebar mt-3 pb-3 mb-3 d-flex">

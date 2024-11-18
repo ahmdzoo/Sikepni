@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Program Magang</h1>
+                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Program Magang</h1>
                 </div>
             </div>
         </div>
@@ -96,10 +96,6 @@
                   <div class="form-group">
                       <label for="cv">Upload CV</label>
                       <input type="file" class="form-control" id="cv" name="cv" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="catatan">Catatan (Opsional)</label>
-                      <textarea class="form-control" id="catatan" name="catatan"></textarea>
                   </div>
               </form>
           </div>

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-4">
                 <div class="col-sm-12 text-left">
-                    <h1 class="m-4" style="font-size: 40px; color: #fff; font-weight: bold; text-shadow: 1px 1px 2px #333;">
+                    <h1 class="m-4" style="font-size: 30px; color: #fff; font-weight: bold; text-shadow: 1px 1px 2px #333;">
                         Laporan Magang
                     </h1>
                 </div>

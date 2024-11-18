@@ -143,7 +143,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
       <a href="{{ route('mitra.dashboard') }}" class="brand-link">
-        <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
+        <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:70%; height: 10%;" />
       </a>
 
       <div class="sidebar mt-3 pb-3 mb-3 d-flex">
@@ -158,7 +158,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-handshake"></i>
+                <i class="nav-icon fas fa-file-alt"></i>
                 <p>Lamaran Magang</p>
               </a>
             </li>

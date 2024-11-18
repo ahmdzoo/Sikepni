@@ -32,7 +32,7 @@
                                 Mitra Magang
                             </p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-handshake"></i>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                                 Dosen Pembimbing
                             </p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-user-tie"></i>
                         </div>
                     </div>
@@ -65,55 +65,59 @@
                 <!-- Total Lamaran Diajukan -->
                 <div class="col">
                     <div class="small-box">
+                        <a href="{{ route('mhs_lowongan') }}">
                         <div class="inner">
                             <h3>{{ $totalMitra }}</h3>
                             <p>Lowongan Magang</p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-briefcase"></i>
                         </div>
-                        <a href="{{ route('mhs_lowongan') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Total Lamaran Pending -->
                 <div class="col">
                     <div class="small-box">
+                        <a href="{{ route('mahasiswa.status_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $totalLamaranPending }}</h3>
                             <p>Pengajuan Lamaran</p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-paper-plane"></i>
                         </div>
-                        <a href="{{ route('mahasiswa.status_lamaran') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Total Lamaran Diterima -->
                 <div class="col">
                     <div class="small-box">
+                        <a href="{{ route('mahasiswa.status_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $totalLamaranDiterima }}</h3>
                             <p>Total Lamaran Diterima</p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <a href="{{ route('mahasiswa.status_lamaran') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
                 <!-- Total Laporan Magang -->
                 <div class="col">
                     <div class="small-box">
+                        <a href="{{ route('mahasiswa.aktifitas') }}">
                         <div class="inner">
                             <h3>{{ $totalLaporan }}</h3>
                             <p>Total Laporan Magang</p>
                         </div>
-                        <div class="icon" style="opacity: 0.5;">
+                        <div class="icon">
                             <i class="fas fa-file-alt"></i>
                         </div>
-                        <a href="{{ route('mahasiswa.aktifitas') }}" class="small-box-footer">Lihat Laporan <i class="fas fa-arrow-circle-right"></i></a>
+                        </a>
                     </div>
                 </div>
             </div>

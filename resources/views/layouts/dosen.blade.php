@@ -130,7 +130,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <a href="{{ route('dashboard') }}" class="brand-link">
-      <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:100%; height: 40%;" />
+      <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:70%; height: 10%;" />
     </a>
   
     <div class="sidebar mt-3 pb-3 mb-3 d-flex">
@@ -144,15 +144,15 @@
           </li>   
           <li class="nav-item">
             <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/dosen_lamaran') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-handshake"></i>
+              <i class="nav-icon fas fa-file-alt"></i>
               <p>Lamaran Magang</p>
             </a>
           </li>
           
           <li class="nav-item">
             <a href="{{ route('dosen.magang_mhs') }}" class="nav-link {{ request()->is('dosen/magang_mhs') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
-                  <p>Laporan Magang</p>
+              <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>Mahasiswa Magang</p>
             </a>
           </li>   
         </ul>

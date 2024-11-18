@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Aktivitas Magang</h1>
+                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Laporan Magang</h1>
                 </div>
             </div>
         </div>
@@ -15,9 +15,10 @@
 
     <div class="container-fluid">
         @if($laporans->isEmpty())
-            <div class="alert alert-warning">
-                Belum ada Laporan yang diupload.
-            </div>
+        <div class="no-data-container">
+            <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
+            <p class="no-data-text">Belum Ada Laporan diupload.</p>
+        </div>
         @else
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">

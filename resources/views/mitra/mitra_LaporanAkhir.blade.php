@@ -2,12 +2,12 @@
 @section('title', 'Laporan Akhir Magang | SIKEPNI')
 
 @section('content')
-<div class="content-wrapper" style="background: linear-gradient(to bottom, #80b8c7, #ffffff); min-height: 100vh;">
+<div class="content-wrapper" style="min-height: 100vh;">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Aktivitas Magang</h1>
+                    <h1 class="m-4" style="font-size: 50px; color: white; font-weight: bold;">Laporan Akhir Magang</h1>
                 </div>
             </div>
         </div>
@@ -15,8 +15,9 @@
 
     <div class="container-fluid">
         @if($LaporanAkhirs->isEmpty())
-            <div class="alert alert-warning">
-                Belum ada Laporan yang diupload.
+            <div class="no-data-container">
+                <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
+                <p class="no-data-text">Belum Ada Laporan Akhir yang diupload.</p>
             </div>
         @else
             <div class="card mb-4">

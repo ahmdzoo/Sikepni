@@ -19,8 +19,9 @@
             </div>
 
             @if($lamarans->isEmpty())
-                <div class="alert alert-warning">
-                    Tidak ada lamaran untuk mitra ini.
+                <div class="no-data-container">
+                    <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
+                    <p class="no-data-text">Belum Ada Lamaran Magang.</p>
                 </div>
             @else
                 <table class="table table-bordered" id="lamaranTable">
