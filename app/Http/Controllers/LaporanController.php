@@ -247,6 +247,59 @@ class LaporanController extends Controller
     }
 
 
+    public function admin_mhs($mitra_id)
+    {
+        // Ambil data mitra berdasarkan mitra_id
+        $mitra = Mitra::findOrFail($mitra_id);
+
+        // Ambil data mahasiswa yang diterima oleh mitra ini
+        $mahasiswaDiterima = Lamaran::where('mitra_id', $mitra_id)
+                                    ->where('status', 'diterima')
+                                    ->with('mahasiswa') // Pastikan ada relasi mahasiswa di model Lamaran
+                                    ->get();
+
+        // Kembalikan tampilan dengan data mitra dan mahasiswa
+        return view('admin.admin_mhs', compact('mitra', 'mahasiswaDiterima'));
+    }
+
+    public function adminLaporan(Request $request, $mahasiswa_id)
+    {
+        // Query dasar untuk laporan magang mahasiswa
+        $query = Laporan::with(['mahasiswa', 'mitra']);
+    
+        // Jika $mahasiswa_id diberikan, tambahkan filter untuk mahasiswa tertentu
+        if ($mahasiswa_id) {
+            $query->where('user_id', $mahasiswa_id);
+        }
+    
+        // Tambahkan filter jenis laporan jika tersedia
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+    
+        // Paginasi hasil dengan 10 laporan per halaman
+        $laporans = $query->paginate(10);
+    
+        return view('admin.admin_laporan', compact('laporans', 'mahasiswa_id'));
+    }
+
+    public function admin_magang()
+{
+    // Ambil semua mitra yang memiliki mahasiswa dengan status 'diterima'
+    $mitras = Mitra::whereHas('lamaran', function ($query) {
+        $query->where('status', 'diterima');
+    })->with(['lamaran' => function ($query) {
+        $query->where('status', 'diterima')->with('mahasiswa');
+    }])->get();
+
+    return view('admin.admin_magang', compact('mitras'));
+}
+
+    
+
+
+
+
 
 
 }

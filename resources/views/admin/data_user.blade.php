@@ -162,6 +162,19 @@
                       <option value="admin">Admin</option>
                   </select>
               </div>
+              <div class="form-group">
+                <label for="editPassword">Password (Optional)</label>
+                <div class="input-group">
+                    <input type="password" class="form-control form-control-sm" id="editPassword" name="password">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('editPassword', 'editTogglePasswordIcon')">
+                            <i id="editTogglePasswordIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <small class="text-muted">Isi jika ingin mengganti password. Kosongkan jika tidak.</small>
+            </div>
+            
           </div>
           
           <div class="modal-footer">
@@ -292,6 +305,7 @@ function editUser(id) {
         $('#editName').val(user.name);
         $('#editEmail').val(user.email);
         $('#editRole').val(user.role);
+        $('#editPassword').val(''); // Kosongkan password saat modal dibuka
         $('#editUserForm').attr('action', '/admin/users/' + user.id);
     });
 }

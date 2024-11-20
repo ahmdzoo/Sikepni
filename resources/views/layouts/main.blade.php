@@ -164,7 +164,13 @@
               <i class="nav-icon fas fa-cogs"></i>
               <p>Data Jurusan</p>
             </a>
-          </li>         
+          </li> 
+          <li class="nav-item">
+            <a href="{{ route('admin.admin_magang') }}" class="nav-link {{ request()->is('admin/admin_magang') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>Laporan Magang</p>
+            </a>
+          </li>          
         </ul>
       </nav>
     </div>

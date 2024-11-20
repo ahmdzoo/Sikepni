@@ -1,4 +1,4 @@
-@extends('layouts.mitra')
+@extends('layouts.main')
 @section('title', 'Laporan Magang | SIKEPNI')
 
 @section('content')

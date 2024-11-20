@@ -129,16 +129,30 @@ class AdminController extends Controller
 
     public function updateUser(Request $request, $id)
     {
+        $user = User::find($id);
+
+        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string',
+            'password' => 'nullable|min:6', // Password optional
         ]);
-
-        $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request->name,
-        ]);
+    
+        // Update data
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+    
+        // Perbarui password jika diisi
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+    
+        $user->save();
 
         return redirect()->route('data_user')->with('success', 'User updated successfully');
+
     }
 
     public function deleteuser($id)

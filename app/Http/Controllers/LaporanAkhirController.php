@@ -226,6 +226,23 @@ class LaporanAkhirController extends Controller
         return view('dosen.magang_mhs', compact('mahasiswaDiterima'));
     }
 
+    public function adminLaporanAkhir(Request $request, $mahasiswa_id)
+{
+    // Query dasar untuk laporan magang mahasiswa
+    $query = LaporanAkhir::with(['mahasiswa', 'mitra']);
+    
+    // Jika $mahasiswa_id diberikan, tambahkan filter untuk mahasiswa tertentu
+    if ($mahasiswa_id) {
+        $query->where('user_id', $mahasiswa_id);
+    }
+
+
+    // Paginasi hasil dengan 10 laporan per halaman
+    $LaporanAkhirs = $query->paginate(10);
+
+    return view('admin.admin_LaporanAkhir', compact('LaporanAkhirs', 'mahasiswa_id'));
+}
+
 
 
 

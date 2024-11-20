@@ -43,7 +43,7 @@ Route::get('/', function () {
 
 #ROUTE LINK NAV
 Route::get('/homepage/landing-page', [homepageController::class, 'show_homepage'])->name('homepage.landing-page');
-Route::get('/moa', [homepageController::class, 'show_moa'])->name('homepage.moa');
+Route::get('/mitra-kerjasama', [homepageController::class, 'show_moa'])->name('homepage.moa');
 Route::get('/mou', [homepageController::class, 'show_mou'])->name('homepage.mou');
 Route::get('/ia', [homepageController::class, 'show_ia'])->name('homepage.ia');
 
@@ -145,6 +145,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/jurusan/{jurusan}', [JurusanController::class, 'editJurusan'])->name('jurusan.edit');
     Route::put('/admin/jurusan/{jurusan}', [JurusanController::class, 'updateJurusan'])->name('jurusan.update');
     Route::delete('/admin/jurusan/{jurusan}', [JurusanController::class, 'deleteJurusan'])->name('jurusan.destroy');
+
+    Route::get('/admin/admin_mhs/{mitra_id}', [LaporanController::class, 'admin_mhs'])->name('admin_mhs');
+    Route::get('/admin/admin_laporan/{mahasiswa_id}', [LaporanController::class, 'adminLaporan'])->name('admin.laporan');
+    Route::get('/admin/admin_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'adminLaporanAkhir'])->name('admin.LaporanAkhir');
+    Route::get('/admin/admin_magang', [LaporanController::class, 'admin_magang'])->name('admin.admin_magang');
+
+
 
 });
 
