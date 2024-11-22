@@ -57,6 +57,8 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Jurusan</th>
+                                <th>NIM</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -75,60 +77,72 @@
 
 <!-- Modal Add User -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="{{ route('store_user') }}" method="POST">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control form-control-sm" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="role">Role</label>
-                <select name="role" id="role" class="form-control form-control-sm" required>
-                    <option value="mahasiswa">Mahasiswa</option>
-                    <option value="dosen_pembimbing">Dosen Pembimbing</option>
-                    <option value="mitra_magang">Mitra Magang</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-group">
-                    <input type="password" class="form-control form-control-sm" id="password" name="password" required>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
-                            <i id="togglePasswordIcon" class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                <small class="text-muted">Kata sandi harus memiliki minimal 6 karakter.</small>
-
-            </div>
-            
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary btn-sm">Add User</button>
-        </div>
-      </form>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{{ route('store_user') }}" method="POST">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="modal-body">
+              <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control form-control-sm" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control form-control-sm" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                  <label for="role">Role</label>
+                  <select name="role" id="role" class="form-control form-control-sm" required>
+                      <option value="mahasiswa">Mahasiswa</option>
+                      <option value="dosen_pembimbing">Dosen Pembimbing</option>
+                      <option value="mitra_magang">Mitra Magang</option>
+                      <option value="admin">Admin</option>
+                  </select>
+              </div>
+              
+                <div class="form-group">
+                      <label for="jurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
+                      <input type="text" class="form-control form-control-sm" id="jurusan" name="jurusan">
+                  </div>
+                  <div class="form-group">
+                      <label for="nim">NIM <small>(Hanya untuk Mahasiswa)</small></label>
+                      <input type="text" class="form-control form-control-sm" id="nim" name="nim">
+                  </div>
+              
+  
+              <div class="form-group">
+                  <label for="password">Password</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control form-control-sm" id="password" name="password" required>
+                      <div class="input-group-append">
+                          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
+                              <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <small class="text-muted">Kata sandi harus memiliki minimal 6 karakter.</small>
+              </div>
+              
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary btn-sm">Add User</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+  
 <!-- End Modal Add User -->
+<!-- Modal Edit User -->
 <!-- Modal Edit User -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -144,7 +158,7 @@
           </div>
           
           <div class="modal-body">
-              <input type="hidden" id="editUserId" name="id">
+              <input type="hidden" id="editUserId" name="user_id">
               <div class="form-group">
                   <label for="editName">Name</label>
                   <input type="text" class="form-control form-control-sm" id="editName" name="name" required>
@@ -162,29 +176,41 @@
                       <option value="admin">Admin</option>
                   </select>
               </div>
+              
+                  <div class="form-group">
+                      <label for="editJurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
+                      <input type="text" class="form-control form-control-sm" id="editJurusan" name="jurusan">
+                  </div>
+                  <div class="form-group">
+                      <label for="editNim">NIM <small>(Hanya untuk Mahasiswa)</small></label>
+                      <input type="text" class="form-control form-control-sm" id="editNim" name="nim">
+                  </div>
+              
+  
               <div class="form-group">
-                <label for="editPassword">Password (Optional)</label>
-                <div class="input-group">
-                    <input type="password" class="form-control form-control-sm" id="editPassword" name="password">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('editPassword', 'editTogglePasswordIcon')">
-                            <i id="editTogglePasswordIcon" class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                <small class="text-muted">Isi jika ingin mengganti password. Kosongkan jika tidak.</small>
-            </div>
-            
+                  <label for="editPassword">Password</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control form-control-sm" id="editPassword" name="password">
+                      <div class="input-group-append">
+                          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('editPassword', 'editTogglePasswordIcon')">
+                              <i id="editTogglePasswordIcon" class="fas fa-eye"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <small class="text-muted">Biarkan kosong jika tidak ingin mengganti password.</small>
+              </div>
+              
           </div>
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+            <button type="submit" class="btn btn-primary btn-sm">Update User</button>
           </div>
         </form>
       </div>
     </div>
   </div>
+  
   <!-- End Modal Edit User -->
   <!-- Modal Delete User -->
 <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
@@ -284,6 +310,14 @@
                 name: 'role',
             },
             {
+                data: 'jurusan',
+                name: 'jurusan',
+            },
+            {
+                data: 'nim',
+                name: 'nim',
+            },
+            {
                 data: 'action',
                 name: 'action',
                 orderable: false,
@@ -305,6 +339,8 @@ function editUser(id) {
         $('#editName').val(user.name);
         $('#editEmail').val(user.email);
         $('#editRole').val(user.role);
+        $('#editJurusan').val(user.jurusan);
+        $('#editNim').val(user.nim);
         $('#editPassword').val(''); // Kosongkan password saat modal dibuka
         $('#editUserForm').attr('action', '/admin/users/' + user.id);
     });
@@ -330,6 +366,7 @@ function togglePasswordVisibility(inputId, iconId) {
         }
     }
 
+ 
 
 
 </script>

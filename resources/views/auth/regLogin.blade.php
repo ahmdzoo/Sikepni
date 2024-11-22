@@ -44,7 +44,6 @@
                   <input
                     type="text"
                     name="name"
-                    minlength="4"
                     class="input-field"
                     autocomplete="off"
                     required
@@ -66,6 +65,34 @@
                   />
                   <label>Email</label>
                 </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="jurusan"
+                    name="jurusan"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                    oninput="removeSpecialChars(this)"
+
+                  />
+                  <label>Jurusan</label>
+                </div>
+                
+                <div class="input-wrap">
+                  <input
+                    type="nim"
+                    name="nim"
+                    class="input-field"
+                    autocomplete="off"
+                    required
+                    oninput="removeSpecialChars(this)"
+
+                  />
+                  <label>NIM</label>
+                </div>
+                
+                
 
                 <div class="input-wrap">
                   <input
@@ -100,6 +127,8 @@
                   <i class="fas fa-eye toggle-icon" id="togglePassword_confirmation" onclick="togglePasswordConfirmationVisibility()"></i>
                 </div>
 
+
+
                 <div class="heading">
                   <h6>Sudah Mempunyai akun?</h6>
                 <a href="{{ route('loginReg') }}" class="toggle">Login</a>
@@ -120,5 +149,8 @@
     </main>
     <!-- Javascript file -->
     <script src="{{ asset('js/login_reg.js') }}"></script>
+
+   
+    
   </body>
 </html>

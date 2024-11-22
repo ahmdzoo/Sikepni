@@ -11,6 +11,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'jurusan', // Tambahkan jurusan
+        'nim', // Tambahkan nim
     ];
 
     // Fungsi untuk memeriksa apakah pengguna adalah Mahasiswa

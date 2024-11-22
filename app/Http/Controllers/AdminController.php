@@ -36,49 +36,49 @@ class AdminController extends Controller
     public function data_user(Request $request)
     {
         $data = User::query();
-            if ($request->input('role')){
-               
-                $data= $data->where('role',$request->role);
-            }
-
-            // Menangani pencarian
-            if ($request->has('search') && !empty($request->search)) {
-                $searchValue = $request->search;
-                $data->where(function($q) use ($searchValue) {
-                    $q->where('name', 'like', "%{$searchValue}%")
-                      ->orWhere('email', 'like', "%{$searchValue}%")
-                      ->orWhere('role', 'like', "%{$searchValue}%");
-                });
-            }
-            
-        
-        if($request->ajax()){
-            
-
-            return DataTables::of($data)
-            
-            ->addColumn('no', function($data){
-                return $data->DT_RowIndex;
-            })
-            ->addColumn('name', function($data){
-                return $data->name;
-            })
-            ->addColumn('email', function($data){
-                return $data->email;
-            })
-            ->addColumn('role', function($data){
-                return $data->role;
-            })
-            ->addColumn('action', function($data){
-                return 'action';
-            })
-            ->make(true);
+        if ($request->input('role')) {
+            $data = $data->where('role', $request->role);
         }
 
-        
+        // Menangani pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $searchValue = $request->search;
+            $data->where(function($q) use ($searchValue) {
+                $q->where('name', 'like', "%{$searchValue}%")
+                ->orWhere('email', 'like', "%{$searchValue}%")
+                ->orWhere('role', 'like', "%{$searchValue}%");
+            });
+        }
+
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addColumn('no', function($data) {
+                    return $data->DT_RowIndex;
+                })
+                ->addColumn('name', function($data) {
+                    return $data->name;
+                })
+                ->addColumn('email', function($data) {
+                    return $data->email;
+                })
+                ->addColumn('role', function($data) {
+                    return $data->role;
+                })
+                ->addColumn('jurusan', function($data) {
+                    return $data->role == 'mahasiswa' ? $data->jurusan : '-'; // Tampilkan jurusan jika mahasiswa
+                })
+                ->addColumn('nim', function($data) {
+                    return $data->role == 'mahasiswa' ? $data->nim : '-'; // Tampilkan NIM jika mahasiswa
+                })
+                ->addColumn('action', function($data) {
+                    return 'action'; // Tindakan untuk setiap baris (misalnya tombol edit/hapus)
+                })
+                ->make(true);
+        }
 
         return view('admin.data_user');
     }
+
 
 
 
@@ -90,36 +90,46 @@ class AdminController extends Controller
 
 
     public function storeUser(Request $request)
-    {
-        // Mulai transaksi
-        DB::beginTransaction();
-    
-        try {
-            // Validasi data
+{
+    // Mulai transaksi
+    DB::beginTransaction();
+
+    try {
+        // Validasi data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Validasi tambahan jika role adalah mahasiswa
+        if ($request->role == 'mahasiswa') {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'role' => 'required|string',
-                'password' => 'required|string|min:6',
+                'jurusan' => 'required|string|max:255',
+                'nim' => 'required|numeric|unique:users,nim',
             ]);
-    
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'role' => $request->role,
-                'password' => bcrypt($request->password),
-            ]);
-    
-    
-            DB::commit();
-    
-            return redirect()->route('data_user')->with('success', 'User added successfully');
-        } catch (\Exception $e) {
-            DB::rollBack();
-    
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan user.'])->withInput();
         }
+
+        // Menyimpan data user
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => bcrypt($request->password),
+            'jurusan' => $request->jurusan ?? null, // Menyimpan jurusan jika ada
+            'nim' => $request->nim ?? null, // Menyimpan nim jika ada
+        ]);
+
+        DB::commit();
+
+        return redirect()->route('data_user')->with('success', 'User added successfully');
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan user.'])->withInput();
     }
+}
 
     public function editUser($id)
     {
@@ -128,32 +138,46 @@ class AdminController extends Controller
     }
 
     public function updateUser(Request $request, $id)
-    {
-        $user = User::find($id);
+{
+    $user = User::find($id);
 
-        // Validasi input
+    // Validasi input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'role' => 'required|string',
+        'password' => 'nullable|min:6', // Password optional
+    ]);
+
+    // Validasi tambahan jika role adalah mahasiswa
+    if ($request->role == 'mahasiswa') {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|string',
-            'password' => 'nullable|min:6', // Password optional
+            'jurusan' => 'required|string|max:255',
+            'nim' => 'required|numeric|unique:users,nim,' . $id,
         ]);
-    
-        // Update data
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->role;
-    
-        // Perbarui password jika diisi
-        if (!empty($request->password)) {
-            $user->password = bcrypt($request->password);
-        }
-    
-        $user->save();
-
-        return redirect()->route('data_user')->with('success', 'User updated successfully');
-
     }
+
+    // Update data
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->role = $request->role;
+
+    // Perbarui jurusan dan nim jika role adalah mahasiswa
+    if ($request->role == 'mahasiswa') {
+        $user->jurusan = $request->jurusan;
+        $user->nim = $request->nim;
+    }
+    
+    // Perbarui password jika diisi
+    if (!empty($request->password)) {
+        $user->password = bcrypt($request->password);
+    }
+
+    $user->save();
+
+    return redirect()->route('data_user')->with('success', 'User updated successfully');
+}
+
 
     public function deleteuser($id)
     {
