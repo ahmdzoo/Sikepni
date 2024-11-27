@@ -16,6 +16,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginRegController;
+use App\Http\Controllers\MitraAdminController;
 use App\Http\Controllers\RegLoginController;
 
 
@@ -83,6 +84,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::put('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'update'])->name('LaporanAkhir.update');
     Route::delete('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'destroy'])->name('LaporanAkhir.destroy');
 
+
 });
 
 // Rute untuk Dosen Pembimbing
@@ -93,6 +95,8 @@ Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
     Route::get('/dosen/magang_mhs', [LaporanController::class, 'magang_mhs'])->name('dosen.magang_mhs');
     Route::get('/dosen/dosen_laporan/{mahasiswa_id}', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
     Route::get('/dosen/dosen_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'dosenLaporanAkhir'])->name('dosen.LaporanAkhir');
+    Route::get('/mitra-lowongan', [DosenPembimbingController::class, 'showMitra'])->name('mitra_lowongan');
+
 
 });
 
@@ -108,8 +112,8 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/mitra_laporan/{mahasiswa_id}', [LaporanController::class, 'mitraLaporan'])->name('mitra.laporan');
     Route::get('/mitra/mitra_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'mitraLaporanAkhir'])->name('mitra.LaporanAkhir');
 
-
-
+    Route::get('/mitra/mitra_admin', [MitraAdminController::class, 'mitra_admin'])->name('mitra_admin');
+    Route::put('/mitra/{id}', [MitraAdminController::class, 'update'])->name('mitra.mitra.update');
 
 });
 

@@ -297,3 +297,14 @@ body{
       font-size: 10px;
   }
 }
+
+.zoom-controls {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#pdfCanvas {
+  transition: transform 0.3s ease; /* Animasi halus saat zoom */
+}
+
+

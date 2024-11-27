@@ -65,6 +65,10 @@
                                             <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
                                                 <i class="fas fa-comments"></i> Komentar
                                             </button>
+                                            <!-- Tombol Download -->
+                                            <a href="{{ Storage::url($laporan->file_path) }}" class="btn btn-sm btn-success" download>
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -91,16 +95,7 @@
                                                     @endforeach
                                                 </ul>
                                                 @endif
-                                                <form action="{{ route('laporan.komentar.store', $laporan->id) }}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <textarea name="content" class="form-control" placeholder="Tulis komentar..." required></textarea>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-sm btn-success mt-2">Kirim</button>
-                                                </form>
-                                                <button type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
-                                                    Close
-                                                </button>
+                                                
                                             </div>
                                         </td>
                                     </tr>

@@ -71,7 +71,7 @@
                         <a href="{{ route('mitra_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $jumlahLamaran }}</h3>
-                            <p>Lamaran Masuk</p>
+                            <p>Pengajuan Magang</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-file-alt"></i>

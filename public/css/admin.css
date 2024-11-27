@@ -102,6 +102,20 @@ body{
   background-color: #e2e6ea;
 }
 
+/* Mengatur ukuran font untuk tabel */
+#datamitra {
+  font-size: 15px; /* Ukuran font kecil */
+}
+
+#datamitra th, #datamitra td {
+  font-size: 15px; /* Pastikan header dan isi tabel memiliki ukuran font kecil */
+}
+
+.action-btn {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+}
+
 /* RESPONSIVE TABLE */
 
 /* Mengatur ukuran font dan padding untuk pagination */

@@ -34,6 +34,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/mitra.css') }}">
 
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- CKEditor -->
@@ -159,7 +160,7 @@
             <li class="nav-item">
               <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-file-alt"></i>
-                <p>Lamaran Magang</p>
+                <p>Pengajuan Magang</p>
               </a>
             </li>
             <li class="nav-item">
@@ -167,6 +168,13 @@
                 class="nav-link {{ request()->is('mitra/mahasiswa_diterima') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-folder-open"></i>
                 <p>Laporan Magang</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('mitra_admin') }}"
+                class="nav-link {{ request()->is('mitra/mitra_admin') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-briefcase"></i>
+                <p>Info Kerjasama</p>
               </a>
             </li>
           </ul>
@@ -262,6 +270,8 @@
     </script>
 
     @stack('js')
+
+    @yield('scripts')
 </body>
 
 </html>

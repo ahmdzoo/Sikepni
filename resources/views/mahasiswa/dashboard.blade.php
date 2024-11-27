@@ -83,7 +83,7 @@
                         <a href="{{ route('mahasiswa.status_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $totalLamaranPending }}</h3>
-                            <p>Pengajuan Lamaran</p>
+                            <p>Pengajuan Magang</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-paper-plane"></i>
@@ -98,7 +98,7 @@
                         <a href="{{ route('mahasiswa.status_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $totalLamaranDiterima }}</h3>
-                            <p>Total Lamaran Diterima</p>
+                            <p>Pengajuan Magang Diterima</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-check-circle"></i>

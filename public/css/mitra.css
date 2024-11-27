@@ -327,3 +327,11 @@ body{
   }
 }
 
+@media (max-width: 768px) {
+  table th, table td {
+      font-size: 12px; /* Perkecil teks */
+  }
+  table td {
+      word-wrap: break-word; /* Membungkus teks panjang */
+  }
+}

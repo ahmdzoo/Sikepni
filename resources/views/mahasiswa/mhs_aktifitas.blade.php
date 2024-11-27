@@ -39,7 +39,8 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="file" class="form-label">Pilih File Laporan</label>
-                                <input type="file" class="form-control" id="file" name="file" required>
+                                <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
+                                <small>Ukuran maksimal 5MB</small>
                             </div>
                             <div class="mb-3">
                                 <label for="jenis_laporan" class="form-label">Jenis Laporan</label>
@@ -191,7 +192,7 @@
                                                     @method('PUT')
                                                     <div class="mb-3">
                                                         <label for="file" class="form-label">File Laporan (kosongkan jika tidak ingin mengubah)</label>
-                                                        <input type="file" class="form-control" id="file" name="file">
+                                                        <input type="file" class="form-control" id="file" name="file" accept=".pdf">
                                                         <small>File saat ini: {{ basename($laporan->file_path) }}</small>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Update Laporan</button>

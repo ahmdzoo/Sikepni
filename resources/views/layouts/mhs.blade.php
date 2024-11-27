@@ -32,6 +32,8 @@
 
   <link rel="stylesheet" href="{{ asset('css/mhs.css') }}">
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -168,7 +170,7 @@
             <a href="{{ route('mahasiswa.status_lamaran') }}"
               class="nav-link {{ request()->is('status-lamaran') ? 'active' : '' }}">
               <i class="nav-icon fas fa-check-circle"></i>
-              <p>Status Lamaran</p>
+              <p>Status Pengajuan</p>
             </a>
           </li>
         </ul>

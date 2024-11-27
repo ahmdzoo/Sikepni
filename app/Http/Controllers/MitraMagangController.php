@@ -12,6 +12,7 @@ use App\Models\Laporan;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class MitraMagangController extends Controller
 {
@@ -111,6 +112,9 @@ class MitraMagangController extends Controller
                 ->addColumn('no_pks', function($data) {
                     return $data->no_pks;
                 })
+                ->addColumn('file_pks', function($data) {
+                    return $data->file_pks;
+                })
                 ->editColumn('tgl_mulai', function ($mitra) {
                     return Carbon::parse($mitra->tgl_mulai)->format('Y-m-d'); // format sesuai kebutuhan
                 })
@@ -125,6 +129,18 @@ class MitraMagangController extends Controller
                 })
                 ->addColumn('dosen_pembimbing', function($data) {
                     return $data->dosenPembimbing->name; // Mengambil nama dosen pembimbing
+                })
+                ->addColumn('alamat', function($data) {
+                    return $data->alamat;
+                })
+                ->addColumn('kuota', function($data) {
+                    return $data->kuota;
+                })
+                ->editColumn('tanggal_mulai_magang', function ($mitra) {
+                    return Carbon::parse($mitra->tanggal_mulai_magang)->format('Y-m-d'); // format sesuai kebutuhan
+                })
+                ->editColumn('tanggal_selesai_magang', function ($mitra) {
+                    return Carbon::parse($mitra->tanggal_selesai_magang)->format('Y-m-d'); // format sesuai kebutuhan
                 })
                 ->addColumn('action', function($data) {
                     return '
@@ -157,10 +173,22 @@ class MitraMagangController extends Controller
             'no_pks' => 'required|string|max:255',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'tanggal_mulai_magang' => 'nullable|date',
+            'tanggal_selesai_magang' => 'nullable|date|after_or_equal:tanggal_mulai_magang',
+            'alamat' => 'nullable|string|max:255', // Validasi untuk alamat
+            'file_pks' => 'nullable|file|mimes:pdf|max:5120', // Validasi file opsional
+            'kuota' => 'nullable|integer', // Validasi untuk alamat
         ]);
 
+        // Mengunggah file PKS jika ada
+            $filePath = $request->hasFile('file_pks') 
+            ? $request->file('file_pks')->store('pks_files', 'public') 
+            : null;
+
         // Membuat mitra baru
-        Mitra::create($request->all());
+        Mitra::create(array_merge($request->all(), [
+            'file_pks' => $filePath,
+        ]));
 
         return redirect()->route('data_mitra')->with('success', 'Mitra Magang berhasil ditambahkan.');
     }
@@ -175,15 +203,23 @@ class MitraMagangController extends Controller
         try {
             $tgl_mulai = $mitra->tgl_mulai ? Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') : null;
             $tgl_selesai = $mitra->tgl_selesai ? Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') : null;
+            $tanggal_mulai_magang = $mitra->tanggal_mulai_magang ? Carbon::parse($mitra->tanggal_mulai_magang)->format('Y-m-d') : null;
+            $tanggal_selesai_magang = $mitra->tanggal_selesai_magang ? Carbon::parse($mitra->tanggal_selesai_magang)->format('Y-m-d') : null;
 
             return response()->json([
                 'id' => $mitra->id,
                 'no_pks' => $mitra->no_pks,
+                'file_pks' => $mitra->file_pks,
                 'tgl_mulai' => $tgl_mulai,
                 'tgl_selesai' => $tgl_selesai,
                 'nama_mitra_id' => $mitra->nama_mitra_id,
                 'jurusan_id' => $mitra->jurusan_id,
                 'dosen_pembimbing_id' => $mitra->dosen_pembimbing_id,
+                'tanggal_mulai_magang' => $tanggal_mulai_magang,
+                'tanggal_selesai_magang' => $tanggal_selesai_magang,
+                'alamat' => $mitra->alamat,
+                'kuota' => $mitra->kuota,
+                
             ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
@@ -196,20 +232,36 @@ class MitraMagangController extends Controller
     {
         // Validasi input
         $request->validate([
-            'nama_mitra_id' => 'required|exists:users,id',
-            'jurusan_id' => 'required|exists:jurusans,id',
-            'dosen_pembimbing_id' => 'required|exists:users,id',
             'no_pks' => 'required|string|max:255',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'alamat' => 'nullable|string|max:255',
+            'file_pks' => 'nullable|file|mimes:pdf|max:5120', // Validasi file PKS
+            'kuota' => 'nullable|integer',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'dosen_pembimbing_id' => 'required|exists:users,id',
+            'tanggal_mulai_magang' => 'nullable|date',
+            'tanggal_selesai_magang' => 'nullable|date|after_or_equal:tanggal_mulai_magang',
         ]);
-
-        // Memperbarui mitra
-        $mitra->update($request->all());
-
-        return redirect()->route('data_mitra')->with('success', 'Mitra Magang berhasil diupdate.');
+    
+        // Tangani file PKS jika diunggah
+        if ($request->hasFile('file_pks')) {
+            // Hapus file lama jika ada
+            if ($mitra->file_pks && Storage::exists('public/' . $mitra->file_pks)) {
+                Storage::delete('public/' . $mitra->file_pks);
+            }
+    
+            // Simpan file baru
+            $filePath = $request->file('file_pks')->store('pks_files', 'public');
+            $mitra->file_pks = $filePath;
+        }
+    
+        // Perbarui data mitra
+        $mitra->update($request->except(['file_pks']) + ['file_pks' => $mitra->file_pks]);
+    
+        return redirect()->route('data_mitra')->with('success', 'Data mitra berhasil diperbarui.');
     }
-
+    
     public function deleteMitra($id)
     {
         $mitra = Mitra::findOrFail($id);
@@ -232,6 +284,8 @@ class MitraMagangController extends Controller
 
         return redirect()->route('data_mitra')->with('success', 'Jurusan berhasil ditambahkan.');
     }
+
+    
 
     
 }

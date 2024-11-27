@@ -69,14 +69,19 @@
                     <table class="table table-striped table-sm" id="datamitra">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>No.PKS</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
-                                <th>Nama Mitra</th>
-                                <th>Jurusan</th>
-                                <th>Dosen Pembimbing</th>
-                                <th>Actions</th>
+                                <th class="text-center">No</th>
+                                <th class="text-left">No.PKS</th>
+                                <th class="text-left">Dokumen PKS</th>
+                                <th class="text-center">Tgl Mulai PKS</th>
+                                <th class="text-center">Tgl Selesai PKS</th>
+                                <th class="text-left">Nama Mitra</th>
+                                <th class="text-left">Alamat</th>
+                                <th class="text-center">Kuota</th>
+                                <th class="text-left">Jurusan/Prodi</th>
+                                <th class="text-left">Dosen Pembimbing</th>
+                                <th class="text-center">Mulai Magang</th>
+                                <th class="text-center">Selesai Magang</th>
+                                <th class="text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,7 +105,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{ route('store_mitra') }}" method="POST">
+        <form action="{{ route('store_mitra') }}" method="POST" enctype="multipart/form-data">
           @csrf
           <div class="modal-body">
             <div class="form-group">
@@ -115,6 +120,14 @@
             <div class="form-group">
               <label for="no_pks">No. PKS</label>
               <input type="text" class="form-control" id="no_pks" name="no_pks" required>
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat">
+            </div>
+            <div class="form-group">
+                <label for="kuota">Kuota</label>
+                <input type="number" class="form-control" id="kuota" name="kuota">
             </div>
             <div class="form-group">
               <label for="tgl_mulai">Tanggal Mulai</label>
@@ -143,6 +156,19 @@
                   <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
                 @endforeach
               </select>
+            </div>
+            <div class="form-group">
+                <label for="tanggal_mulai_magang">Mulai Magang</label>
+                <input type="date" class="form-control" id="tanggal_mulai_magang" name="tanggal_mulai_magang">
+            </div>
+            <div class="form-group">
+                <label for="tanggal_selesai_magang">Selesai Magang</label>
+                <input type="date" class="form-control" id="tanggal_selesai_magang" name="tanggal_selesai_magang" required>
+             </div>
+             <div class="form-group">
+                <label for="file_pks">Upload File PKS</label>
+                <input type="file" class="form-control-file" id="file_pks" name="file_pks" accept=".pdf">
+                <small class="text-muted">Format file harus PDF, ukuran maksimal 5MB.</small>
             </div>
           </div>
           <div class="modal-footer">
@@ -191,7 +217,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="#" method="POST" id="editMitraForm">
+            <form action="#" method="POST" id="editMitraForm" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -208,6 +234,13 @@
                     <div class="form-group">
                         <label for="edit_no_pks">No. PKS</label>
                         <input type="text" class="form-control" id="edit_no_pks" name="no_pks" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_alamat">Alamat</label>
+                        <input type="text" class="form-control" id="edit_alamat" name="alamat" required>
+                    </div><div class="form-group">
+                        <label for="edit_kuota">Kuota</label>
+                        <input type="number" class="form-control" id="edit_kuota" name="kuota" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_tgl_mulai">Tanggal Mulai</label>
@@ -236,6 +269,19 @@
                                 <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_tanggal_mulai_magang">Mulai Magang</label>
+                        <input type="date" class="form-control" id="edit_tanggal_mulai_magang" name="tanggal_mulai_magang">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_tanggal_selesai_magang">Selesai Magang</label>
+                        <input type="date" class="form-control" id="edit_tanggal_selesai_magang" name="tanggal_selesai_magang">
+                     </div>
+                     <div class="form-group">
+                        <label for="edit_file_pks">Upload File PKS</label>
+                        <input type="file" class="form-control-file" id="edit_file_pks" name="file_pks" accept=".pdf">
+                        <small class="text-muted">Format file harus PDF, ukuran maksimal 5MB.</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -368,6 +414,7 @@
                  {
                      data: null,
                      name: 'no',
+                     className: 'text-center',
                      render: function (data, type, row, meta) {
                          return meta.row + meta.settings._iDisplayStart + 1;
                      },
@@ -379,16 +426,39 @@
                      name: 'no_pks',
                  },
                  {
+                     data: 'file_pks',
+                     name: 'file_pks',
+                     className: 'text-center',
+                     render: function (data, type, row) {
+                        if (row.file_pks) {
+                            return `<a href="/storage/${row.file_pks}" target="_blank" class="action-btn btn-sm btn-info">Lihat</a>`;
+                        } else {
+                            return `<span class="text-muted">Tidak ada file</span>`;
+                        }
+                    }
+                 },
+                 {
                      data: 'tgl_mulai',
                      name: 'tgl_mulai',
+                     className: 'text-center',
                  },
                  {
                      data: 'tgl_selesai',
                      name: 'tgl_selesai',
+                     className: 'text-center',
                  },
                  {
                      data: 'mitra_user', // Mengambil nama mitra dari relasi
                      name: 'mitra_user',
+                 },
+                 {
+                     data: 'alamat', // Mengambil nama mitra dari relasi
+                     name: 'alamat',
+                 },
+                 {
+                     data: 'kuota', // Mengambil nama mitra dari relasi
+                     name: 'kuota',
+                     className: 'text-center',
                  },
                  {
                      data: 'jurusan', // Mengambil nama jurusan dari relasi
@@ -399,17 +469,28 @@
                      name: 'dosen_pembimbing',
                  },
                  {
-                     data: 'action',
-                     name: 'action',
-                     orderable: false,
-                     searchable: false,
-                     render: function (data, type, row) {
-                         return `
-                             <button class="btn btn-primary btn-sm edit" data-id="${row.id}">Edit</button>
-                             <button class="btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal">Delete</button>
-                         `;
-                     }
+                     data: 'tanggal_mulai_magang',
+                     name: 'tanggal_mulai_magang',
+                     className: 'text-center',
                  },
+                 {
+                     data: 'tanggal_selesai_magang',
+                     name: 'tanggal_selesai_magang',
+                     className: 'text-center',
+                 },
+                 {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        return `
+                            <button class="action-btn btn-primary btn-sm edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal"><i class="fas fa-trash-alt"></i></button>
+                        `;
+                    }
+                }
+
              ]
          });
      }
@@ -423,6 +504,11 @@
            $('#edit_nama_mitra_id').val(data.nama_mitra_id);
            $('#edit_jurusan_id').val(data.jurusan_id);
            $('#edit_dosen_pembimbing_id').val(data.dosen_pembimbing_id);
+           $('#edit_alamat').val(data.alamat);
+           $('#edit_kuota').val(data.kuota);
+           $('#edit_tanggal_mulai_magang').val(data.tanggal_mulai_magang);
+           $('#edit_tanggal_selesai_magang').val(data.tanggal_selesai_magang);
+           $('#edit_file_pks').val('');
            // Set action URL
            $('#editMitraForm').attr('action', `/admin/mitra/${id}`);
            // Buka modal setelah data diisi

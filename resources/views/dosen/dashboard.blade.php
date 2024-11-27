@@ -37,7 +37,7 @@
                         <a href="{{ route('dosen_lamaran') }}">
                         <div class="inner">
                             <h3>{{ $jumlahLamaran }}</h3>
-                            <p>CV Lamaran Magang</p>
+                            <p>CV Pengajuan Magang</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-file-alt"></i>

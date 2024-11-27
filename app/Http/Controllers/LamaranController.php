@@ -36,7 +36,7 @@ class LamaranController extends Controller
         // Validasi input
         $request->validate([
             'mitra_id' => 'required|exists:mitras,id',
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'cv' => 'required|file|mimes:pdf|max:5120',
         ]);
 
         // Simpan file CV ke dalam folder public/cv

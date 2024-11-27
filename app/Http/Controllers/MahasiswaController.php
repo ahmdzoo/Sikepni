@@ -95,11 +95,11 @@ class MahasiswaController extends Controller
                 ->addColumn('no_pks', function($data) {
                     return $data->no_pks;
                 })
-                ->editColumn('tgl_mulai', function ($mitra) {
-                    return Carbon::parse($mitra->tgl_mulai)->format('Y-m-d'); // format sesuai kebutuhan
+                ->editColumn('tanggal_mulai_magang', function ($mitra) {
+                    return Carbon::parse($mitra->tanggal_mulai_magang)->format('Y-m-d'); // format sesuai kebutuhan
                 })
-                ->editColumn('tgl_selesai', function ($mitra) {
-                    return Carbon::parse($mitra->tgl_selesai)->format('Y-m-d'); // format sesuai kebutuhan
+                ->editColumn('tanggal_selesai_magang', function ($mitra) {
+                    return Carbon::parse($mitra->tanggal_selesai_magang)->format('Y-m-d'); // format sesuai kebutuhan
                 })
                 ->addColumn('mitra_user', function ($data) {
                     return $data->mitraUser->name; // Mengambil nama mitra
@@ -109,6 +109,15 @@ class MahasiswaController extends Controller
                 })
                 ->addColumn('dosen_pembimbing', function ($data) {
                     return $data->dosenPembimbing->name; // Mengambil nama dosen pembimbing
+                })
+                ->addColumn('kuota', function($data) {
+                    return $data->kuota;
+                })
+                ->addColumn('alamat', function($data) {
+                    return $data->alamat;
+                })
+                ->addColumn('file_pks', function($data) {
+                    return $data->file_pks;
                 })
                 ->addColumn('action', function ($data) {
                     return '

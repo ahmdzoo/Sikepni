@@ -10,7 +10,7 @@
 
         <div class="card p-4" style="width: 100%;">
             <div class="card-header">
-                <h5 class="m-0" style="font-size: 30px; font-weight: bold;">Status Lamaran</h5>
+                <h5 class="m-0" style="font-size: 30px; font-weight: bold;">Status Pengajuan Magang</h5>
             </div>
 
             <div class="table-responsive">

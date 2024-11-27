@@ -1,4 +1,4 @@
-@extends('layouts.mhs')
+@extends('layouts.dosen')
 @section('title', 'Program Magang | SIKEPNI')
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
@@ -10,35 +10,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Program Magang</h1>
+                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Daftar Mitra</h1>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="container-fluid">
-       <!-- Pesan Sukses -->
-       @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        <!-- Pesan Kesalahan -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-
         <div class="card">
             <div class="card-body">
                 <!-- Filter Mitra (Jika Ada) -->
@@ -67,7 +45,6 @@
                                 <th>Kuota</th>
                                 <th>Jurusan</th>
                                 <th>Dosen Pembimbing</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,34 +58,6 @@
     </div>
 </div>
 
-<!-- Modal Ajukan Lamaran -->
-<div class="modal fade" id="ajukanLamaranModal" tabindex="-1" role="dialog" aria-labelledby="ajukanLamaranModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="ajukanLamaranModalLabel">Ajukan Lamaran untuk <span id="mitraName"></span></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form id="ajukanLamaranForm" action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <input type="hidden" name="mitra_id" id="mitraId">
-                  <div class="form-group">
-                      <label for="cv">Upload CV</label>
-                      <input type="file" class="form-control" id="cv" name="cv" accept=".pdf" required>
-                      <small>Ukuran maksimal 5MB</small>
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="submitAjukan">Ajukan</button>
-          </div>
-      </div>
-  </div>
-</div>
 
 <!-- Modal untuk Menampilkan File PDF 2 -->
 <div id="fileModal" class="modal fade" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
@@ -137,13 +86,13 @@
 </div>
 
 
+
 @endsection
 
 @push('scripts')
 <!-- Pastikan jQuery versi penuh dimuat sebelum skrip lainnya -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-
 @endpush
 
 @section('scripts')
@@ -184,7 +133,8 @@
 
      });
 
- 
+     
+
     function loadData() {
          return $('#lowongan').DataTable({
              processing: true,
@@ -194,7 +144,7 @@
              searching: true,
              ordering: false,
              ajax: {
-                 url: "{{ route('mhs_lowongan') }}",
+                 url: "{{ route('mitra_lowongan') }}",
                  data: function (d) {
                      d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
                      d.search = $('input[type="search"]').val();
@@ -211,7 +161,6 @@
                             return `<span class="text-muted">Tidak ada file</span>`;
                         }
                     }
-
                 },
                  {
                      data: 'tanggal_mulai_magang',
@@ -243,25 +192,13 @@
                  {
                      data: 'dosen_pembimbing', // Mengambil nama dosen pembimbing dari relasi
                      name: 'dosen_pembimbing',
-                 },
-                 {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    render: function (data, type, row) {
-                        return `
-                            <button class="btn btn-primary btn-sm ajukan" data-id="${row.id}" data-nama="${row.mitra_user}">Pengajuan Magang</button>
-                        `;
-                    },
-                    className: 'text-center',
-                }
+                 }
+                 
 
              ]
          });
      }
 
-    // MODAL PREVIEW PDF
      $(document).on('click', '.lihat-file', function () {
         var filePath = $(this).data('file');
         var fileUrl = `/storage/${filePath}`; // Path ke file
@@ -269,7 +206,6 @@
         $('#previewFrame').attr('src', fileUrl); // Set file ke iframe
         $('#previewFileModal').modal('show'); // Tampilkan modal
     });
-
 
     let zoomLevel = 1;  // Menyimpan tingkat zoom default
 
@@ -342,6 +278,9 @@
         }, 500); // Waktu delay 500ms (sesuaikan sesuai kebutuhan)
     }
 
+  
+
+    
 </script>
 @include('layouts/footer')
 @endsection

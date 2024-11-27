@@ -25,8 +25,7 @@
                     <div class="col-md-3 mb-4">
                         <div class="card text-center shadow-sm" style="border-radius: 15px;">
                             <div class="card-header bg-transparent text-left" style="font-size: 12px; color: #6c757d;">
-                                <small>Diterima:</small>
-                                <span>{{ \Carbon\Carbon::parse($item->updated_at)->format('d M, Y') }}</span>
+                                <small>{{ $item->mahasiswa->jurusan }}</small>
                             </div>
                             <div class="card-body d-flex flex-column align-items-center">
                                 <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>

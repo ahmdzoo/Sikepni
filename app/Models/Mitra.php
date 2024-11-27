@@ -16,6 +16,11 @@ class Mitra extends Model
         'no_pks',
         'tgl_mulai',
         'tgl_selesai',
+        'tanggal_mulai_magang',
+        'tanggal_selesai_magang',
+        'alamat',
+        'kuota',
+        'file_pks',
     ];
 
     public function dosenPembimbing()

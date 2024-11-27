@@ -80,7 +80,7 @@ class LaporanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:pdf|max:2048',
+            'file' => 'required|file|mimes:pdf|max:5120',
         ]);
 
     // Ambil nama asli file
@@ -123,7 +123,7 @@ class LaporanController extends Controller
         $laporan = Laporan::findOrFail($id);
 
         $request->validate([
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ]);
 
         if ($request->hasFile('file')) {
