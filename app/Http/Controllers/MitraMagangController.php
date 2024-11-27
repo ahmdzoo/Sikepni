@@ -109,9 +109,7 @@ class MitraMagangController extends Controller
                 ->addColumn('no', function($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
-                ->addColumn('no_pks', function($data) {
-                    return $data->no_pks;
-                })
+
                 ->addColumn('file_pks', function($data) {
                     return $data->file_pks;
                 })
@@ -170,7 +168,6 @@ class MitraMagangController extends Controller
             'nama_mitra_id' => 'required|exists:users,id',
             'jurusan_id' => 'required|exists:jurusans,id',
             'dosen_pembimbing_id' => 'required|exists:users,id',
-            'no_pks' => 'required|string|max:255',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'tanggal_mulai_magang' => 'nullable|date',
@@ -208,7 +205,6 @@ class MitraMagangController extends Controller
 
             return response()->json([
                 'id' => $mitra->id,
-                'no_pks' => $mitra->no_pks,
                 'file_pks' => $mitra->file_pks,
                 'tgl_mulai' => $tgl_mulai,
                 'tgl_selesai' => $tgl_selesai,
@@ -232,7 +228,6 @@ class MitraMagangController extends Controller
     {
         // Validasi input
         $request->validate([
-            'no_pks' => 'required|string|max:255',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'alamat' => 'nullable|string|max:255',

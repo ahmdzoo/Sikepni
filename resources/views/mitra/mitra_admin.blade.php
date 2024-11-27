@@ -79,19 +79,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="nama_mitra_id" class="form-label">Nama Mitra</label>
-                            <select id="nama_mitra_id" name="nama_mitra_id" class="form-select select2" required>
-                                @foreach($mitrasMagang as $user)
-                                <option value="{{ $user->id }}" 
-                                    {{ old('nama_mitra_id', $mitra->nama_mitra_id ?? '') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }}
-                                </option>
-                                @endforeach
-                            </select>                        
-                        </div>
-                        <div class="mb-3">
                             <label for="jurusan_id" class="form-label">Jurusan</label>
-                            <select id="jurusan_id" name="jurusan_id" class="form-select" required>
+                            <select id="jurusan_id" name="jurusan_id" class="form-select select2 w-100" required>
                                 @foreach ($jurusans as $jurusan)
                                     <option value="{{ $jurusan->id }}" 
                                         {{ old('jurusan_id', $mitra->jurusan->id ?? '') == $jurusan->id ? 'selected' : '' }}>
@@ -102,7 +91,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="dosen_pembimbing_id" class="form-label">Dosen Pembimbing</label>
-                            <select id="dosen_pembimbing_id" name="dosen_pembimbing_id" class="form-select select2" required>
+                            <select id="dosen_pembimbing_id" name="dosen_pembimbing_id" class="form-select select2 w-100" required>
                                 @foreach ($dosenPembimbing as $dosen)
                                     <option value="{{ $dosen->id }}" 
                                         {{ old('dosen_pembimbing_id', $mitra->dosenPembimbing->id ?? '') == $dosen->id ? 'selected' : '' }}>
@@ -111,6 +100,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="tanggal_mulai_magang" class="form-label">Tanggal Mulai Magang</label>
                             <input type="date" id="tanggal_mulai_magang" name="tanggal_mulai_magang" class="form-control" 
@@ -170,7 +160,7 @@
     $(document).ready(function() {
         $('.select2').select2({
             placeholder: "Pilih",
-            allowClear: true
+            allowClear: false
         });
     });
 

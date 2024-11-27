@@ -70,7 +70,6 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-left">No.PKS</th>
                                 <th class="text-left">Dokumen PKS</th>
                                 <th class="text-center">Tgl Mulai PKS</th>
                                 <th class="text-center">Tgl Selesai PKS</th>
@@ -118,52 +117,48 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="no_pks">No. PKS</label>
-              <input type="text" class="form-control" id="no_pks" name="no_pks" required>
+                <label for="tgl_mulai">Tanggal Mulai</label>
+                <input type="date" class="form-control" id="tgl_mulai" name="tgl_mulai" required>
             </div>
             <div class="form-group">
-                <label for="alamat">Alamat</label>
+                <label for="tgl_selesai">Tanggal Selesai</label>
+                <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" required>
+            </div>
+            <div class="form-group">
+                <label for="jurusan_id">Jurusan</label>
+                <div class="input-group">
+                    <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
+                        <option value="" disabled selected>Pilih Jurusan</option>
+                        @foreach($jurusans as $jurusan)
+                        <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dosen_pembimbing_id">Dosen Pendamping</label>
+                <select class="form-control select2" id="dosen_pembimbing_id" name="dosen_pembimbing_id" required>
+                    <option value="" disabled selected>Pilih Dosen Pendamping</option>
+                    @foreach($dosen_pembimbing as $dosen)
+                    <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat <small>(Opsional)</small></label>
                 <input type="text" class="form-control" id="alamat" name="alamat">
             </div>
             <div class="form-group">
-                <label for="kuota">Kuota</label>
+                <label for="kuota">Kuota <small>(Opsional)</small></label>
                 <input type="number" class="form-control" id="kuota" name="kuota">
             </div>
             <div class="form-group">
-              <label for="tgl_mulai">Tanggal Mulai</label>
-              <input type="date" class="form-control" id="tgl_mulai" name="tgl_mulai" required>
-            </div>
-            <div class="form-group">
-              <label for="tgl_selesai">Tanggal Selesai</label>
-              <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" required>
-            </div>
-            <div class="form-group">
-              <label for="jurusan_id">Jurusan</label>
-              <div class="input-group">
-                <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
-                  <option value="" disabled selected>Pilih Jurusan</option>
-                  @foreach($jurusans as $jurusan)
-                    <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="dosen_pembimbing_id">Dosen Pendamping</label>
-              <select class="form-control select2" id="dosen_pembimbing_id" name="dosen_pembimbing_id" required>
-                <option value="" disabled selected>Pilih Dosen Pendamping</option>
-                @foreach($dosen_pembimbing as $dosen)
-                  <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="form-group">
-                <label for="tanggal_mulai_magang">Mulai Magang</label>
+                <label for="tanggal_mulai_magang">Mulai Magang <small>(Opsional)</small></label>
                 <input type="date" class="form-control" id="tanggal_mulai_magang" name="tanggal_mulai_magang">
             </div>
             <div class="form-group">
-                <label for="tanggal_selesai_magang">Selesai Magang</label>
-                <input type="date" class="form-control" id="tanggal_selesai_magang" name="tanggal_selesai_magang" required>
+                <label for="tanggal_selesai_magang">Selesai Magang <small>(Opsional)</small></label>
+                <input type="date" class="form-control" id="tanggal_selesai_magang" name="tanggal_selesai_magang">
              </div>
              <div class="form-group">
                 <label for="file_pks">Upload File PKS</label>
@@ -232,17 +227,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="edit_no_pks">No. PKS</label>
-                        <input type="text" class="form-control" id="edit_no_pks" name="no_pks" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_alamat">Alamat</label>
-                        <input type="text" class="form-control" id="edit_alamat" name="alamat" required>
-                    </div><div class="form-group">
-                        <label for="edit_kuota">Kuota</label>
-                        <input type="number" class="form-control" id="edit_kuota" name="kuota" required>
-                    </div>
-                    <div class="form-group">
                         <label for="edit_tgl_mulai">Tanggal Mulai</label>
                         <input type="date" class="form-control" id="edit_tgl_mulai" name="tgl_mulai" required>
                     </div>
@@ -256,7 +240,7 @@
                             <select class="form-control select2" id="edit_jurusan_id" name="jurusan_id" required>
                                 <option value="" disabled>Pilih Jurusan</option>
                                 @foreach($jurusans as $jurusan)
-                                    <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                                <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -266,16 +250,23 @@
                         <select class="form-control select2" id="edit_dosen_pembimbing_id" name="dosen_pembimbing_id" required>
                             <option value="" disabled>Pilih Dosen Pendamping</option>
                             @foreach($dosen_pembimbing as $dosen)
-                                <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
+                            <option value="{{ $dosen->id }}">{{ $dosen->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="edit_tanggal_mulai_magang">Mulai Magang</label>
+                        <label for="edit_alamat">Alamat <small>(Opsional)</small></label>
+                        <input type="text" class="form-control" id="edit_alamat" name="alamat">
+                    </div><div class="form-group">
+                        <label for="edit_kuota">Kuota <small>(Opsional)</small></label>
+                        <input type="number" class="form-control" id="edit_kuota" name="kuota">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_tanggal_mulai_magang">Mulai Magang <small>(Opsional)</small></label>
                         <input type="date" class="form-control" id="edit_tanggal_mulai_magang" name="tanggal_mulai_magang">
                     </div>
                     <div class="form-group">
-                        <label for="edit_tanggal_selesai_magang">Selesai Magang</label>
+                        <label for="edit_tanggal_selesai_magang">Selesai Magang <small>(Opsional)</small></label>
                         <input type="date" class="form-control" id="edit_tanggal_selesai_magang" name="tanggal_selesai_magang">
                      </div>
                      <div class="form-group">
@@ -422,10 +413,6 @@
                      searchable: false
                  },
                  {
-                     data: 'no_pks',
-                     name: 'no_pks',
-                 },
-                 {
                      data: 'file_pks',
                      name: 'file_pks',
                      className: 'text-center',
@@ -498,7 +485,6 @@
    function editMitra(id) {
        $.get(`${routes.edit}${id}/edit`, function (data) { // Pastikan URL sesuai
            $('#editMitraId').val(data.id);
-           $('#edit_no_pks').val(data.no_pks);
            $('#edit_tgl_mulai').val(data.tgl_mulai);
            $('#edit_tgl_selesai').val(data.tgl_selesai);
            $('#edit_nama_mitra_id').val(data.nama_mitra_id);

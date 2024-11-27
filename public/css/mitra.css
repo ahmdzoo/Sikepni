@@ -335,3 +335,20 @@ body{
       word-wrap: break-word; /* Membungkus teks panjang */
   }
 }
+
+.select2-container {
+  width: 100% !important; /* Pastikan elemen Select2 mengambil lebar penuh */
+}
+.select2-container .select2-selection--single {
+  height: calc(1.5em + 0.75rem + 2px); /* Sesuaikan tinggi dengan input Bootstrap */
+  display: flex;
+  align-items: center;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  padding-left: 0;
+  height: auto;
+  margin-top: -8px;
+
+  
+}

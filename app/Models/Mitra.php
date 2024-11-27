@@ -13,7 +13,6 @@ class Mitra extends Model
         'nama_mitra_id',
         'jurusan_id',
         'dosen_pembimbing_id', // Pastikan kolom ini ada di tabel mitra
-        'no_pks',
         'tgl_mulai',
         'tgl_selesai',
         'tanggal_mulai_magang',

@@ -42,7 +42,7 @@ class MitraAdminController extends Controller
 public function update(Request $request, $id)
 {
     $request->validate([
-        'nama_mitra_id' => 'required|exists:users,id',
+        // 'nama_mitra_id' => 'required|exists:users,id',
         'jurusan_id' => 'required|exists:jurusans,id',
         'dosen_pembimbing_id' => 'required|exists:users,id',
         'tanggal_mulai_magang' => 'required|date',
@@ -53,7 +53,7 @@ public function update(Request $request, $id)
 
     $mitra = Mitra::findOrFail($id);
     $mitra->update([
-        'nama_mitra_id' => $request->nama_mitra_id,
+        // 'nama_mitra_id' => $request->nama_mitra_id,
         'jurusan_id' => $request->jurusan_id,
         'dosen_pembimbing_id' => $request->dosen_pembimbing_id,
         'tanggal_mulai_magang' => $request->tanggal_mulai_magang,
