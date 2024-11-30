@@ -162,7 +162,7 @@
           <li class="nav-item">
             <a href="{{ route('jurusan') }}" class="nav-link {{ request()->is('admin/jurusan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-cogs"></i>
-              <p>Data Jurusan</p>
+              <p>Data Jurusan/Prodi</p>
             </a>
           </li> 
           <li class="nav-item">

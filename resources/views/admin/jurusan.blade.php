@@ -30,7 +30,7 @@
             <div class="card-body">
                 <!-- Tombol Tambah jurusan -->
                 <button type="button" class="btn btn-success mb-3 btn-sm" data-toggle="modal" data-target="#addJurusanModal">
-                    Add Jurusan
+                    Add Jurusan/Prodi
                 </button>
 
                 <!-- Pembungkus Tabel Responsif -->
@@ -63,7 +63,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addJurusanModalLabel">Add Jurusan</h5>
+          <h5 class="modal-title" id="addJurusanModalLabel">Add Jurusan/Prodi</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -72,13 +72,13 @@
           @csrf
           <div class="modal-body">
             <div class="form-group">
-              <label for="jurusan_name">Nama Jurusan</label>
+              <label for="jurusan_name">Nama Jurusan/Prodi</label>
               <input type="text" class="form-control" id="jurusan_name" name="name" placeholder="Masukkan nama jurusan" required>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add Jurusan</button>
+            <button type="submit" class="btn btn-primary">Add Jurusan/Prodi</button>
           </div>
         </form>
       </div>
@@ -94,7 +94,7 @@
           @csrf
           @method('PUT')
           <div class="modal-header">
-            <h5 class="modal-title" id="editJurusanModalLabel">Edit Jurusan</h5>
+            <h5 class="modal-title" id="editJurusanModalLabel">Edit Jurusan/Prodi</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -132,7 +132,7 @@
           </div>
           
           <div class="modal-body">
-              <p>Are you sure you want to delete this jurusan?</p>
+              <p>Are you sure you want to delete this jurusan/prodi?</p>
               <input type="hidden" id="deleteJurusanId" name="id">
           </div>
           

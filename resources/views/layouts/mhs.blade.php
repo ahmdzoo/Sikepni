@@ -156,7 +156,7 @@
             <a href="{{ route('mhs_lowongan') }}"
               class="nav-link {{ request()->is('mhs-lowongan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-briefcase"></i>
-              <p>Program Magang</p>
+              <p>Lowongan Magang</p>
             </a>
           </li>
           <li class="nav-item">

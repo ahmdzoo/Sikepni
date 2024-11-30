@@ -54,7 +54,7 @@
               <a href="{{ route('jurusan') }}">
                 <div class="inner">
                   <h3>{{ $jumlahJurusan ?? 0 }}</sup></h3>
-                  <p>Jumlah Jurusan</p>
+                  <p>Jurusan/Prodi</p>
                 </div>
                 <div class="icon">
                   <i class="fas fas fa-cogs"></i>

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Laporan;
 use App\Models\Lamaran;
 use App\Models\Jurusan;
+use App\Models\LaporanAkhir;
 use Carbon\Carbon;
 
 class MahasiswaController extends Controller
@@ -24,6 +25,9 @@ class MahasiswaController extends Controller
     
         // Menghitung total laporan yang dimiliki mahasiswa
         $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
+
+        // Menghitung total laporan yang dimiliki mahasiswa
+        $totalLaporanAkhir = LaporanAkhir::where('user_id', $mahasiswaId)->count();
     
         // Menghitung total lamaran yang diajukan mahasiswa
         $totalLamaran = Lamaran::where('user_id', $mahasiswaId)->count();
@@ -40,6 +44,7 @@ class MahasiswaController extends Controller
         return view('mahasiswa.dashboard', [
             'mitras' => $mitras,
             'totalLaporan' => $totalLaporan, // Menambahkan total laporan ke view
+            'totalLaporanAkhir' => $totalLaporanAkhir,
             'totalLamaran' => $totalLamaran,
             'totalMitra' => $totalMitra,
             'totalLamaranPending' => $totalLamaranPending,

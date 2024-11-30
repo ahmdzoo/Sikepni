@@ -37,7 +37,12 @@
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>
+                            {{ $error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -125,10 +130,10 @@
                 <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" required>
             </div>
             <div class="form-group">
-                <label for="jurusan_id">Jurusan</label>
+                <label for="jurusan_id">Jurusan/Prodi</label>
                 <div class="input-group">
                     <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
-                        <option value="" disabled selected>Pilih Jurusan</option>
+                        <option value="" disabled selected>Pilih Jurusan/Prodi</option>
                         @foreach($jurusans as $jurusan)
                         <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
                         @endforeach
@@ -235,10 +240,10 @@
                         <input type="date" class="form-control" id="edit_tgl_selesai" name="tgl_selesai" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit_jurusan_id">Jurusan</label>
+                        <label for="edit_jurusan_id">Jurusan/Prodi</label>
                         <div class="input-group">
                             <select class="form-control select2" id="edit_jurusan_id" name="jurusan_id" required>
-                                <option value="" disabled>Pilih Jurusan</option>
+                                <option value="" disabled>Pilih Jurusan/Prodi</option>
                                 @foreach($jurusans as $jurusan)
                                 <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
                                 @endforeach
@@ -271,6 +276,7 @@
                      </div>
                      <div class="form-group">
                         <label for="edit_file_pks">Upload File PKS</label>
+                        <small class="text-muted">Kosongkan Jika tidak ingin diperbarui</small>
                         <input type="file" class="form-control-file" id="edit_file_pks" name="file_pks" accept=".pdf">
                         <small class="text-muted">Format file harus PDF, ukuran maksimal 5MB.</small>
                     </div>

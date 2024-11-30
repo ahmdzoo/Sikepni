@@ -120,6 +120,20 @@
                         </a>
                     </div>
                 </div>
+                <!-- Total Laporan Akhir Magang -->
+                <div class="col">
+                    <div class="small-box">
+                        <a href="{{ route('mahasiswa.LaporanAkhir') }}">
+                        <div class="inner">
+                            <h3>{{ $totalLaporanAkhir }}</h3>
+                            <p>Laporan Akhir Magang</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
