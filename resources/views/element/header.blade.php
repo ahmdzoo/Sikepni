@@ -15,7 +15,7 @@
           <div class="nav__menu" id="nav-menu">
               <ul class="nav__list">
                   <li><a href="/" class="nav__link">Beranda</a></li>
-                  <li><a href="/moa" class="nav__link">Mitra Kerjasama</a></li>
+                  <li><a href="/Mitra_Kerjasama" class="nav__link">Mitra Kerjasama</a></li>
               </ul>
           </div>
       </nav>

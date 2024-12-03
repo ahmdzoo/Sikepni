@@ -84,13 +84,7 @@
                                                             <div>
                                                                 <strong>{{ $komentar->user->name }}:</strong> {{ $komentar->content }}
                                                             </div>
-                                                            <form action="{{ route('laporan.komentar.destroy', ['laporan' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn-delete-icon">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </form>
+                                                            
                                                         </li>
                                                     @endforeach
                                                 </ul>

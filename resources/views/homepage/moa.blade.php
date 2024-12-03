@@ -44,7 +44,6 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>No PKS</th>
                                 <th>Tgl Mulai</th>
                                 <th>Tgl Selesai</th>
                                 <th>Nama Mitra</th>
@@ -86,7 +85,6 @@
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'no_pks', name: 'no_pks' },
             { data: 'tgl_mulai', name: 'tgl_mulai' },
             { data: 'tgl_selesai', name: 'tgl_selesai' },
             { data: 'nama_mitra', name: 'nama_mitra' },

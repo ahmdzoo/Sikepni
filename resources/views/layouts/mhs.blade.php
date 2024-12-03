@@ -154,21 +154,21 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('mhs_lowongan') }}"
-              class="nav-link {{ request()->is('mhs-lowongan') ? 'active' : '' }}">
+              class="nav-link {{ request()->is('mahasiswa/lowongan_magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>Lowongan Magang</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('mahasiswa.magang') }}"
-              class="nav-link {{ request()->is('mahasiswa/magang') ? 'active' : '' }}">
+              class="nav-link {{ request()->is('mahasiswa/aktifitas_magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>Aktifitas Magang</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('mahasiswa.status_lamaran') }}"
-              class="nav-link {{ request()->is('status-lamaran') ? 'active' : '' }}">
+              class="nav-link {{ request()->is('mahasiswa/status_pengajuan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-check-circle"></i>
               <p>Status Pengajuan</p>
             </a>

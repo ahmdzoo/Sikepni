@@ -67,18 +67,18 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
         Route::get('/mahasiswa/lowongan', [LamaranController::class, 'index'])->name('lamaran.index');
         Route::post('/mahasiswa/lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
     });
-    Route::get('/mhs-lowongan', [MahasiswaController::class, 'showMitra'])->name('mhs_lowongan');
+    Route::get('/mahasiswa/lowongan_magang', [MahasiswaController::class, 'showMitra'])->name('mhs_lowongan');
     // Mengajukan lamaran
-    Route::get('/status-lamaran', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
+    Route::get('/mahasiswa/status_pengajuan', [LamaranController::class, 'statusLamaranMahasiswa'])->name('mahasiswa.status_lamaran');
 
-    Route::get('/mahasiswa/mhs_aktifitas', [LaporanController::class, 'mahasiswaAktifitas'])->name('mahasiswa.aktifitas');
-    Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    Route::get('/mahasiswa/laporan', [LaporanController::class, 'mahasiswaAktifitas'])->name('mahasiswa.aktifitas');
+    Route::post('/mahasiswa/laporan', [LaporanController::class, 'store'])->name('laporan.store');
     Route::get('/laporan/{id}/edit', [LaporanController::class, 'edit'])->name('laporan.edit');
     Route::put('/laporan/{id}', [LaporanController::class, 'update'])->name('laporan.update');
     Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
-    Route::get('/mahasiswa/magang', [LaporanController::class, 'magang'])->name('mahasiswa.magang');
+    Route::get('mahasiswa/aktifitas_magang', [LaporanController::class, 'magang'])->name('mahasiswa.magang');
 
-    Route::get('/mahasiswa/mhs_LaporanAkhir', [LaporanAkhirController::class, 'mhsLaporanAkhir'])->name('mahasiswa.LaporanAkhir');
+    Route::get('/mahasiswa/LaporanAkhir', [LaporanAkhirController::class, 'mhsLaporanAkhir'])->name('mahasiswa.LaporanAkhir');
     Route::post('/LaporanAkhir', [LaporanAkhirController::class, 'store'])->name('LaporanAkhir.store');
     Route::get('/LaporanAkhir/{id}/edit', [LaporanAkhirController::class, 'edit'])->name('LaporanAkhir.edit');
     Route::put('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'update'])->name('LaporanAkhir.update');
@@ -90,12 +90,12 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
 // Rute untuk Dosen Pembimbing
 Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
     Route::get('/dosen/dashboard', [DosenPembimbingController::class, 'dashboard'])->name('dosen.dashboard');
-    Route::get('/dosen/dosen_lamaran', [DosenPembimbingController::class, 'dosen_lamaran'])->name('dosen_lamaran');
+    Route::get('/dosen/pengajuan_magang', [DosenPembimbingController::class, 'dosen_lamaran'])->name('dosen_lamaran');
     Route::get('/dosen/dosen_laporan', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
-    Route::get('/dosen/magang_mhs', [LaporanController::class, 'magang_mhs'])->name('dosen.magang_mhs');
+    Route::get('/dosen/mahasiswa_magang', [LaporanController::class, 'magang_mhs'])->name('dosen.magang_mhs');
     Route::get('/dosen/dosen_laporan/{mahasiswa_id}', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
     Route::get('/dosen/dosen_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'dosenLaporanAkhir'])->name('dosen.LaporanAkhir');
-    Route::get('/mitra-lowongan', [DosenPembimbingController::class, 'showMitra'])->name('mitra_lowongan');
+    Route::get('/dosen/daftar_mitra', [DosenPembimbingController::class, 'showMitra'])->name('mitra_lowongan');
 
 
 });
@@ -103,16 +103,16 @@ Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
 // Rute untuk Mitra Magang
 Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/dashboard', [MitraMagangController::class, 'dashboard'])->name('mitra.dashboard');
-    Route::get('/mitra/mitra_lamaran', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
-    Route::get('/mitra/lamarans', [LamaranController::class, 'index'])->name('mitra_lamaran');
+    Route::get('/mitra/pengajuan_magang', [MitraMagangController::class, 'mitra_lamaran'])->name('mitra_lamaran');
+    Route::get('/mitra/pengajuan_magang', [LamaranController::class, 'index'])->name('mitra_lamaran');
     Route::post('/lamaran/{id}/acc', [LamaranController::class, 'accLamaran'])->name('lamaran.acc');
     Route::post('/lamaran/{id}/tolak', [LamaranController::class, 'tolakLamaran'])->name('lamaran.tolak');
     Route::post('/lamaran/acc/{id}', [LamaranController::class, 'acc'])->name('lamaran.acc');
-    Route::get('/mitra/mahasiswa_diterima', [LaporanController::class, 'mahasiswaDiterima'])->name('mitra.mahasiswa_diterima');
-    Route::get('/mitra/mitra_laporan/{mahasiswa_id}', [LaporanController::class, 'mitraLaporan'])->name('mitra.laporan');
-    Route::get('/mitra/mitra_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'mitraLaporanAkhir'])->name('mitra.LaporanAkhir');
+    Route::get('/mitra/mahasiswa_magang', [LaporanController::class, 'mahasiswaDiterima'])->name('mitra.mahasiswa_diterima');
+    Route::get('/mitra/laporan/{mahasiswa_id}', [LaporanController::class, 'mitraLaporan'])->name('mitra.laporan');
+    Route::get('/mitra/LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'mitraLaporanAkhir'])->name('mitra.LaporanAkhir');
 
-    Route::get('/mitra/mitra_admin', [MitraAdminController::class, 'mitra_admin'])->name('mitra_admin');
+    Route::get('/mitra/info_kerjasama', [MitraAdminController::class, 'mitra_admin'])->name('mitra_admin');
     Route::put('/mitra/{id}', [MitraAdminController::class, 'update'])->name('mitra.mitra.update');
 
 });
@@ -150,10 +150,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::put('/admin/jurusan/{jurusan}', [JurusanController::class, 'updateJurusan'])->name('jurusan.update');
     Route::delete('/admin/jurusan/{jurusan}', [JurusanController::class, 'deleteJurusan'])->name('jurusan.destroy');
 
-    Route::get('/admin/admin_mhs/{mitra_id}', [LaporanController::class, 'admin_mhs'])->name('admin_mhs');
-    Route::get('/admin/admin_laporan/{mahasiswa_id}', [LaporanController::class, 'adminLaporan'])->name('admin.laporan');
-    Route::get('/admin/admin_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'adminLaporanAkhir'])->name('admin.LaporanAkhir');
-    Route::get('/admin/admin_magang', [LaporanController::class, 'admin_magang'])->name('admin.admin_magang');
+    Route::get('/admin/mahasiswa_magang/{mitra_id}', [LaporanController::class, 'admin_mhs'])->name('admin_mhs');
+    Route::get('/admin/laporan/{mahasiswa_id}', [LaporanController::class, 'adminLaporan'])->name('admin.laporan');
+    Route::get('/admin/LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'adminLaporanAkhir'])->name('admin.LaporanAkhir');
+    Route::get('/admin/laporan_magang', [LaporanController::class, 'admin_magang'])->name('admin.admin_magang');
 
 
 
@@ -169,7 +169,7 @@ Route::resource('mitras', MitraMagangController::class);
 
 
 Route::get('/admin/mitra/data', [MitraController::class, 'getData'])->name('mitra.data');
-Route::get('/moa', [MitraController::class, 'index'])->name('moa.index');
+Route::get('/Mitra_Kerjasama', [MitraController::class, 'index'])->name('moa.index');
 Route::get('/moa/data', [MitraController::class, 'getData'])->name('mitra.data');
 
 //COMMENT LAPORAN MAGANG

@@ -47,6 +47,10 @@
                                             <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
                                                 <i class="fas fa-comments"></i> Komentar
                                             </button>
+                                            <!-- Tombol Download -->
+                                            <a href="{{ Storage::url($laporan->file_path) }}" class="btn btn-sm btn-success" download>
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -62,17 +66,7 @@
                                                             <div>
                                                                 <strong>{{ $komentar->user->name }}:</strong> {{ $komentar->content }}
                                                             </div>
-                                                            <form action="{{ route('LaporanAkhir.komentar.destroy', ['LaporanAkhir' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn-delete-icon">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                                <!-- Tombol Download -->
-                                                                <a href="{{ Storage::url($laporan->file_path) }}" class="btn btn-sm btn-success" download>
-                                                                    <i class="fas fa-download"></i> Download
-                                                                </a>
-                                                            </form>
+                                                            
                                                         </li>
                                                     @endforeach
                                                 </ul>

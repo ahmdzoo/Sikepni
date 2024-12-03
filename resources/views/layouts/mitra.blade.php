@@ -158,21 +158,21 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/lamarans') ? 'active' : '' }}">
+              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/pengajuan_magang') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-file-alt"></i>
                 <p>Pengajuan Magang</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('mitra.mahasiswa_diterima') }}"
-                class="nav-link {{ request()->is('mitra/mahasiswa_diterima') ? 'active' : '' }}">
+                class="nav-link {{ request()->is('mitra/mahasiswa_magang') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-folder-open"></i>
                 <p>Mahasiswa Magang</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('mitra_admin') }}"
-                class="nav-link {{ request()->is('mitra/mitra_admin') ? 'active' : '' }}">
+                class="nav-link {{ request()->is('mitra/info_kerjasama') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-briefcase"></i>
                 <p>Info Kerjasama</p>
               </a>

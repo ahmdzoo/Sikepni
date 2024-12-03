@@ -149,19 +149,19 @@
             </a>
           </li>   
           <li class="nav-item">
-            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/dosen_lamaran') ? 'active' : '' }}">
+            <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/pengajuan_magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>Pengajuan Magang</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('dosen.magang_mhs') }}" class="nav-link {{ request()->is('dosen/magang_mhs') ? 'active' : '' }}">
+            <a href="{{ route('dosen.magang_mhs') }}" class="nav-link {{ request()->is('dosen/mahasiswa_magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>Mahasiswa Magang</p>
             </a>
           </li>   
           <li class="nav-item">
-            <a href="{{ route('mitra_lowongan') }}" class="nav-link {{ request()->is('mitra-lowongan') ? 'active' : '' }}">
+            <a href="{{ route('mitra_lowongan') }}" class="nav-link {{ request()->is('dosen/daftar_mitra') ? 'active' : '' }}">
               <i class="nav-icon fas fa-handshake"></i>
               <p>Daftar Mitra</p>
             </a>

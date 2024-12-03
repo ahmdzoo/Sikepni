@@ -166,7 +166,7 @@
             </a>
           </li> 
           <li class="nav-item">
-            <a href="{{ route('admin.admin_magang') }}" class="nav-link {{ request()->is('admin/admin_magang') ? 'active' : '' }}">
+            <a href="{{ route('admin.admin_magang') }}" class="nav-link {{ request()->is('admin/laporan_magang') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>Laporan Magang</p>
             </a>

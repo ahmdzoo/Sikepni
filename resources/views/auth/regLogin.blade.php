@@ -137,7 +137,7 @@
               </div>
               <div>
                 <div class="heading">
-                  <a href="{{ route('homepage.landing-page') }}" class="toggle">
+                  <a href="/" class="toggle">
                   <i class="fa-solid fa-arrow-left"></i> Kembali
                   </a>
               </div>

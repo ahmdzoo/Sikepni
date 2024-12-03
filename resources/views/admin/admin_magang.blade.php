@@ -8,7 +8,7 @@
             <div class="row mb-4">
                 <div class="col-sm-12 text-left">
                     <h1 class="m-4" style="font-size: 30px; color: #fff; font-weight: bold;">
-                        Aktifitas Magang
+                        Laporan Magang
                     </h1>
                 </div>
             </div>
