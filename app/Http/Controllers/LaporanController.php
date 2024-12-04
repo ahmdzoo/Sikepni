@@ -76,40 +76,45 @@ class LaporanController extends Controller
 
 
 
-
     public function store(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:pdf|max:5120',
-        ]);
-
-    // Ambil nama asli file
-        $originalName = $request->file('file')->getClientOriginalName();
-
-        // Simpan file di storage dengan nama asli
-        $path = $request->file('file')->storeAs('laporan', $originalName,'public' );
-        
-
-        // Ambil mitra dari lamaran yang diterima oleh mahasiswa
-        $lamaran = Lamaran::where('user_id', auth()->id())
-            ->where('status', 'diterima') // Pastikan hanya mengambil lamaran yang diterima
-            ->first();
-
-            if ($lamaran) {
-                Laporan::create([
-                    'user_id' => auth()->id(),
-                    'mitra_id' => $lamaran->mitra_id, // Simpan ID mitra yang menerima lamaran
-                    'file_path' => $path,
-                    'jenis_laporan' => $request->input('jenis_laporan', 'Harian'), // Default ke 'Harian' jika tidak ada input
-                ]);
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:pdf|max:5120',
+            ]);
+    
+            // Ambil nama asli file
+            $originalName = $request->file('file')->getClientOriginalName();
+    
+            // Simpan file di storage dengan nama asli
+            $path = $request->file('file')->storeAs('laporan', $originalName, 'public');
+    
+            // Ambil mitra dari lamaran yang diterima oleh mahasiswa
+            $lamaran = Lamaran::where('user_id', auth()->id())
+                ->where('status', 'diterima') // Pastikan hanya mengambil lamaran yang diterima
+                ->first();
+    
+            if (!$lamaran) {
+                return redirect()->back()->with('error', 'Anda belum diterima oleh mitra.');
             }
-            
-         else {
-            return redirect()->back()->with('error', 'Anda belum diterima oleh mitra.');
+    
+            Laporan::create([
+                'user_id' => auth()->id(),
+                'mitra_id' => $lamaran->mitra_id, // Simpan ID mitra yang menerima lamaran
+                'file_path' => $path,
+                'jenis_laporan' => $request->input('jenis_laporan', 'Harian'), // Default ke 'Harian' jika tidak ada input
+            ]);
+    
+            return redirect()->back()->with('success', 'Laporan berhasil diupload.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat upload. Silakan coba lagi.');
         }
-
-        return redirect()->back()->with('success', 'Laporan berhasil diupload.');
     }
+    
 
 
     public function edit($id)

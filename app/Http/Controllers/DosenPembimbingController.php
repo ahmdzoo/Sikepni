@@ -42,8 +42,7 @@ class DosenPembimbingController extends Controller
             ->get();
 
         // Ambil laporan akhir magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
-        $laporanAkhir = Laporan::whereIn('mitra_id', $mitraIds)
-            ->where('jenis_laporan', 'Akhir')
+        $laporanAkhir = LaporanAkhir::whereIn('mitra_id', $mitraIds)
             ->with('mahasiswa')
             ->orderBy('created_at', 'desc')
             ->take(5)

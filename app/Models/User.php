@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+class User extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable; // Pastikan trait Notifiable digunakan
+
     protected $fillable = [
         'name',
         'email',

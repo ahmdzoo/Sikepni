@@ -39,9 +39,15 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="file" class="form-label">Pilih File Laporan</label>
-                                <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
+                                <input type="file" class="form-control @error('file') is-invalid @enderror" id="file" name="file" accept=".pdf" required>
+                                @error('file')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                                 <small>Ukuran maksimal 5MB</small>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="jenis_laporan" class="form-label">Jenis Laporan</label>
                                 <select name="jenis_laporan" id="jenis_laporan" class="form-control" required>
@@ -57,6 +63,28 @@
                 </div>
             </div>
         </div>
+
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <li>
+                        {{ $error }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </li>
+                @endforeach
+            </div>
+        @endif
 
         <!-- Daftar Laporan Section -->
         <div class="card shadow-sm">

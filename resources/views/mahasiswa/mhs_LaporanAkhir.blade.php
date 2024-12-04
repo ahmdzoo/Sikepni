@@ -49,6 +49,28 @@
             </div>
         </div>
 
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <li>
+                        {{ $error }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </li>
+                @endforeach
+            </div>
+        @endif
+
         <!-- Daftar Laporan Section -->
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
