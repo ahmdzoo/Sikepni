@@ -7,6 +7,7 @@ use App\Models\Lamaran;
 use App\Models\LaporanAkhir;
 use App\Models\Mitra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,8 +23,10 @@ class LaporanAkhirController extends Controller
         return view('mahasiswa.mhs_LaporanAkhir', compact('LaporanAkhirs'));
     }
 
-    public function dosenLaporanAkhir(Request $request, $mahasiswa_id)
+    public function dosenLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
     {
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
     
         // Ambil mitra yang terkait dengan dosen
@@ -41,8 +44,10 @@ class LaporanAkhirController extends Controller
     }
     
 
-    public function mitraLaporanAkhir(Request $request, $mahasiswa_id)
+    public function mitraLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
     {
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
         $mitraId = auth()->user()->id; // ID mitra yang login
 
         // Ambil mitra terkait user
@@ -231,8 +236,10 @@ class LaporanAkhirController extends Controller
         return view('dosen.magang_mhs', compact('mahasiswaDiterima'));
     }
 
-    public function adminLaporanAkhir(Request $request, $mahasiswa_id)
+    public function adminLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
 {
+    $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
     // Query dasar untuk laporan magang mahasiswa
     $query = LaporanAkhir::with(['mahasiswa', 'mitra']);
     

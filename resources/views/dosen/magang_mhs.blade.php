@@ -30,9 +30,9 @@
                             <div class="card-body d-flex flex-column align-items-center">
                                 <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>
                                 <p class="card-text text-muted" style="font-size: 14px;">Mahasiswa</p>
-                                <a href="{{ route('dosen.laporan', ['mahasiswa_id' => $item->mahasiswa->id]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang &rsaquo;</a>
-                                <a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => $item->mahasiswa->id]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
-
+                                <a href="{{ route('dosen.laporan', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang &rsaquo;</a>
+                                <a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
+                                
                             </div>
                         </div>
                     </div>

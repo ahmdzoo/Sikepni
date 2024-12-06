@@ -7,6 +7,7 @@ use App\Models\Lamaran;
 use App\Models\Laporan;
 use App\Models\Mitra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt; // Menambahkan Crypt
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,15 +26,18 @@ class LaporanController extends Controller
         return view('mahasiswa.mhs_aktifitas', compact('laporans'));
     }
 
-    public function dosenLaporan(Request $request, $mahasiswa_id)
+    public function dosenLaporan(Request $request, $encrypted_mahasiswa_id)
     {
+        // Dekripsi ID mahasiswa
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
     
         // Ambil mitra yang terkait dengan dosen
         $mitras = Mitra::where('dosen_pembimbing_id', $dosenId)->pluck('id');
     
         // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
-            $query = Laporan::whereIn('mitra_id', $mitras)
+        $query = Laporan::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
             ->with('mahasiswa');
 
@@ -45,12 +49,14 @@ class LaporanController extends Controller
         // Paginasi hasil dengan 10 laporan per halaman
         $laporans = $query->paginate(10);
         
-        return view('dosen.dosen_laporan', compact('laporans','mahasiswa_id'));
+        return view('dosen.dosen_laporan', compact('laporans', 'mahasiswa_id'));
     }
-    
 
-    public function mitraLaporan(Request $request, $mahasiswa_id)
+    public function mitraLaporan(Request $request, $encrypted_mahasiswa_id)
     {
+        // Dekripsi ID mahasiswa
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
         $mitraId = auth()->user()->id; // ID mitra yang login
 
         // Ambil mitra terkait user
@@ -69,11 +75,8 @@ class LaporanController extends Controller
         // Paginasi hasil dengan 10 laporan per halaman
         $laporans = $query->paginate(10);
 
-        return view('mitra.mitra_laporan', compact('laporans','mahasiswa_id'));
+        return view('mitra.mitra_laporan', compact('laporans', 'mahasiswa_id'));
     }
-
-
-
 
 
     public function store(Request $request)
@@ -252,8 +255,10 @@ class LaporanController extends Controller
     }
 
 
-    public function admin_mhs($mitra_id)
+    public function admin_mhs($encrypted_mitra_id)
     {
+        $mitra_id = Crypt::decrypt($encrypted_mitra_id);
+
         // Ambil data mitra berdasarkan mitra_id
         $mitra = Mitra::findOrFail($mitra_id);
 
@@ -267,8 +272,10 @@ class LaporanController extends Controller
         return view('admin.admin_mhs', compact('mitra', 'mahasiswaDiterima'));
     }
 
-    public function adminLaporan(Request $request, $mahasiswa_id)
+    public function adminLaporan(Request $request, $encrypted_mahasiswa_id)
     {
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+
         // Query dasar untuk laporan magang mahasiswa
         $query = Laporan::with(['mahasiswa', 'mitra']);
     
@@ -289,22 +296,16 @@ class LaporanController extends Controller
     }
 
     public function admin_magang()
-{
-    // Ambil semua mitra yang memiliki mahasiswa dengan status 'diterima'
-    $mitras = Mitra::whereHas('lamaran', function ($query) {
-        $query->where('status', 'diterima');
-    })->with(['lamaran' => function ($query) {
-        $query->where('status', 'diterima')->with('mahasiswa');
-    }])->get();
+    {
+        // Ambil semua mitra yang memiliki mahasiswa dengan status 'diterima'
+        $mitras = Mitra::whereHas('lamaran', function ($query) {
+            $query->where('status', 'diterima');
+        })->with(['lamaran' => function ($query) {
+            $query->where('status', 'diterima')->with('mahasiswa');
+        }])->get();
 
-    return view('admin.admin_magang', compact('mitras'));
-}
-
-    
-
-
-
-
+        return view('admin.admin_magang', compact('mitras'));
+    }
 
 
 }
