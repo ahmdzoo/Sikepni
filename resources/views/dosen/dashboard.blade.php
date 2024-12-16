@@ -70,7 +70,7 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
-                                                <td><a href="{{ route('dosen.laporan', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
+                                                <td><a href="{{ route('dosen.laporan', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -106,7 +106,7 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
-                                                <td><a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
+                                                <td><a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
                                             </tr>
                                         @empty
                                             <tr>

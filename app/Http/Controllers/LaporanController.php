@@ -132,6 +132,7 @@ class LaporanController extends Controller
 
         $request->validate([
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'jenis_laporan' => 'nullable|string',
         ]);
 
         if ($request->hasFile('file')) {
@@ -145,6 +146,9 @@ class LaporanController extends Controller
             // Update path di database dengan nama file asli
             $laporan->file_path = 'laporan/' . $originalName;
         }
+
+        // Update jenis laporan jika ada perubahan
+        $laporan->jenis_laporan = $request->input('jenis_laporan');
 
         $laporan->save();
 

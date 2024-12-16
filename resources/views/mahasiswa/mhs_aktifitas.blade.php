@@ -57,7 +57,7 @@
                                 </select>
                             </div>
                             
-                            <button type="submit" class="btn btn-danger">Upload Laporan</button>
+                            <button type="submit" class="btn btn-primary">Upload Laporan</button>
                         </form>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                                         <!-- Dropdown Action -->
                                         <div class="dropdown">
                                             <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton-{{ $laporan->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="bi bi-three-dots"></i>
+                                                <i class="fa fa-ellipsis-h"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton-{{ $laporan->id }}">
                                                 
@@ -222,6 +222,14 @@
                                                         <label for="file" class="form-label">File Laporan (kosongkan jika tidak ingin mengubah)</label>
                                                         <input type="file" class="form-control" id="file" name="file" accept=".pdf">
                                                         <small>File saat ini: {{ basename($laporan->file_path) }}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jenis_laporan">Jenis Laporan</label>
+                                                        <select name="jenis_laporan" id="jenis_laporan" class="form-control" required>
+                                                            <option value="Harian" {{ $laporan->jenis_laporan == 'Harian' ? 'selected' : '' }}>Harian</option>
+                                                            <option value="Mingguan" {{ $laporan->jenis_laporan == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+                                                            <option value="Bulanan" {{ $laporan->jenis_laporan == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+                                                        </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Update Laporan</button>
                                                 </form>

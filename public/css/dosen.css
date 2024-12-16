@@ -365,3 +365,84 @@ body{
 }
 
 
+.dropdown-menu {
+  width: 400px; /* Lebarkan sesuai kebutuhan */
+  max-height: 500px; /* Tinggikan sesuai kebutuhan */
+  overflow-y: auto; /* Scroll jika data terlalu panjang */
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown-submenu .dropdown-menu {
+  position: relative; /* Agar berada tepat di bawah */
+  left: 0;
+  top: 0;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  }
+  
+  .dropdown-item {
+  white-space: normal;
+  padding: 10px;
+  
+  }
+  
+  
+  
+  .dropdown-content {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: relative;
+    width: 100%; /* Memastikan konten dropdown mengambil ruang penuh */
+  }
+  
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .nav-item .fa-bell {
+    color: white !important; /* Mengubah warna ikon menjadi putih */
+  }
+  
+  .dropdown-item:active {
+    background-color: inherit !important;
+    color: inherit !important;
+    outline: none !important;
+  }
+  
+  span.menu {
+    margin-left: 10px; /* Menggeser span menu ke kanan dengan margin kiri */
+  }
+
+  /* Dropdown menu */
+.dropdown-menu {
+  width: 400px; /* Lebarkan dropdown pada ukuran layar besar */
+  max-height: 500px; /* Atur tinggi dropdown agar tidak terlalu tinggi */
+  overflow-y: auto; /* Membuat dropdown scrollable jika terlalu panjang */
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsif: Mengurangi lebar dropdown saat layar mengecil */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100%; /* Memperlebar dropdown agar sesuai dengan lebar layar kecil */
+    max-width: 300px; /* Tentukan lebar maksimal agar tidak terlalu besar */
+  }
+  
+  .dropdown-item {
+    font-size: 0.875rem; /* Mengecilkan ukuran font pada dropdown item */
+  }
+}
+
+/* Menyesuaikan lebih lanjut jika layar lebih kecil */
+@media (max-width: 480px) {
+  .dropdown-menu {
+    width: 100%;
+    max-width: 250px; /* Lebar dropdown pada layar sangat kecil */
+  }
+
+  .dropdown-item {
+    font-size: 0.75rem; /* Mengecilkan font lebih lanjut */
+  }
+}

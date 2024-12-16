@@ -60,9 +60,10 @@
            {{ Auth::user()->email }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ubahPasswordModal">
+          <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#ubahPasswordModal">
             <i class="fas fa-key"></i> Reset Password
-          </a>                 
+          </a>
+                     
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i> Logout
@@ -71,6 +72,21 @@
             @csrf
           </form>
         </div>
+      </li>
+
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="mainDropdown" role="button" data-toggle="dropdown">
+              <i class="fas fa-bell"></i>
+          </a>
+          <div class="dropdown-menu p-3" id="notifikasi"  aria-labelledby="mainDropdown" data-auto-close="outside">
+              <span class="dropdown-item dropdown-header">Notifikasi</span>
+              <div class="dropdown-divider"></div>
+              <!-- Pengajuan Magang -->
+                          <span class="dropdown-item text-muted">Tidak ada Notifikasi</span>
+
+              </a>
+              <div class="dropdown-divider"></div>
+          </div>
       </li>
     </ul>
   </nav>
@@ -263,6 +279,44 @@
           showMessage('Terjadi kesalahan. Silakan coba lagi.', false);
       });
   });
+
+  $(document).ready(function () {
+    // Mengaktifkan dropdown
+    $('.dropdown-toggle').dropdown();
+});
+
+
+
+$(document).ready(function() {
+        // Mencegah dropdown ditutup saat mengklik elemen di dalamnya
+        $('#notifikasi').on('click', function(event) {
+            event.stopPropagation();
+        });
+
+        // Toggle konten dropdown child saat diklik
+        $('.dropdown-item .dropdown-toggle').on('click', function(e) {
+            const content = $(this).next('.dropdown-content');
+            content.toggle();
+            e.preventDefault();
+        });
+    });
+
+    $(document).ready(function() {
+    // Fungsi untuk menampilkan dropdown
+    $('#pengajuanDropdown').click(function() {
+        $('#pengajuanContent').toggle();
+    });
+
+    $('#laporanMagangDropdown').click(function() {
+        $('#laporanMagangContent').toggle();
+    });
+
+    $('#laporanAkhirDropdown').click(function() {
+        $('#laporanAkhirContent').toggle();
+    });
+
+    
+});
 </script>
 
 

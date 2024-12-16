@@ -104,7 +104,7 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
-                                                <td><a href="{{ route('mitra.laporan', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
+                                                <td><a href="{{ route('mitra.laporan', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -140,7 +140,7 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $laporan->mahasiswa->name }}</td>
                                                 <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
-                                                <td><a href="{{ route('mitra.LaporanAkhir', ['mahasiswa_id' => $laporan->mahasiswa->id]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
+                                                <td><a href="{{ route('mitra.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}" class="btn btn-primary btn-sm">Lihat</a></td>
                                         @empty
                                             <tr>
                                                 <td colspan="4" class="text-center">Belum Ada Laporan Akhir Magang</td>

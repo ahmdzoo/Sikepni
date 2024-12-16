@@ -24,7 +24,7 @@
                 <div class="inner">
                   <h3>{{ $jumlahMitra ?? 0 }}</h3>
                 </sup></h3>
-                  <p>Jumlah Mitra</p>
+                  <p>Mitra</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-handshake"></i>
@@ -39,7 +39,7 @@
               <a href="{{ route('data_user') }}">
                 <div class="inner">
                   <h3>{{ $jumlahUser ?? 0 }}</sup></h3>
-                  <p>Jumlah User</p>
+                  <p>User</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-users"></i>

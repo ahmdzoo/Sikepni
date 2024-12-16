@@ -42,7 +42,7 @@
                                 <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
                                 <small>Ukuran maksimal 5MB</small>
                             </div>
-                            <button type="submit" class="btn btn-danger">Upload Laporan</button>
+                            <button type="submit" class="btn btn-primary">Upload Laporan</button>
                         </form>
                     </div>
                 </div>

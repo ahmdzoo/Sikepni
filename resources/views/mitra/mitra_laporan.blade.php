@@ -21,7 +21,7 @@
             <div class="card-body">
                 <!-- Filter Berdasarkan Jenis Laporan -->
                 <div class="filter-section mb-3 ml-3 text-left">
-                    <form method="GET" action="{{ route('mitra.laporan', $mahasiswa_id) }}" class="d-inline-block">
+                    <form method="GET" action="{{ route('mitra.laporan', ['mahasiswa_id' => Crypt::encrypt($mahasiswa_id)]) }}" class="d-inline-block">
                         <div class="input-group" style="width: 250px; display: inline-flex;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-primary text-white"><i class="fas fa-filter"></i></span>

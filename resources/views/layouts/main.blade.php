@@ -33,10 +33,6 @@
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!-- CKEditor -->
-  <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
-
-  
 
   @yield('css') 
 </head>
@@ -68,6 +64,67 @@
           </form>
         </div>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="mainDropdown" role="button" data-toggle="dropdown">
+            <i class="fas fa-bell"></i>
+            @if($lamarans->count() + $laporanMagang->count() + $laporanAkhir->count() > 0)
+              <span class="badge badge-warning navbar-badge">
+                {{ $lamarans->count() + $laporanMagang->count() + $laporanAkhir->count() }}
+              </span>
+            @endif
+        </a>
+        <div class="dropdown-menu p-3"  id="notifikasi"  aria-labelledby="mainDropdown" data-auto-close="outside">
+            <span class="dropdown-item dropdown-header">Notifikasi</span>
+            <div class="dropdown-divider"></div>
+            <!-- Pengajuan Magang -->
+            <a href="javascript:void(0)" class="dropdown-item" id="pengajuanDropdown">
+              <i class="fas fa-file-alt"></i><span class="menu">{{$lamarans->count()}} Pengajuan Magang</span>
+                <div class="dropdown-content" id="pengajuanContent" style="display: none;">
+                    @forelse ($lamarans as $lamaran)
+                        <a class="dropdown-item" href="{{ route('mitra_lamaran', $lamaran->id) }}">
+                            <small><b>{{ $lamaran->user->name }}</b> Mengirim Pengajuan Magang</small>
+                            <small class="text-muted d-block">{{ $lamaran->created_at->format('d M Y') }}</small>
+                        </a>
+                    @empty
+                        <span class="dropdown-item text-muted">Tidak ada Notifikasi</span>
+                    @endforelse
+                </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <!-- Laporan Magang -->
+            <a href="javascript:void(0)" class="dropdown-item" id="laporanMagangDropdown">
+                <i class="fas fa-calendar-alt"></i><span class="menu">{{$laporanMagang->count()}} Laporan Magang</span>
+                <div class="dropdown-content" id="laporanMagangContent" style="display: none;">
+                    @forelse ($laporanMagang as $laporan)
+                        <a class="dropdown-item" href="{{ route('admin.laporan', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
+                            <small><b>{{ $laporan->mahasiswa->name }}</b> Mengunggah Laporan Magang {{ $laporan->jenis_laporan }} : {{ basename($laporan->file_path) }}</small>
+                            <small class="text-muted d-block">{{ $laporan->created_at->format('d M Y') }}</small>
+                        </a>
+                    @empty
+                        <span class="dropdown-item text-muted">Tidak ada Notifikasi</span>
+                    @endforelse
+                </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <!-- Laporan Akhir Magang -->
+            <a href="javascript:void(0)" class="dropdown-item"  id="laporanAkhirDropdown">
+                <i class="fas fa-file-invoice"></i><span class="menu">{{$laporanAkhir->count()}} Laporan Akhir Magang</span>
+                <div class="dropdown-content" id="laporanAkhirContent" style="display: none;">
+                    @forelse ($laporanAkhir as $laporan)
+                        <a class="dropdown-item" href="{{ route('admin.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
+                            <small><b>{{ $laporan->mahasiswa->name }}</b> Mengunggah Laporan Akhir</small>
+                            <small class="text-muted d-block">{{ $laporan->created_at->format('d M Y') }}</small>
+                        </a>
+                    @empty
+                        <span class="dropdown-item text-muted">Tidak ada Notifikasi</span>
+                    @endforelse
+                </div>
+            </a>
+            <div class="dropdown-divider"></div>
+        </div>
+    </li>
+    
+    
     </ul>
   </nav>
 
@@ -260,6 +317,49 @@
           showMessage('Terjadi kesalahan. Silakan coba lagi.', false);
       });
   });
+
+  $(document).ready(function () {
+    // Mengaktifkan dropdown
+    $('.dropdown-toggle').dropdown();
+});
+
+$(document).ready(function() {
+
+    
+});
+
+$(document).ready(function() {
+        // Mencegah dropdown ditutup saat mengklik elemen di dalamnya
+        $('#notifikasi').on('click', function(event) {
+            event.stopPropagation();
+        });
+
+        // Toggle konten dropdown child saat diklik
+        $('.dropdown-item .dropdown-toggle').on('click', function(e) {
+            const content = $(this).next('.dropdown-content');
+            content.toggle();
+            e.preventDefault();
+        });
+    });
+
+    $(document).ready(function() {
+    // Fungsi untuk menampilkan dropdown
+    $('#pengajuanDropdown').click(function() {
+        $('#pengajuanContent').toggle();
+    });
+
+    $('#laporanMagangDropdown').click(function() {
+        $('#laporanMagangContent').toggle();
+    });
+
+    $('#laporanAkhirDropdown').click(function() {
+        $('#laporanAkhirContent').toggle();
+    });
+
+    
+});
+
+
 </script>
 
 
