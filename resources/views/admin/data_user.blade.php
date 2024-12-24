@@ -107,10 +107,16 @@
                   </select>
               </div>
               
-                <div class="form-group">
-                      <label for="jurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
-                      <input type="text" class="form-control form-control-sm" id="jurusan" name="jurusan">
-                  </div>
+              <div class="form-group">
+                <label for="jurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
+                <select name="jurusan" id="jurusan" class="form-control form-control-sm">
+                    <option value="">Pilih Jurusan</option>
+                    @foreach($jurusans as $jurusan)
+                        <option value="{{ $jurusan->name }}">{{ $jurusan->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
                   <div class="form-group">
                       <label for="nim">NIM <small>(Hanya untuk Mahasiswa)</small></label>
                       <input type="text" class="form-control form-control-sm" id="nim" name="nim">
@@ -177,10 +183,16 @@
                   </select>
               </div>
               
-                  <div class="form-group">
-                      <label for="editJurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
-                      <input type="text" class="form-control form-control-sm" id="editJurusan" name="jurusan">
-                  </div>
+              <div class="form-group">
+                <label for="editJurusan">Jurusan <small>(Hanya untuk Mahasiswa)</small></label>
+                <select name="jurusan" id="editJurusan" class="form-control form-control-sm">
+                    <option value="">Pilih Jurusan</option>
+                    @foreach($jurusans as $jurusan)
+                        <option value="{{ $jurusan->name }}">{{ $jurusan->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
                   <div class="form-group">
                       <label for="editNim">NIM <small>(Hanya untuk Mahasiswa)</small></label>
                       <input type="text" class="form-control form-control-sm" id="editNim" name="nim">

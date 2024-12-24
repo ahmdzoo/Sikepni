@@ -31,6 +31,7 @@
                             <th>Nama Mahasiswa</th>
                             <th>Email</th>
                             <th>CV</th>
+                            <th>Perusahaan</th>
                             <th>Tanggal Lamaran</th>
                         </tr>
                     </thead>
@@ -45,6 +46,7 @@
                                         Lihat CV
                                     </a>
                                 </td>
+                                <td>{{ $lamaran->mitra->mitraUser->name  }}</td>
                                 <td>{{ $lamaran->created_at->format('d M Y') }}</td>
                             </tr>
                         @endforeach

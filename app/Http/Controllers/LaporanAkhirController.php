@@ -35,7 +35,7 @@ class LaporanAkhirController extends Controller
         // Query dasar untuk LaporanAkhir sesuai mitra dan mahasiswa tertentu
             $query = LaporanAkhir::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
-            ->with('mahasiswa');
+            ->whereHas('mahasiswa');
 
         // Paginasi hasil dengan 10 LaporanAkhir per halaman
         $LaporanAkhirs = $query->paginate(10);
@@ -56,7 +56,7 @@ class LaporanAkhirController extends Controller
         // Query dasar untuk LaporanAkhir sesuai mitra dan mahasiswa tertentu
         $query = LaporanAkhir::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
-            ->with('mahasiswa');
+            ->whereHas('mahasiswa');
 
         // Paginasi hasil dengan 10 LaporanAkhir per halaman
         $LaporanAkhirs = $query->paginate(10);
@@ -198,7 +198,7 @@ class LaporanAkhirController extends Controller
             ->whereHas('mitra', function ($query) {
                 $query->where('nama_mitra_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->get();
 
         // Debugging output ke log untuk memastikan data tidak kosong
@@ -220,7 +220,7 @@ class LaporanAkhirController extends Controller
             ->whereHas('mitra', function ($query) {
                 $query->where('dosen_pembimbing_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->get();
 
         // Debugging output ke log untuk memastikan data tidak kosong

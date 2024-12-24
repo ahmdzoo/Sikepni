@@ -36,14 +36,14 @@ class DosenPembimbingController extends Controller
         // Ambil laporan magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
         $laporanMagang = Laporan::whereIn('mitra_id', $mitraIds)
             ->where('jenis_laporan', '!=', 'Akhir')
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
         // Ambil laporan akhir magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
         $laporanAkhir = LaporanAkhir::whereIn('mitra_id', $mitraIds)
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
@@ -51,7 +51,7 @@ class DosenPembimbingController extends Controller
         // Ambil mahasiswa yang lamarannya diterima dan diampu oleh dosen ini
         $mahasiswaDiterima = Lamaran::whereIn('mitra_id', $mitraIds)
             ->where('status', 'diterima') // Pastikan statusnya diterima
-            ->with('mahasiswa') // Mengambil data mahasiswa yang melamar
+            ->whereHas('mahasiswa') // Mengambil data mahasiswa yang melamar
             ->orderBy('updated_at', 'desc') // Urutkan berdasarkan tanggal lamaran
             ->take(5) // Batasi 5 data terbaru
             ->get();
@@ -73,7 +73,7 @@ class DosenPembimbingController extends Controller
         $mitras = Mitra::where('dosen_pembimbing_id', $user->id)->pluck('id');
 
         // Ambil lamaran yang terkait dengan mitra
-        $lamarans = Lamaran::whereIn('mitra_id', $mitras)->with('user')->get();
+        $lamarans = Lamaran::whereIn('mitra_id', $mitras)->with('user')->whereHas('mahasiswa')->get();
 
         return view('dosen.dosen_lamaran', compact('lamarans'));
     }

@@ -39,7 +39,7 @@ class LaporanController extends Controller
         // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
         $query = Laporan::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
-            ->with('mahasiswa');
+            ->whereHas('mahasiswa');
 
         // Tambahkan filter jenis laporan jika tersedia
         if ($request->has('filter_jenis') && $request->filter_jenis) {
@@ -65,7 +65,7 @@ class LaporanController extends Controller
         // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
         $query = Laporan::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
-            ->with('mahasiswa');
+            ->whereHas('mahasiswa');
 
         // Tambahkan filter jenis laporan jika tersedia
         if ($request->has('filter_jenis') && $request->filter_jenis) {
@@ -219,7 +219,7 @@ class LaporanController extends Controller
                 $query->where('nama_mitra_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
             ->orderBy('updated_at', 'desc')
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->get();
 
         // Debugging output ke log untuk memastikan data tidak kosong
@@ -242,7 +242,7 @@ class LaporanController extends Controller
                 $query->where('dosen_pembimbing_id', auth()->id()); // Sesuaikan dengan kolom ID pengguna mitra
             })
             ->orderBy('updated_at', 'desc')
-            ->with('mahasiswa')
+            ->whereHas('mahasiswa')
             ->get();
 
         // Debugging output ke log untuk memastikan data tidak kosong
@@ -269,7 +269,7 @@ class LaporanController extends Controller
         // Ambil data mahasiswa yang diterima oleh mitra ini
         $mahasiswaDiterima = Lamaran::where('mitra_id', $mitra_id)
                                     ->where('status', 'diterima')
-                                    ->with('mahasiswa') // Pastikan ada relasi mahasiswa di model Lamaran
+                                    ->whereHas('mahasiswa') // Pastikan ada relasi mahasiswa di model Lamaran
                                     ->get();
 
         // Kembalikan tampilan dengan data mitra dan mahasiswa
@@ -305,7 +305,7 @@ class LaporanController extends Controller
         $mitras = Mitra::whereHas('lamaran', function ($query) {
             $query->where('status', 'diterima');
         })->with(['lamaran' => function ($query) {
-            $query->where('status', 'diterima')->with('mahasiswa');
+            $query->where('status', 'diterima')->whereHas('mahasiswa');
         }])->get();
 
         return view('admin.admin_magang', compact('mitras'));

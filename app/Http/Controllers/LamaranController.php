@@ -21,7 +21,7 @@ class LamaranController extends Controller
         // Cek apakah mitra ditemukan
         if ($mitra) {
             // Ambil semua lamaran yang terkait dengan mitra_id tersebut
-            $lamarans = Lamaran::where('mitra_id', $mitra->id)->get();
+            $lamarans = Lamaran::where('mitra_id', $mitra->id)->whereHas('mahasiswa')->get();
         } else {
             // Jika mitra tidak ditemukan, set lamarans sebagai koleksi kosong
             $lamarans = collect(); // Membuat Collection kosong

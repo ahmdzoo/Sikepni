@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -10,10 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class RegLoginController extends Controller
 {
-    // Tampilan Login
+    // Tampilan Regis
     public function ShowRegistration()
     {
-        return view('auth.regLogin');
+        $jurusans = Jurusan::all(); // Ambil semua data jurusan
+        return view('auth.regLogin', compact('jurusans'));
     }
 
     // Proses Registrasi

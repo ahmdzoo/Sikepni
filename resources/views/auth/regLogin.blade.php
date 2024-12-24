@@ -67,17 +67,15 @@
                 </div>
 
                 <div class="input-wrap">
-                  <input
-                    type="jurusan"
-                    name="jurusan"
-                    class="input-field"
-                    autocomplete="off"
-                    required
-                    oninput="removeSpecialChars(this)"
-
-                  />
+                  <select name="jurusan" class="input-field" required>
+                    <option value="" disabled selected>Pilih Jurusan</option>
+                    @foreach ($jurusans as $jurusan)
+                      <option value="{{ $jurusan->name }}">{{ $jurusan->name }}</option>
+                    @endforeach
+                  </select>
                   <label>Jurusan</label>
                 </div>
+                
                 
                 <div class="input-wrap">
                   <input

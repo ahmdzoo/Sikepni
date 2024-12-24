@@ -47,5 +47,6 @@ class Lamaran extends Model
 
 
 
+
     
 }

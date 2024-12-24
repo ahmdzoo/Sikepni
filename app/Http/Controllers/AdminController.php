@@ -76,7 +76,9 @@ class AdminController extends Controller
                 ->make(true);
         }
 
-        return view('admin.data_user');
+        $jurusans = Jurusan::all();
+
+        return view('admin.data_user', compact('jurusans'));
     }
 
 

@@ -205,17 +205,17 @@
           </li>
           
           <li class="nav-item">
-            <a href="{{ route('data_mitra') }}" class="nav-link {{ request()->is('admin/data_mitra') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-handshake"></i>
-              <p>Data Mitra</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="{{ route('data_user') }}" class="nav-link {{ request()->is('admin/data_user') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>Data User</p>
             </a>
           </li> 
+          <li class="nav-item">
+            <a href="{{ route('data_mitra') }}" class="nav-link {{ request()->is('admin/data_mitra') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-handshake"></i>
+              <p>Data Mitra</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{{ route('jurusan') }}" class="nav-link {{ request()->is('admin/jurusan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-cogs"></i>
