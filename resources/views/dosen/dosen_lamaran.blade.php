@@ -3,6 +3,11 @@
 
 @section('content')
 <div class="content-wrapper" style=" min-height: 100vh;">
+    <div class="content-header">
+        <div class="container-fluid">
+            <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Pengajuan Magang</h1>
+        </div>
+    </div>
     <div class="container-fluid">
         @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -10,7 +15,7 @@
 
         <div class="card p-4" style="width: 100%;">
             <div class="card-header">
-                <h5 class="m-0" style="font-size: 24px; font-weight: bold;">Daftar Lamaran Magang</h5>
+                <h5 class="m-0" style="font-size: 20px; font-weight: bold;">Daftar Lamaran Magang</h5>
             </div>
 
             <div class="mb-3">

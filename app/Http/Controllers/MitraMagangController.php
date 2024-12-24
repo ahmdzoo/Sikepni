@@ -35,20 +35,20 @@ class MitraMagangController extends Controller
         $jumlahMahasiswaDiterima = Lamaran::where('status', 'diterima')
             ->whereHas('mitra', function ($query) use ($dosenId) {
                 $query->where('nama_mitra_id', $dosenId);
-            })->whereHas('mahasiswa')->count();
+            })->count();
 
 
         // Ambil laporan magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
         $laporanMagang = Laporan::whereIn('mitra_id', $mitraIds)
             ->where('jenis_laporan', '!=', 'Akhir')
-            ->whereHas('mahasiswa')
+            
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
         // Ambil laporan akhir magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
         $laporanAkhir = LaporanAkhir::whereIn('mitra_id', $mitraIds)
-            ->whereHas('mahasiswa')
+            
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
@@ -56,7 +56,7 @@ class MitraMagangController extends Controller
         // Ambil mahasiswa yang lamarannya diterima dan diampu oleh dosen ini
         $mahasiswaDiterima = Lamaran::whereIn('mitra_id', $mitraIds)
             ->where('status', 'diterima') // Pastikan statusnya diterima
-            ->whereHas('mahasiswa') // Mengambil data mahasiswa yang melamar
+             // Mengambil data mahasiswa yang melamar
             ->orderBy('updated_at', 'desc') // Urutkan berdasarkan tanggal lamaran
             ->take(5) // Batasi 5 data terbaru
             ->get();

@@ -68,7 +68,7 @@
 
                 <div class="input-wrap">
                   <select name="jurusan" class="input-field" required>
-                    <option value="" disabled selected>Pilih Jurusan</option>
+                    <option value="" disabled selected></option>
                     @foreach ($jurusans as $jurusan)
                       <option value="{{ $jurusan->name }}">{{ $jurusan->name }}</option>
                     @endforeach

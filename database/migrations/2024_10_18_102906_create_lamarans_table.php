@@ -13,7 +13,7 @@ return new class extends Migration {
     {
         Schema::create('lamarans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable()->constrained()->onDelete('cascade'); // ID mahasiswa
+            $table->unsignedBigInteger('user_id')->nullable()->constrained('users')->onDelete('cascade'); // ID mahasiswa
             $table->unsignedBigInteger('mitra_id'); // ID mitra yang menerima lamaran
             $table->foreign('mitra_id')->references('id')->on('mitras')->onDelete('cascade'); // Menambahkan foreign key
             $table->string('cv_path'); // Path ke file CV
