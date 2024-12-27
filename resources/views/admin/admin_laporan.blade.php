@@ -109,18 +109,4 @@
 </div>
 @include('layouts/footer')
 
-<!-- CSS Responsif Tambahan -->
-<style>
-    /* Ukuran teks dan padding tabel akan mengecil pada layar kecil */
-    @media (max-width: 768px) {
-        .custom-table th, .custom-table td {
-            font-size: 8px; /* Ukuran font lebih kecil */
-            padding: 4px;    /* Padding lebih kecil */
-        }
-        .custom-table .btn {
-            padding: 2px 4px; /* Ukuran tombol lebih kecil */
-            font-size: 5px;  /* Ukuran font tombol lebih kecil */
-        }
-    }
-</style>
 @endsection
