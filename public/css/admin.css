@@ -342,3 +342,31 @@ font-size: 0.8rem; /* Ukuran ikon lebih kecil */
     font-size: 0.75rem; /* Mengecilkan font lebih lanjut */
   }
 }
+
+
+/* Styling for responsive cards in 4 columns per row */
+.row > .col-md-3 {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .row > .col-md-3 {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row > .col-md-3 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .row > .col-md-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}

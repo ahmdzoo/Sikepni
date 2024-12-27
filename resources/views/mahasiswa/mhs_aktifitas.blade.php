@@ -194,12 +194,12 @@
                                                 <div class="form-group">
                                                     <textarea name="content" class="form-control" placeholder="Tulis komentar..." required></textarea>
                                                 </div>
-                                                <button type="submit" class="btn btn-sm btn-success mt-2">Kirim Komentar</button>
+                                                <button type="submit" class="btn btn-sm btn-success mt-2">Kirim</button>
+                                                <!-- Tombol untuk menutup komentar -->
+                                                <button type="button" class="btn btn-sm btn-secondary mt-2" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
+                                                    Tutup
+                                                </button>
                                             </form>
-                                            <!-- Tombol untuk menutup komentar -->
-                                            <button type="button" class="btn btn-secondary mt-3" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
-                                                Close
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>
