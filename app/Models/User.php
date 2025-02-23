@@ -45,6 +45,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === 'admin';
     }
 
+    // Fungsi untuk memeriksa apakah pengguna adalah Admin
+    public function isKordinator()
+    {
+        return $this->role === 'kordinator';
+    }
+
     public function hasRole($role)
     {
         return $this->role === $role;
@@ -78,4 +84,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Komentar::class);
     }
 
+    public function mahasiswa()
+    {
+        return $this->belongsToMany(User::class, 'dosen_mahasiswa', 'dosen_id', 'mahasiswa_id');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsToMany(User::class, 'dosen_mahasiswa', 'mahasiswa_id', 'dosen_id');
+    }
 }

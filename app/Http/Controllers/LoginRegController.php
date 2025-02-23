@@ -38,6 +38,8 @@ class LoginRegController extends Controller
             switch ($user->role) {
                 case 'admin':
                     return redirect()->intended('admin/dashboard'); // Rute untuk admin
+                case 'kordinator':
+                    return redirect()->intended('kordinator/dashboard');
                 case 'mahasiswa':
                     return redirect()->intended('mahasiswa/dashboard'); // Rute untuk mahasiswa
                 case 'mitra_magang':
@@ -49,7 +51,7 @@ class LoginRegController extends Controller
             }
         }
 
-            // Pesan jika terjadi kesalahan
+        // Pesan jika terjadi kesalahan
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->withInput($request->only('email'));

@@ -10,7 +10,7 @@ class Laporan extends Model
     use HasFactory;
 
 
-    protected $fillable = ['user_id', 'mitra_id', 'file_path', 'jenis_laporan'];
+    protected $fillable = ['user_id', 'mitra_id', 'file_path', 'jenis_laporan', 'nilai'];
 
 
     public function mahasiswa()
@@ -28,5 +28,14 @@ class Laporan extends Model
         return $this->hasMany(Komentar::class);
     }
 
-}
+    public function scopeForDosen($query, $dosenId)
+    {
+        return $query->whereHas('mahasiswa', function ($q) use ($dosenId) {
+            $q->whereHas('dosen', function ($subQuery) use ($dosenId) {
+                $subQuery->where('dosen_id', $dosenId);
+            });
+        });
+    }
 
+
+}

@@ -22,7 +22,6 @@
                                 <th class="text-center">Dokumen PKS</th>
                                 <th>Nama Mitra</th>
                                 <th>Jurusan</th>
-                                <th>Dosen Pembimbing</th>
                                 <th class="text-center">Mulai Magang</th>
                                 <th class="text-center">Selesai Magang</th>
                                 <th>Alamat</th>
@@ -46,7 +45,6 @@
                                 
                                 <td>{{ $mitra->mitraUser->name ?? '-' }}</td>
                                 <td>{{ $mitra->jurusan->name ?? '-' }}</td>
-                                <td>{{ $mitra->dosenPembimbing->name ?? '-' }}</td>
                                 <td class="text-center">{{ $mitra->tanggal_mulai_magang }}</td>
                                 <td class="text-center">{{ $mitra->tanggal_selesai_magang }}</td>
                                 <td>{{ $mitra->alamat ?? '-' }}</td>
@@ -87,17 +85,6 @@
                                     <option value="{{ $jurusan->id }}" 
                                         {{ old('jurusan_id', $mitra->jurusan->id ?? '') == $jurusan->id ? 'selected' : '' }}>
                                         {{ $jurusan->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dosen_pembimbing_id" class="form-label">Dosen Pembimbing</label>
-                            <select id="dosen_pembimbing_id" name="dosen_pembimbing_id" class="form-select select2 w-100" required>
-                                @foreach ($dosenPembimbing as $dosen)
-                                    <option value="{{ $dosen->id }}" 
-                                        {{ old('dosen_pembimbing_id', $mitra->dosenPembimbing->id ?? '') == $dosen->id ? 'selected' : '' }}>
-                                        {{ $dosen->name }}
                                     </option>
                                 @endforeach
                             </select>

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.kordinator')
 @section('title', 'Data User | SIKEPNI')
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
@@ -34,7 +34,7 @@
                 </button>
                 
                 <!-- Filter Role -->
-                <form method="GET" action="{{ route('data_user') }}" class="mb-3">
+                <form method="GET" action="{{ route('kordinator.data_user') }}" class="mb-3">
                     <div class="form-group">
                         <label for="role">Filter by Role:</label>
                         <select name="role" id="role" class="form-control form-control-sm" onchange="this.form.submit()">
@@ -44,7 +44,6 @@
                             <option value="mitra_magang" {{ request('role') == 'mitra_magang' ? 'selected' : '' }}>Mitra Magang</option>
                             <option value="kordinator" {{ request('role') == 'kordinator' ? 'selected' : '' }}>Kordinator</option>
                             <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-
                         </select>
                     </div>
                 </form>
@@ -81,7 +80,7 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="{{ route('store_user') }}" method="POST">
+        <form action="{{ route('kordinator.store_user') }}" method="POST">
           @csrf
           <div class="modal-header">
             <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
@@ -105,8 +104,8 @@
                       <option value="mahasiswa">Mahasiswa</option>
                       <option value="dosen_pembimbing">Dosen Pembimbing</option>
                       <option value="mitra_magang">Mitra Magang</option>
-                      <option value="kordinator">Kordinator</option>
-                      <option value="admin">Admin</option>
+                      <option value="kordinator">kordinator</option>
+                      <Aption value="admin">Admin</Aption>
                   </select>
               </div>
               
@@ -182,8 +181,8 @@
                       <option value="mahasiswa">Mahasiswa</option>
                       <option value="dosen_pembimbing">Dosen Pembimbing</option>
                       <option value="mitra_magang">Mitra Magang</option>
-                      <option value="kordinator">Kordinator</option>
-                      <option value="admin">Admin</option>
+                      <option value="kordinator">kordinator</option>
+                      <Kption value="kordinator">Kordinator</Kption>
                   </select>
               </div>
               
@@ -296,7 +295,7 @@
         searching: true,
         ordering: false,
         ajax: {
-            url: "{{ route('data_user') }}",
+            url: "{{ route('kordinator.data_user') }}",
             data: function (d) {
                 d.role = $('#role').val(); // Menambahkan parameter role
                 d.search = $('input[type="search"]').val(); // Pastikan ini sesuai dengan apa yang diterima di controller
@@ -350,7 +349,7 @@
 }
 
 function editUser(id) {
-    $.get('/admin/users/' + id, function(user) {
+    $.get('/kordinator/users/' + id, function(user) {
         $('#editUserId').val(user.id);
         $('#editName').val(user.name);
         $('#editEmail').val(user.email);
@@ -358,13 +357,13 @@ function editUser(id) {
         $('#editJurusan').val(user.jurusan);
         $('#editNim').val(user.nim);
         $('#editPassword').val(''); // Kosongkan password saat modal dibuka
-        $('#editUserForm').attr('action', '/admin/users/' + user.id);
+        $('#editUserForm').attr('action', '/kordinator/users/' + user.id);
     });
 }
 
 function deleteUser(id) {
     $('#deleteUserId').val(id);
-    $('#deleteUserForm').attr('action', '/admin/users/' + id);
+    $('#deleteUserForm').attr('action', '/kordinator/users/' + id);
 }
 
 function togglePasswordVisibility(inputId, iconId) {

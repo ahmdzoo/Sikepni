@@ -23,9 +23,9 @@
                         <div class="inner">
                             <span class="h3-like">
                                 @if (isset($mitras) && $mitras->isNotEmpty())
-                                    {{ $mitras->first()->mitraUser->name }}
+                                {{ $mitras->first()->mitraUser->name }}
                                 @else
-                                    Tidak ada mitra
+                                Tidak ada mitra
                                 @endif
                             </span>
                             <p>
@@ -42,12 +42,13 @@
                     <div class="small-box">
                         <div class="inner">
                             <span class="h3-like">
-                                @if (isset($mitras) && $mitras->isNotEmpty())
-                                    {{ $mitras->first()->dosenPembimbing->name }}
+                                @if (isset($dosen) && $dosen->isNotEmpty())
+                                {{ $dosen->first()->name }}
                                 @else
-                                    Tidak ada dosen
+                                Tidak ada dosen pembimbing
                                 @endif
                             </span>
+
                             <p>
                                 Dosen Pembimbing
                             </p>
@@ -61,48 +62,48 @@
 
             <!-- Row for the remaining cards -->
             <div class="row row-cols-1 row-cols-md-3 g-4 m-4">
-                
+
                 <!-- Total Lamaran Diajukan -->
                 <div class="col">
                     <div class="small-box">
                         <a href="{{ route('mhs_lowongan') }}">
-                        <div class="inner">
-                            <h3>{{ $totalMitra }}</h3>
-                            <p>Lowongan Magang</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
+                            <div class="inner">
+                                <h3>{{ $totalMitra }}</h3>
+                                <p>Lowongan Magang</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
-                
+
                 <!-- Total Lamaran Pending -->
                 <div class="col">
                     <div class="small-box">
                         <a href="{{ route('mahasiswa.status_lamaran') }}">
-                        <div class="inner">
-                            <h3>{{ $totalLamaranPending }}</h3>
-                            <p>Pengajuan Magang</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-paper-plane"></i>
-                        </div>
+                            <div class="inner">
+                                <h3>{{ $totalLamaranPending }}</h3>
+                                <p>Pengajuan Magang</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
-                
+
                 <!-- Total Lamaran Diterima -->
                 <div class="col">
                     <div class="small-box">
                         <a href="{{ route('mahasiswa.status_lamaran') }}">
-                        <div class="inner">
-                            <h3>{{ $totalLamaranDiterima }}</h3>
-                            <p>Pengajuan Magang Diterima</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
+                            <div class="inner">
+                                <h3>{{ $totalLamaranDiterima }}</h3>
+                                <p>Pengajuan Magang Diterima</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -110,13 +111,13 @@
                 <div class="col">
                     <div class="small-box">
                         <a href="{{ route('mahasiswa.aktifitas') }}">
-                        <div class="inner">
-                            <h3>{{ $totalLaporan }}</h3>
-                            <p>Total Laporan Magang</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
+                            <div class="inner">
+                                <h3>{{ $totalLaporan }}</h3>
+                                <p>Total Laporan Magang</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -124,13 +125,13 @@
                 <div class="col">
                     <div class="small-box">
                         <a href="{{ route('mahasiswa.LaporanAkhir') }}">
-                        <div class="inner">
-                            <h3>{{ $totalLaporanAkhir }}</h3>
-                            <p>Laporan Akhir Magang</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
+                            <div class="inner">
+                                <h3>{{ $totalLaporanAkhir }}</h3>
+                                <p>Laporan Akhir Magang</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -145,7 +146,6 @@
 
 @push('styles')
 <style>
-   
+
 </style>
 @endpush
-

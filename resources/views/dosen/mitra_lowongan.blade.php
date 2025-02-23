@@ -44,7 +44,6 @@
                                 <th>Alamat</th>
                                 <th>Kuota</th>
                                 <th>Jurusan</th>
-                                <th>Dosen Pembimbing</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -189,10 +188,7 @@
                      data: 'jurusan', // Mengambil nama jurusan dari relasi
                      name: 'jurusan',
                  },
-                 {
-                     data: 'dosen_pembimbing', // Mengambil nama dosen pembimbing dari relasi
-                     name: 'dosen_pembimbing',
-                 }
+                 
                  
 
              ]

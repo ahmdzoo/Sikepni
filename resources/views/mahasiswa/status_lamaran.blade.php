@@ -54,7 +54,7 @@
                                         @elseif($lamaran->status == 'ditolak')
                                             <span class="badge badge-danger">DITOLAK</span>
                                         @else
-                                            <span class="badge badge-warning">Pending</span>
+                                            <span class="badge badge-warning">DIPROSES</span>
                                         @endif
                                     </td>
                                     <td>

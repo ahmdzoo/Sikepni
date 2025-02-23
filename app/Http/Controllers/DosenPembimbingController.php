@@ -11,52 +11,33 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\User;
 use App\Models\Jurusan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DosenPembimbingController extends Controller
 {
     public function dashboard()
     {
-        $dosenId = auth()->user()->id; // ID dosen yang sedang login
+        $dosenId = Auth::id();
 
-        // Ambil semua ID mitra yang dibimbing oleh dosen ini
-        $mitraIds = Mitra::where('dosen_pembimbing_id', $dosenId)->pluck('id');
-
-        // Hitung jumlah total lamaran masuk yang terkait dengan mitra dari dosen pembimbing ini
-        $jumlahLamaran = Lamaran::whereHas('mitra', function ($query) use ($dosenId) {
-            $query->where('dosen_pembimbing_id', $dosenId);
-        })->count();
-
-        // Hitung jumlah mahasiswa yang diterima oleh mitra terkait dosen pembimbing
-        $jumlahMahasiswaDiterima = Lamaran::where('status', 'diterima')
-            ->whereHas('mitra', function ($query) use ($dosenId) {
-                $query->where('dosen_pembimbing_id', $dosenId);
-            })->count();
+        // Ambil mahasiswa yang berelasi dengan dosen
+        $mahasiswaDibimbing = User::whereHas('dosen', function ($query) use ($dosenId) {
+            $query->where('dosen_id', $dosenId);
+        })->get();
 
 
-        // Ambil laporan magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
-        $laporanMagang = Laporan::whereIn('mitra_id', $mitraIds)
-            ->where('jenis_laporan', '!=', 'Akhir')
-            ->whereHas('mahasiswa')
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+        $jumlahMahasiswa = $mahasiswaDibimbing->count();
 
-        // Ambil laporan akhir magang mahasiswa yang dibimbing dosen ini, dengan limit 5 data terbaru
-        $laporanAkhir = LaporanAkhir::whereIn('mitra_id', $mitraIds)
-            ->whereHas('mahasiswa')
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
 
-        // Ambil mahasiswa yang lamarannya diterima dan diampu oleh dosen ini
-        $mahasiswaDiterima = Lamaran::whereIn('mitra_id', $mitraIds)
-            ->where('status', 'diterima') // Pastikan statusnya diterima
-            ->whereHas('mahasiswa') // Mengambil data mahasiswa yang melamar
-            ->orderBy('updated_at', 'desc') // Urutkan berdasarkan tanggal lamaran
-            ->take(5) // Batasi 5 data terbaru
-            ->get();
+        // Ambil laporan magang terbaru
+        $laporanMagang = Laporan::forDosen($dosenId)->get()->count();
 
-        return view('dosen.dashboard', compact('jumlahLamaran', 'jumlahMahasiswaDiterima', 'laporanMagang', 'laporanAkhir', 'mahasiswaDiterima'));
+        // Ambil laporan akhir terbaru
+        $laporanAkhir = LaporanAkhir::forDosen($dosenId)->get()->count();
+
+
+
+
+        return view('dosen.dashboard', compact('mahasiswaDibimbing', 'jumlahMahasiswa', 'laporanMagang', 'laporanAkhir'));
     }
 
 
@@ -65,18 +46,25 @@ class DosenPembimbingController extends Controller
         return view('dosen.dosen_laporan'); // Pastikan Anda memiliki view ini
     }
 
-    // Di DosenPembimbingController
     public function dosen_lamaran()
     {
-        $user = auth()->user();
-        // Ambil mitra yang terkait dengan dosen pembimbing
-        $mitras = Mitra::where('dosen_pembimbing_id', $user->id)->pluck('id');
+        $dosenId = auth()->user()->id;
 
-        // Ambil lamaran yang terkait dengan mitra
-        $lamarans = Lamaran::whereIn('mitra_id', $mitras)->with('user')->whereHas('mahasiswa')->get();
+        // Ambil ID mahasiswa yang dibimbing oleh dosen ini
+        $mahasiswaDibimbingIds = User::whereHas('dosen', function ($query) use ($dosenId) {
+            $query->where('dosen_id', $dosenId);
+        })->pluck('id');
+
+        // Ambil lamaran yang dibuat oleh mahasiswa yang terkait dengan dosen ini
+        $lamarans = Lamaran::whereIn('user_id', $mahasiswaDibimbingIds)
+            ->with(['user', 'mitra'])
+            ->get();
 
         return view('dosen.dosen_lamaran', compact('lamarans'));
     }
+
+
+
 
     // Menampilkan daftar mitra magang
     public function mitra_lowongan()
@@ -88,20 +76,16 @@ class DosenPembimbingController extends Controller
     {
         if ($request->ajax()) {
             // Mengambil data mitra
-            $data = Mitra::with(['mitraUser', 'jurusan', 'dosenPembimbing'])->select('mitras.*');
+            $data = Mitra::with(['mitraUser', 'jurusan'])->select('mitras.*');
 
             // Menangani pencarian
             if ($request->has('search') && !empty($request->search)) {
                 $searchValue = $request->search;
                 $data->where(function ($q) use ($searchValue) {
-                    $q->where('no_pks', 'like', "%{$searchValue}%")
-                        ->orWhereHas('mitraUser', function ($q) use ($searchValue) {
-                            $q->where('name', 'like', "%{$searchValue}%");
-                        })
+                    $q->orWhereHas('mitraUser', function ($q) use ($searchValue) {
+                        $q->where('name', 'like', "%{$searchValue}%");
+                    })
                         ->orWhereHas('jurusan', function ($q) use ($searchValue) {
-                            $q->where('name', 'like', "%{$searchValue}%");
-                        })
-                        ->orWhereHas('dosenPembimbing', function ($q) use ($searchValue) {
                             $q->where('name', 'like', "%{$searchValue}%");
                         });
                 });
@@ -117,7 +101,7 @@ class DosenPembimbingController extends Controller
                 ->addColumn('no', function ($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
-                ->addColumn('no_pks', function($data) {
+                ->addColumn('no_pks', function ($data) {
                     return $data->no_pks;
                 })
                 ->editColumn('tanggal_mulai_magang', function ($mitra) {
@@ -132,16 +116,14 @@ class DosenPembimbingController extends Controller
                 ->addColumn('jurusan', function ($data) {
                     return $data->jurusan->name; // Mengambil nama jurusan
                 })
-                ->addColumn('dosen_pembimbing', function ($data) {
-                    return $data->dosenPembimbing->name; // Mengambil nama dosen pembimbing
-                })
-                ->addColumn('kuota', function($data) {
+
+                ->addColumn('kuota', function ($data) {
                     return $data->kuota;
                 })
-                ->addColumn('alamat', function($data) {
+                ->addColumn('alamat', function ($data) {
                     return $data->alamat;
                 })
-                ->addColumn('file_pks', function($data) {
+                ->addColumn('file_pks', function ($data) {
                     return $data->file_pks;
                 })
                 ->make(true);
@@ -152,8 +134,6 @@ class DosenPembimbingController extends Controller
             'mitras' => Mitra::with('jurusan', 'dosenPembimbing')->get(),
             'mitrasMagang' => User::where('role', 'mitra_magang')->get(),
             'jurusans' => Jurusan::all(),
-            'dosen_pembimbing' => User::where('role', 'dosen_pembimbing')->get(),
         ]);
     }
-
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\homepageController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\KordinatorController;
 use App\Http\Controllers\LamaranController;
 use App\Http\Controllers\LaporanAkhirController;
 use App\Http\Controllers\LaporanController;
@@ -39,7 +40,6 @@ use App\Http\Controllers\RegLoginController;
 #ROUTE HOMEPAGE
 Route::get('/', function () {
     return view('homepage/landing-page');
-
 });
 
 #ROUTE LINK NAV
@@ -83,8 +83,6 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('/LaporanAkhir/{id}/edit', [LaporanAkhirController::class, 'edit'])->name('LaporanAkhir.edit');
     Route::put('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'update'])->name('LaporanAkhir.update');
     Route::delete('/LaporanAkhir/{id}', [LaporanAkhirController::class, 'destroy'])->name('LaporanAkhir.destroy');
-
-
 });
 
 // Rute untuk Dosen Pembimbing
@@ -96,8 +94,6 @@ Route::group(['middleware' => ['auth', 'role:dosen_pembimbing']], function () {
     Route::get('/dosen/dosen_laporan/{mahasiswa_id}', [LaporanController::class, 'dosenLaporan'])->name('dosen.laporan');
     Route::get('/dosen/dosen_LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'dosenLaporanAkhir'])->name('dosen.LaporanAkhir');
     Route::get('/dosen/daftar_mitra', [DosenPembimbingController::class, 'showMitra'])->name('mitra_lowongan');
-
-
 });
 
 // Rute untuk Mitra Magang
@@ -114,6 +110,10 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
 
     Route::get('/mitra/info_kerjasama', [MitraAdminController::class, 'mitra_admin'])->name('mitra_admin');
     Route::put('/mitra/{id}', [MitraAdminController::class, 'update'])->name('mitra.mitra.update');
+
+    Route::post('/mitra/laporan/{id}/nilai', [LaporanController::class, 'updateNilai'])->name('mitra.laporan.nilai');
+    Route::post('/mitra/laporan/{id}/nilai', [LaporanAkhirController::class, 'updateNilai'])->name('mitra.laporanAkhir.nilai');
+
 
 });
 
@@ -155,10 +155,50 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/admin/LaporanAkhir/{mahasiswa_id}', [LaporanAkhirController::class, 'adminLaporanAkhir'])->name('admin.LaporanAkhir');
     Route::get('/admin/laporan_magang', [LaporanController::class, 'admin_magang'])->name('admin.admin_magang');
 
-
-
+    Route::get('/admin/data_dosen', [AdminController::class, 'data_dosen'])->name('data_dosen');
+    Route::post('/admin/assign_dosen', [AdminController::class, 'assignDosen'])->name('assign_dosen');
 });
 
+// Rute untuk Kordinator
+Route::group(['middleware' => ['auth', 'role:kordinator']], function () {
+
+    // Tampilan manajemen data
+    Route::get('/kordinator/dashboard', [KordinatorController::class, 'dashboard'])->name('kordinator.dashboard');
+    Route::get('/kordinator/data_mitra', [KordinatorController::class, 'data_mitra'])->name('kordinator.data_mitra');
+    Route::get('/kordinator/data_user', [KordinatorController::class, 'data_user'])->name('kordinator.data_user');
+    Route::get('/kordinator/jurusan', [KordinatorController::class, 'jurusan'])->name('kordinator.jurusan');
+
+    Route::post('/kordinator/user/store', [KordinatorController::class, 'storeUser'])->name('kordinator.store_user');
+
+    // Rute untuk Mitra
+    Route::post('/kordinator/mitra/store', [KordinatorController::class, 'store'])->name('kordinator.store_mitra');
+    Route::get('/kordinator/mitra/create', [KordinatorController::class, 'create'])->name('kordinator.mitra.create');
+    Route::get('/kordinator/mitra/{mitra}/edit', [KordinatorController::class, 'edit'])->name('kordinator.mitra.edit');
+    Route::put('/kordinator/mitra/{mitra}', [KordinatorController::class, 'update'])->name('kordinator.mitra.update');
+    Route::delete('/kordinator/mitra/{mitra}', [KordinatorController::class, 'deleteMitra'])->name('kordinator.mitra.destroy');
+
+
+    // Rute untuk manajemen user
+    Route::get('/kordinator/users/{id}', [KordinatorController::class, 'editUser'])->name('kordinator.edit_user');
+    Route::put('/kordinator/users/{id}', [KordinatorController::class, 'updateUser'])->name('kordinator.update_user');
+    Route::delete('/kordinator/users/{id}', [KordinatorController::class, 'deleteUser'])->name('kordinator.delete_user');
+
+    // Rute untuk Menyimpan Jurusan
+    Route::post('/kordinator/jurusan/store', [KordinatorController::class, 'storeJurusan'])->name('kordinator.jurusan.store');
+
+    // Rute untuk Edit Jurusan
+    Route::get('/kordinator/jurusan/{jurusan}', [KordinatorController::class, 'editJurusan'])->name('kordinator.jurusan.edit');
+    Route::put('/kordinator/jurusan/{jurusan}', [KordinatorController::class, 'updateJurusan'])->name('kordinator.jurusan.update');
+    Route::delete('/kordinator/jurusan/{jurusan}', [KordinatorController::class, 'deleteJurusan'])->name('kordinator.jurusan.destroy');
+
+    Route::get('/kordinator/mahasiswa_magang/{mitra_id}', [KordinatorController::class, 'kordinator_mhs'])->name('kordinator.kordinator_mhs');
+    Route::get('/kordinator/laporan/{mahasiswa_id}', [KordinatorController::class, 'kordinatorLaporan'])->name('kordinator.laporan');
+    Route::get('/kordinator/LaporanAkhir/{mahasiswa_id}', [KordinatorController::class, 'kordinatorLaporanAkhir'])->name('kordinator.LaporanAkhir');
+    Route::get('/kordinator/laporan_magang', [KordinatorController::class, 'kordinator_magang'])->name('kordinator.admin_magang');
+
+    Route::get('/kordinator/data_dosen', [KordinatorController::class, 'data_dosen'])->name('kordinator.data_dosen');
+    Route::post('/kordinator/assign_dosen', [KordinatorController::class, 'assignDosen'])->name('kordinator.assign_dosen');
+});
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');

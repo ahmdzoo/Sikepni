@@ -23,19 +23,19 @@ class MitraAdminController extends Controller
     $userId = auth()->id();
 
     // Mengambil data mitra yang hanya terelasi dengan pengguna yang sedang login
-    $mitras = Mitra::with(['jurusan', 'dosenPembimbing', 'mitraUser'])
+    $mitras = Mitra::with(['jurusan', 'mitraUser'])
                     ->where('nama_mitra_id', $userId)
                     ->get();
                     
     // Mengambil semua dosen pembimbing dari pengguna dengan role 'dosen_pembimbing'
-    $dosenPembimbing = User::where('role', 'dosen_pembimbing')->get();
+    // $dosenPembimbing = User::where('role', 'dosen_pembimbing')->get();
 
     $mitrasMagang = User::where('role', 'mitra_magang')->get();
 
     // Mengambil semua data jurusan
     $jurusans = Jurusan::all();
 
-    return view('mitra.mitra_admin', compact('mitras', 'dosenPembimbing', 'jurusans', 'mitrasMagang' ));
+    return view('mitra.mitra_admin', compact('mitras', 'jurusans', 'mitrasMagang' ));
 }
 
 
@@ -44,7 +44,6 @@ public function update(Request $request, $id)
     $request->validate([
         // 'nama_mitra_id' => 'required|exists:users,id',
         'jurusan_id' => 'required|exists:jurusans,id',
-        'dosen_pembimbing_id' => 'required|exists:users,id',
         'tanggal_mulai_magang' => 'required|date',
         'tanggal_selesai_magang' => 'required|date|after_or_equal:tanggal_mulai_magang',
         'alamat' => 'nullable|string',
@@ -55,7 +54,6 @@ public function update(Request $request, $id)
     $mitra->update([
         // 'nama_mitra_id' => $request->nama_mitra_id,
         'jurusan_id' => $request->jurusan_id,
-        'dosen_pembimbing_id' => $request->dosen_pembimbing_id,
         'tanggal_mulai_magang' => $request->tanggal_mulai_magang,
         'tanggal_selesai_magang' => $request->tanggal_selesai_magang,
         'alamat' => $request->alamat,

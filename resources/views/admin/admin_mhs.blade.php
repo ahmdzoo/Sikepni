@@ -20,23 +20,31 @@
             <p class="no-data-text">Tidak ada mahasiswa magang yang diterima oleh mitra ini.</p>
         </div>
         @else
-            <div class="row">
-                @foreach($mahasiswaDiterima as $item)
-                    <div class="col-md-3 mb-4">
-                        <div class="card text-center shadow-sm" style="border-radius: 15px;">
-                            <div class="card-header bg-transparent text-left" style="font-size: 12px; color: #6c757d;">
-                                <span>{{ $item->mitra->mitraUser->name }}</span>
-                            </div>
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>
-                                <p class="card-text text-muted" style="font-size: 14px;">Mahasiswa</p>
-                                <a href="{{ route('admin.laporan', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang &rsaquo;</a>
-                                <a href="{{ route('admin.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
-                            </div>
-                        </div>
+        <div class="row">
+            @foreach($mahasiswaDiterima as $item)
+            <div class="col-md-3 mb-4">
+                <div class="card text-center shadow-sm" style="border-radius: 15px;">
+                    <div class="card-header bg-transparent text-left" style="font-size: 12px; color: #6c757d;">
+                        <span>
+                            @if($item->mahasiswa->dosen->isNotEmpty())
+                                @foreach($item->mahasiswa->dosen as $dosen)
+                                    {{ $dosen->name }}<br>
+                                @endforeach
+                            @else
+                                <em>Belum ada dosen</em>
+                            @endif
+                        </span>
                     </div>
-                @endforeach
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>
+                        <p class="card-text text-muted" style="font-size: 14px;">Mahasiswa</p>
+                        <a href="{{ route('admin.laporan', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang &rsaquo;</a>
+                        <a href="{{ route('admin.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
+                    </div>
+                </div>
             </div>
+            @endforeach
+        </div>
         @endif
     </div>
 </div>

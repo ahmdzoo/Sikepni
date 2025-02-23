@@ -48,5 +48,13 @@ class Lamaran extends Model
 
 
 
+    public function dosen()
+    {
+        return $this->belongsToMany(User::class, 'dosen_mahasiswa', 'mahasiswa_id', 'dosen_id');
+    }
+
+
+
+
     
 }

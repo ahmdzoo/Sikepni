@@ -15,27 +15,40 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container-fluid">
-       <!-- Pesan Sukses -->
-       @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <!-- Pesan Sukses -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @endif
 
         <!-- Pesan Kesalahan -->
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>
+                    {{ $error }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @endif
 
 
@@ -47,11 +60,11 @@
                     <select name="filter" id="filter" class="form-control form-control-sm">
                         <option value="">All</option>
                         @foreach($jurusans as $jurusan)
-                            <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                        <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
                         @endforeach
                     </select>
                 </div>
-                
+
 
                 <!-- Pembungkus Tabel Responsif -->
                 <div class="table-responsive">
@@ -66,16 +79,15 @@
                                 <th>Alamat</th>
                                 <th>Kuota</th>
                                 <th>Jurusan</th>
-                                <th>Dosen Pembimbing</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -83,31 +95,31 @@
 
 <!-- Modal Ajukan Lamaran -->
 <div class="modal fade" id="ajukanLamaranModal" tabindex="-1" role="dialog" aria-labelledby="ajukanLamaranModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="ajukanLamaranModalLabel">Ajukan Lamaran untuk <span id="mitraName"></span></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form id="ajukanLamaranForm" action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <input type="hidden" name="mitra_id" id="mitraId">
-                  <div class="form-group">
-                      <label for="cv">Upload CV</label>
-                      <input type="file" class="form-control" id="cv" name="cv" accept=".pdf" required>
-                      <small>Ukuran maksimal 5MB</small>
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="submitAjukan">Ajukan</button>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ajukanLamaranModalLabel">Ajukan Lamaran untuk <span id="mitraName"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="ajukanLamaranForm" action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="mitra_id" id="mitraId">
+                    <div class="form-group">
+                        <label for="cv">Upload CV</label>
+                        <input type="file" class="form-control" id="cv" name="cv" accept=".pdf" required>
+                        <small>Ukuran maksimal 5MB</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitAjukan">Ajukan</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal untuk Menampilkan File PDF 2 -->
@@ -164,48 +176,47 @@
     });
 
 
-    $(document).ready(function () {
-         var table = loadData();
+    $(document).ready(function() {
+        var table = loadData();
 
-         $('#filter').change(function() {
-             table.ajax.reload(); // Reload tabel saat filter role diubah
-         });
-         // Tidak perlu menangani pencarian secara manual, DataTables mengurusnya
-         $('#lowongan_filter input[type="search"]').on('keyup change', function() {
-             table.ajax.reload(); // Reload tabel saat melakukan pencarian
-         });
+        $('#filter').change(function() {
+            table.ajax.reload(); // Reload tabel saat filter role diubah
+        });
+        // Tidak perlu menangani pencarian secara manual, DataTables mengurusnya
+        $('#lowongan_filter input[type="search"]').on('keyup change', function() {
+            table.ajax.reload(); // Reload tabel saat melakukan pencarian
+        });
 
-         // Refresh jurusan dropdown setelah menambah jurusan baru
-          $('#addJurusanModal').on('hidden.bs.modal', function () {
-              // Mengambil data jurusan terbaru via AJAX atau reload halaman
-              // Berikut adalah contoh reload halaman
-              location.reload();
-          });
+        // Refresh jurusan dropdown setelah menambah jurusan baru
+        $('#addJurusanModal').on('hidden.bs.modal', function() {
+            // Mengambil data jurusan terbaru via AJAX atau reload halaman
+            // Berikut adalah contoh reload halaman
+            location.reload();
+        });
 
-     });
+    });
 
- 
+
     function loadData() {
-         return $('#lowongan').DataTable({
-             processing: true,
-             pagination: true,
-             responsive: true,
-             serverSide: true,
-             searching: true,
-             ordering: false,
-             ajax: {
-                 url: "{{ route('mhs_lowongan') }}",
-                 data: function (d) {
-                     d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
-                     d.search = $('input[type="search"]').val();
-                 }
-             },
-             columns: [
-                {
+        return $('#lowongan').DataTable({
+            processing: true,
+            pagination: true,
+            responsive: true,
+            serverSide: true,
+            searching: true,
+            ordering: false,
+            ajax: {
+                url: "{{ route('mhs_lowongan') }}",
+                data: function(d) {
+                    d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
+                    d.search = $('input[type="search"]').val();
+                }
+            },
+            columns: [{
                     data: 'file_pks',
                     name: 'file_pks',
-                    render: function (data, type, row) {
-                    if (row.file_pks) {
+                    render: function(data, type, row) {
+                        if (row.file_pks) {
                             return `<a href="javascript:void(0)" class="action-btn btn-sm btn-info" onclick="viewFile('/storage/${row.file_pks}')">Lihat</a>`;
                         } else {
                             return `<span class="text-muted">Tidak ada file</span>`;
@@ -213,43 +224,40 @@
                     }
 
                 },
-                 {
-                     data: 'tanggal_mulai_magang',
-                     name: 'tanggal_mulai_magang',
-                     className: 'text-center',
-                 },
-                 {
-                     data: 'tanggal_selesai_magang',
-                     name: 'tanggal_selesai_magang',
-                     className: 'text-center',
-                 },
-                 {
-                     data: 'mitra_user', // Mengambil nama mitra dari relasi
-                     name: 'mitra_user',
-                 },
-                 {
-                     data: 'alamat',
-                     name: 'alamat',
-                 },
-                 {
-                     data: 'kuota',
-                     name: 'kuota',
-                     className: 'text-center',
-                 },
-                 {
-                     data: 'jurusan', // Mengambil nama jurusan dari relasi
-                     name: 'jurusan',
-                 },
-                 {
-                     data: 'dosen_pembimbing', // Mengambil nama dosen pembimbing dari relasi
-                     name: 'dosen_pembimbing',
-                 },
-                 {
+                {
+                    data: 'tanggal_mulai_magang',
+                    name: 'tanggal_mulai_magang',
+                    className: 'text-center',
+                },
+                {
+                    data: 'tanggal_selesai_magang',
+                    name: 'tanggal_selesai_magang',
+                    className: 'text-center',
+                },
+                {
+                    data: 'mitra_user', // Mengambil nama mitra dari relasi
+                    name: 'mitra_user',
+                },
+                {
+                    data: 'alamat',
+                    name: 'alamat',
+                },
+                {
+                    data: 'kuota',
+                    name: 'kuota',
+                    className: 'text-center',
+                },
+                {
+                    data: 'jurusan', // Mengambil nama jurusan dari relasi
+                    name: 'jurusan',
+                },
+
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false,
-                    render: function (data, type, row) {
+                    render: function(data, type, row) {
                         return `
                             <button class="btn btn-primary btn-sm ajukan" data-id="${row.id}" data-nama="${row.mitra_user}">Pengajuan Magang</button>
                         `;
@@ -257,12 +265,12 @@
                     className: 'text-center',
                 }
 
-             ]
-         });
-     }
+            ]
+        });
+    }
 
     // MODAL PREVIEW PDF
-     $(document).on('click', '.lihat-file', function () {
+    $(document).on('click', '.lihat-file', function() {
         var filePath = $(this).data('file');
         var fileUrl = `/storage/${filePath}`; // Path ke file
 
@@ -271,19 +279,19 @@
     });
 
 
-    let zoomLevel = 1;  // Menyimpan tingkat zoom default
+    let zoomLevel = 1; // Menyimpan tingkat zoom default
 
     // Fungsi untuk melakukan zoom in
     document.getElementById('zoomIn').addEventListener('click', function() {
-        zoomLevel += 0.1;  // Menambah zoom level
-        updateZoom();      // Memperbarui tampilan zoom pada PDF
+        zoomLevel += 0.1; // Menambah zoom level
+        updateZoom(); // Memperbarui tampilan zoom pada PDF
     });
 
     // Fungsi untuk melakukan zoom out
     document.getElementById('zoomOut').addEventListener('click', function() {
-        if (zoomLevel > 0.1) {  // Menjamin agar zoom level tidak menjadi terlalu kecil
-            zoomLevel -= 0.1;  // Mengurangi zoom level
-            updateZoom();      // Memperbarui tampilan zoom pada PDF
+        if (zoomLevel > 0.1) { // Menjamin agar zoom level tidak menjadi terlalu kecil
+            zoomLevel -= 0.1; // Mengurangi zoom level
+            updateZoom(); // Memperbarui tampilan zoom pada PDF
         }
     });
 
@@ -305,7 +313,9 @@
                 pdfDoc.getPage(pageNum).then(function(page) {
                     var canvas = document.createElement('canvas');
                     var context = canvas.getContext('2d');
-                    var viewport = page.getViewport({ scale: zoomLevel });  // Gunakan zoom level yang sudah diperbarui
+                    var viewport = page.getViewport({
+                        scale: zoomLevel
+                    }); // Gunakan zoom level yang sudah diperbarui
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
 
@@ -338,10 +348,9 @@
 
         // Delay kecil untuk memastikan modal terbuka sepenuhnya
         setTimeout(function() {
-            updateZoom();  // Memperbarui tampilan PDF setelah modal terbuka
+            updateZoom(); // Memperbarui tampilan PDF setelah modal terbuka
         }, 500); // Waktu delay 500ms (sesuaikan sesuai kebutuhan)
     }
-
 </script>
 @include('layouts/footer')
 @endsection

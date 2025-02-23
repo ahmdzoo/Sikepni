@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('tgl_selesai'); // Tanggal berakhirnya kerjasama
             $table->unsignedBigInteger('nama_mitra_id'); // Foreign key ke tabel users (role mitra_magang)
             $table->unsignedBigInteger('jurusan_id'); // Foreign key ke tabel jurusans
-            $table->unsignedBigInteger('dosen_pembimbing_id'); // Foreign key ke tabel users (role dosen_pembimbing)
             $table->timestamps();
 
             // Definisi Foreign Key

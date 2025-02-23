@@ -17,40 +17,33 @@ class MahasiswaController extends Controller
     public function dashboard()
     {
         $mahasiswaId = auth()->id(); // Mendapatkan ID mahasiswa yang sedang login
-    
+
         // Mengambil mitra yang menerima lamaran mahasiswa
         $mitras = Mitra::whereHas('lamaran', function ($query) use ($mahasiswaId) {
             $query->where('user_id', $mahasiswaId)->where('status', 'diterima');
-        })->with(['mitraUser', 'jurusan', 'dosenPembimbing'])->get(); // Menyertakan relasi
-    
-        // Menghitung total laporan yang dimiliki mahasiswa
-        $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
+        })->with(['mitraUser', 'jurusan'])->get();
 
-        // Menghitung total laporan yang dimiliki mahasiswa
+        $mahasiswa = auth()->user();
+        $dosen = $mahasiswa->dosen; // Mengambil dosen yang berelasi dengan mahasiswa ini
+        
+        // Menghitung jumlah laporan
+        $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
         $totalLaporanAkhir = LaporanAkhir::where('user_id', $mahasiswaId)->count();
-    
-        // Menghitung total lamaran yang diajukan mahasiswa
+
+        // Menghitung jumlah lamaran
         $totalLamaran = Lamaran::where('user_id', $mahasiswaId)->count();
-    
-        // Menghitung jumlah lamaran yang berstatus pending
         $totalLamaranPending = Lamaran::where('user_id', $mahasiswaId)->where('status', 'pending')->count();
-    
-        // Menghitung jumlah lamaran yang diterima
         $totalLamaranDiterima = Lamaran::where('user_id', $mahasiswaId)->where('status', 'diterima')->count();
 
         // Menghitung jumlah mitra yang ada
         $totalMitra = Mitra::count();
-    
-        return view('mahasiswa.dashboard', [
-            'mitras' => $mitras,
-            'totalLaporan' => $totalLaporan, // Menambahkan total laporan ke view
-            'totalLaporanAkhir' => $totalLaporanAkhir,
-            'totalLamaran' => $totalLamaran,
-            'totalMitra' => $totalMitra,
-            'totalLamaranPending' => $totalLamaranPending,
-            'totalLamaranDiterima' => $totalLamaranDiterima,
-        ]);
+
+        return view('mahasiswa.dashboard', compact(
+            'mitras', 'dosen', 'totalLaporan', 'totalLaporanAkhir', 
+            'totalLamaran', 'totalMitra', 'totalLamaranPending', 'totalLamaranDiterima'
+        ));
     }
+
     
     // Menampilkan aktivitas mahasiswa
     public function mhs_aktifitas()
@@ -68,7 +61,7 @@ class MahasiswaController extends Controller
     {
         if ($request->ajax()) {
             // Mengambil data mitra
-            $data = Mitra::with(['mitraUser', 'jurusan', 'dosenPembimbing'])->select('mitras.*');
+            $data = Mitra::with(['mitraUser', 'jurusan'])->select('mitras.*');
 
             // Menangani pencarian
             if ($request->has('search') && !empty($request->search)) {
@@ -80,10 +73,8 @@ class MahasiswaController extends Controller
                         })
                         ->orWhereHas('jurusan', function ($q) use ($searchValue) {
                             $q->where('name', 'like', "%{$searchValue}%");
-                        })
-                        ->orWhereHas('dosenPembimbing', function ($q) use ($searchValue) {
-                            $q->where('name', 'like', "%{$searchValue}%");
                         });
+
                 });
             }
 
@@ -112,9 +103,6 @@ class MahasiswaController extends Controller
                 ->addColumn('jurusan', function ($data) {
                     return $data->jurusan->name; // Mengambil nama jurusan
                 })
-                ->addColumn('dosen_pembimbing', function ($data) {
-                    return $data->dosenPembimbing->name; // Mengambil nama dosen pembimbing
-                })
                 ->addColumn('kuota', function($data) {
                     return $data->kuota;
                 })
@@ -137,10 +125,9 @@ class MahasiswaController extends Controller
 
         // Jika bukan AJAX, kembalikan view data mitra
         return view('mahasiswa.mhs_lowongan', [
-            'mitras' => Mitra::with('jurusan', 'dosenPembimbing')->get(),
+            'mitras' => Mitra::with('jurusan')->get(),
             'mitrasMagang' => User::where('role', 'mitra_magang')->get(),
             'jurusans' => Jurusan::all(),
-            'dosen_pembimbing' => User::where('role', 'dosen_pembimbing')->get(),
         ]);
     }
 }

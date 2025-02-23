@@ -33,26 +33,43 @@ class LamaranController extends Controller
 
     public function store(Request $request)
     {
+        $mahasiswa_id = auth()->user()->id;
+
         // Validasi input
         $request->validate([
             'mitra_id' => 'required|exists:mitras,id',
             'cv' => 'required|file|mimes:pdf|max:5120',
+        ], [
+            'cv.required' => 'File CV wajib diunggah.',
+            'cv.file' => 'CV harus berupa file yang valid.',
+            'cv.mimes' => 'Format CV harus berupa PDF.',
+            'cv.max' => 'Ukuran CV maksimal 5MB.',
         ]);
+        
 
         // Simpan file CV ke dalam folder public/cv
         $cvPath = $request->file('cv')->store('cv', 'public'); // Menyimpan file di public/storage/cv
 
+        // Cek apakah mahasiswa sudah memiliki lamaran dengan status pending atau diterima
+        $existingLamaran = Lamaran::where('user_id', $mahasiswa_id)
+            ->whereIn('status', ['pending', 'diterima'])
+            ->exists();
 
-        // Simpan data lamaran
+        if ($existingLamaran) {
+            return redirect()->back()->with('error', 'Anda sudah memiliki pengajuan magang yang masih diproses atau sudah diterima.');
+        }
+
+        // Simpan lamaran baru jika belum ada yang pending atau diterima
         Lamaran::create([
-            'user_id' => auth()->id(), // Mengambil user_id dari pengguna yang sedang login
+            'user_id' => $mahasiswa_id,
             'mitra_id' => $request->mitra_id,
-            'cv_path' => 'cv/' . basename($cvPath), // Menyimpan path relatif file CV
+            'cv_path' => 'cv/' . basename($cvPath),
+            'status' => 'pending', // Default status
         ]);
 
-        // Redirect ke halaman lowongan dengan pesan sukses
-        return redirect()->route('mhs_lowongan')->with('success', 'Lamaran berhasil diajukan.');
+        return redirect()->back()->with('success', 'Lamaran magang berhasil diajukan.');
     }
+
 
     public function accLamaran(Request $request, $id)
     {
@@ -101,7 +118,7 @@ class LamaranController extends Controller
 
         // Mengambil data lamaran mahasiswa dengan relasi mitra dan dosen pembimbing
         $lamarans = Lamaran::where('user_id', $user_id)
-            ->with(['mitra.dosenPembimbing', 'mitra.mitraUser']) // Memastikan mitraUser juga di-load
+            ->with(['mitra.mitraUser']) // Memastikan mitraUser juga di-load
             ->get();
 
         // Log jumlah lamaran yang ditemukan
@@ -129,17 +146,5 @@ class LamaranController extends Controller
 
         // Kembalikan data lamaran ke view 'status_lamaran'
         return view('mahasiswa.status_lamaran', compact('lamarans'));
-    }
-
-
-
-    public function mitra()
-    {
-        return $this->belongsTo(Mitra::class, 'mitra_id');
-    }
-
-    public function mitraUser()
-    {
-        return $this->hasOneThrough(User::class, Mitra::class, 'id', 'id', 'mitra_id', 'user_id');
     }
 }

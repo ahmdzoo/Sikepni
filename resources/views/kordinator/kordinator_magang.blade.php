@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.kordinator')
 @section('title', 'Aktifitas Magang | SIKEPNI')
 
 @section('content')
@@ -23,9 +23,10 @@
         @else
             @foreach ($mitras as $mitra)
                 <div class="card mb-4" style="background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                    <a href="{{ route('admin_mhs',['mitra_id' => Crypt::encrypt($mitra->id)]) }}">
+                    <a href="{{ route('kordinator.kordinator_mhs',['mitra_id' => Crypt::encrypt($mitra->id)]) }}">
                     <div class="card-body">
                         <h3 class="card-title" style="font-weight: bold; color: #333;">{{ $mitra->mitraUser->name }}</h3>
+                        <p class="card-text" style="color: #555;">Dosen</p>
                     </div>
                     </a>
                 </div>

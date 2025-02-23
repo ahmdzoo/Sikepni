@@ -24,39 +24,40 @@
             </div>
 
             @if($lamarans->isEmpty())
-                <div class="no-data-container">
-                    <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
-                    <p class="no-data-text">Belum Ada Lamaran Magang.</p>
-                </div>
+            <div class="no-data-container">
+                <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
+                <p class="no-data-text">Belum Ada Lamaran Magang.</p>
+            </div>
             @else
-                <table class="table table-bordered" id="lamaranTable">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Email</th>
-                            <th>CV</th>
-                            <th>Perusahaan</th>
-                            <th>Tanggal Lamaran</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($lamarans as $index => $lamaran)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $lamaran->user->name }}</td> <!-- Mengakses nama mahasiswa dari relasi -->
-                                <td>{{ $lamaran->user->email }}</td> <!-- Mengakses email mahasiswa -->
-                                <td>
-                                    <a href="{{ Storage::url($lamaran->cv_path) }}" target="_blank" class="btn btn-sm btn-primary">
-                                        Lihat CV
-                                    </a>
-                                </td>
-                                <td>{{ $lamaran->mitra->mitraUser->name  }}</td>
-                                <td>{{ $lamaran->created_at->format('d M Y') }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <table class="table table-bordered" id="lamaranTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Email</th>
+                        <th>CV</th>
+                        <th>Perusahaan</th>
+                        <th>Tanggal Lamaran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lamarans as $index => $lamaran)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $lamaran->user->name }}</td> <!-- Nama Mahasiswa -->
+                        <td>{{ $lamaran->user->email }}</td> <!-- Email Mahasiswa -->
+                        <td>
+                            <a href="{{ Storage::url($lamaran->cv_path) }}" target="_blank" class="btn btn-sm btn-primary">
+                                Lihat CV
+                            </a>
+                        </td>
+                        <td>{{ $lamaran->mitra->mitraUser->name }}</td> <!-- Nama Perusahaan -->
+                        <td>{{ $lamaran->created_at->format('d M Y') }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+
+            </table>
             @endif
         </div>
     </div>
@@ -64,27 +65,27 @@
 
 <!-- JavaScript untuk pencarian -->
 <script>
-  function searchLamaran() {
-    const input = document.getElementById('search');
-    const filter = input.value.toLowerCase();
-    const table = document.getElementById('lamaranTable');
-    const tr = table.getElementsByTagName('tr');
+    function searchLamaran() {
+        const input = document.getElementById('search');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('lamaranTable');
+        const tr = table.getElementsByTagName('tr');
 
-    for (let i = 1; i < tr.length; i++) {
-      const td = tr[i].getElementsByTagName('td');
-      let txtValue = '';
-      for (let j = 0; j < td.length - 1; j++) { // exclude the last column (aksi)
-        if (td[j]) {
-          txtValue += td[j].textContent || td[j].innerText;
+        for (let i = 1; i < tr.length; i++) {
+            const td = tr[i].getElementsByTagName('td');
+            let txtValue = '';
+            for (let j = 0; j < td.length - 1; j++) { // exclude the last column (aksi)
+                if (td[j]) {
+                    txtValue += td[j].textContent || td[j].innerText;
+                }
+            }
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
         }
-      }
-      if (txtValue.toLowerCase().indexOf(filter) > -1) {
-        tr[i].style.display = '';
-      } else {
-        tr[i].style.display = 'none';
-      }
     }
-  }
 </script>
 
 <!-- Bootstrap JS -->

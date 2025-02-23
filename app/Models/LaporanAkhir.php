@@ -27,4 +27,14 @@ class LaporanAkhir extends Model
         return $this->hasMany(KomentarAkhir::class);
     }
 
+    public function scopeForDosen($query, $dosenId)
+{
+    return $query->whereHas('mahasiswa', function ($q) use ($dosenId) {
+        $q->whereHas('dosen', function ($subQuery) use ($dosenId) {
+            $subQuery->where('dosen_id', $dosenId);
+        });
+    });
+}
+
+
 }

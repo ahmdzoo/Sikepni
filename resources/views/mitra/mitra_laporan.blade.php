@@ -12,6 +12,24 @@
             </div>
         </div>
     </div>
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
 
     <div class="container-fluid">
         <div class="card mb-4">
@@ -45,74 +63,43 @@
                                 <th>Jenis Laporan</th>
                                 <th>Nama</th>
                                 <th>Tanggal Upload</th>
+                                <th>Nilai</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if($laporans->isEmpty())
-                                <tr>
-                                    <td colspan="6" class="text-center">Belum Ada Laporan yang diupload.</td>
-                                </tr>
+                            <tr>
+                                <td colspan="7" class="text-center">Belum Ada Laporan yang diupload.</td>
+                            </tr>
                             @else
-                                @foreach($laporans as $index => $laporan)
-                                    <tr>
-                                        <td class="text-center">{{ $laporans->firstItem() + $index }}</td>
-                                        <td>
-                                            <a href="{{ Storage::url($laporan->file_path) }}" target="_blank">
-                                                {{ basename($laporan->file_path) }}
-                                            </a>
-                                        </td>
-                                        <td>{{ $laporan->jenis_laporan }}</td>
-                                        <td>{{ $laporan->mahasiswa->name }}</td>
-                                        <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
-                                                <i class="fas fa-comments"></i> Komentar
-                                            </button>
-                                            <!-- Tombol Download -->
-                                            <a href="{{ Storage::url($laporan->file_path) }}" class="btn btn-sm btn-success" download>
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="collapse" id="komentar-{{ $laporan->id }}">
-                                            <div class="p-3">
-                                                <h5>Komentar</h5>
-                                                @if($laporan->komentars->isEmpty())
-                                                    <p>Belum ada komentar.</p>
-                                                @else
-                                                    <ul>
-                                                        @foreach($laporan->komentars as $komentar)
-                                                            <li class="comment-item">
-                                                                <div>
-                                                                    <strong>{{ $komentar->user->name }}:</strong> {{ $komentar->content }}
-                                                                </div>
-                                                                <form action="{{ route('laporan.komentar.destroy', ['laporan' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn-delete-icon">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                                <form action="{{ route('laporan.komentar.store', $laporan->id) }}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <textarea name="content" class="form-control" placeholder="Tulis komentar..." required></textarea>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-sm btn-success mt-2">Kirim</button>
-                                                    <button type="button" class="btn btn-sm btn-secondary mt-2" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
-                                                        Tutup
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($laporans as $index => $laporan)
+                            <tr>
+                                <td class="text-center">{{ $laporans->firstItem() + $index }}</td>
+                                <td>
+                                    <a href="{{ Storage::url($laporan->file_path) }}" target="_blank">
+                                        {{ basename($laporan->file_path) }}
+                                    </a>
+                                </td>
+                                <td>{{ $laporan->jenis_laporan }}</td>
+                                <td>{{ $laporan->mahasiswa->name }}</td>
+                                <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
+                                <td class="text-center">
+                                    <form action="{{ route('mitra.laporan.nilai', $laporan->id) }}" method="POST">
+                                        @csrf
+                                        <input type="number" name="nilai" class="form-control text-center" min="0" max="100" value="{{ $laporan->nilai ?? '' }}" required>
+                                    </form>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                    <a href="{{ Storage::url($laporan->file_path) }}" class="btn btn-sm btn-success" download>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
                             @endif
                         </tbody>
                     </table>
@@ -128,18 +115,4 @@
 
 @include('layouts/footer')
 
-<!-- CSS Responsif Tambahan -->
-<style>
-    /* Ukuran teks dan padding tabel akan mengecil pada layar kecil */
-    @media (max-width: 768px) {
-        .custom-table th, .custom-table td {
-            font-size: 8px; /* Ukuran font lebih kecil */
-            padding: 4px;    /* Padding lebih kecil */
-        }
-        .custom-table .btn {
-            padding: 2px 4px; /* Ukuran tombol lebih kecil */
-            font-size: 5px;  /* Ukuran font tombol lebih kecil */
-        }
-    }
-</style>
 @endsection

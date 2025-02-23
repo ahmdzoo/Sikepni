@@ -16,8 +16,8 @@ class LaporanAkhirController extends Controller
     public function mhsLaporanAkhir(Request $request)
     {
         $query = LaporanAkhir::query();
-    
-    
+
+
         $LaporanAkhirs = $query->where('user_id', auth()->id())->paginate(10); // Pastikan hanya menampilkan LaporanAkhir mahasiswa yang sedang login
 
         return view('mahasiswa.mhs_LaporanAkhir', compact('LaporanAkhirs'));
@@ -25,27 +25,29 @@ class LaporanAkhirController extends Controller
 
     public function dosenLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
     {
+        // Dekripsi ID mahasiswa
         $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
 
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
-    
-        // Ambil mitra yang terkait dengan dosen
-        $mitras = Mitra::where('dosen_pembimbing_id', $dosenId)->pluck('id');
-    
-        // Query dasar untuk LaporanAkhir sesuai mitra dan mahasiswa tertentu
-            $query = LaporanAkhir::whereIn('mitra_id', $mitras)
-            ->where('user_id', $mahasiswa_id)
-            ->whereHas('mahasiswa');
 
-        // Paginasi hasil dengan 10 LaporanAkhir per halaman
-        $LaporanAkhirs = $query->paginate(10);
-        
-        return view('dosen.dosen_LaporanAkhir', compact('LaporanAkhirs','mahasiswa_id'));
+        // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
+        $query = LaporanAkhir::forDosen($dosenId);
+
+        // Tambahkan filter jenis laporan jika tersedia
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+
+        // Paginasi hasil dengan 10 laporan per halaman
+        $laporans = $query->paginate(10);
+
+        return view('dosen.dosen_laporanAkhir', compact('laporans', 'mahasiswa_id'));
     }
-    
+
 
     public function mitraLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
     {
+        // Dekripsi ID mahasiswa
         $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
 
         $mitraId = auth()->user()->id; // ID mitra yang login
@@ -53,16 +55,23 @@ class LaporanAkhirController extends Controller
         // Ambil mitra terkait user
         $mitras = Mitra::where('nama_mitra_id', $mitraId)->pluck('id');
 
-        // Query dasar untuk LaporanAkhir sesuai mitra dan mahasiswa tertentu
+        // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
         $query = LaporanAkhir::whereIn('mitra_id', $mitras)
             ->where('user_id', $mahasiswa_id)
             ->whereHas('mahasiswa');
 
-        // Paginasi hasil dengan 10 LaporanAkhir per halaman
+        // Tambahkan filter jenis laporan jika tersedia
+        if ($request->has('filter_jenis') && $request->filter_jenis) {
+            $query->where('jenis_laporan', $request->filter_jenis);
+        }
+
+        // Paginasi hasil dengan 10 laporan per halaman
         $LaporanAkhirs = $query->paginate(10);
 
-        return view('mitra.mitra_LaporanAkhir', compact('LaporanAkhirs','mahasiswa_id'));
+        return view('mitra.mitra_laporanAkhir', compact('LaporanAkhirs', 'mahasiswa_id'));
     }
+
+
 
 
     public function store(Request $request)
@@ -71,28 +80,28 @@ class LaporanAkhirController extends Controller
             $request->validate([
                 'file' => 'required|file|mimes:pdf|max:5120',
             ]);
-    
+
             // Ambil nama asli file
             $originalName = $request->file('file')->getClientOriginalName();
-    
+
             // Simpan file di storage dengan nama asli
             $path = $request->file('file')->storeAs('LaporanAkhir', $originalName, 'public');
-    
+
             // Ambil mitra dari lamaran yang diterima oleh mahasiswa
             $lamaran = Lamaran::where('user_id', auth()->id())
                 ->where('status', 'diterima') // Pastikan hanya mengambil lamaran yang diterima
                 ->first();
-    
+
             if (!$lamaran) {
                 return redirect()->back()->with('error', 'Anda belum diterima oleh mitra.');
             }
-    
+
             LaporanAkhir::create([
                 'user_id' => auth()->id(),
                 'mitra_id' => $lamaran->mitra_id, // Simpan ID mitra yang menerima lamaran
                 'file_path' => $path,
             ]);
-    
+
             return redirect()->back()->with('success', 'Laporan berhasil diupload.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
@@ -125,7 +134,7 @@ class LaporanAkhirController extends Controller
             // Simpan file dengan nama asli
             $originalName = $request->file('file')->getClientOriginalName();
             $path = $request->file('file')->storeAs('LaporanAkhir', $originalName, 'public');
-            
+
             // Update path di database dengan nama file asli
             $LaporanAkhir->file_path = 'LaporanAkhir/' . $originalName;
         }
@@ -147,11 +156,11 @@ class LaporanAkhirController extends Controller
 
         if ($LaporanAkhirCount == 0 && $page > 1) {
             return redirect()->route('mahasiswa.aktifitas', ['page' => $page - 1])
-                            ->with('success', 'LaporanAkhir berhasil dihapus');
+                ->with('success', 'LaporanAkhir berhasil dihapus');
         }
 
         return redirect()->route('mahasiswa.aktifitas')
-                        ->with('success', 'LaporanAkhir berhasil dihapus');
+            ->with('success', 'LaporanAkhir berhasil dihapus');
     }
 
     public function storeKomentar(Request $request, $laporanAkhirId)
@@ -237,26 +246,44 @@ class LaporanAkhirController extends Controller
     }
 
     public function adminLaporanAkhir(Request $request, $encrypted_mahasiswa_id)
-{
-    $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
+    {
+        $mahasiswa_id = Crypt::decrypt($encrypted_mahasiswa_id);
 
-    // Query dasar untuk laporan magang mahasiswa
-    $query = LaporanAkhir::with(['mahasiswa', 'mitra']);
-    
-    // Jika $mahasiswa_id diberikan, tambahkan filter untuk mahasiswa tertentu
-    if ($mahasiswa_id) {
-        $query->where('user_id', $mahasiswa_id);
+        // Query dasar untuk laporan magang mahasiswa
+        $query = LaporanAkhir::with(['mahasiswa', 'mitra']);
+
+        // Jika $mahasiswa_id diberikan, tambahkan filter untuk mahasiswa tertentu
+        if ($mahasiswa_id) {
+            $query->where('user_id', $mahasiswa_id);
+        }
+
+
+        // Paginasi hasil dengan 10 laporan per halaman
+        $LaporanAkhirs = $query->paginate(10);
+
+        return view('admin.admin_LaporanAkhir', compact('LaporanAkhirs', 'mahasiswa_id'));
     }
 
+    public function updateNilai(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'nilai' => 'required|numeric|min:0|max:100', // Pastikan nilai dalam rentang 0-100
+        ]);
 
-    // Paginasi hasil dengan 10 laporan per halaman
-    $LaporanAkhirs = $query->paginate(10);
+        try {
+            // Cari laporan berdasarkan ID
+            $laporan = LaporanAkhir::findOrFail($id);
 
-    return view('admin.admin_LaporanAkhir', compact('LaporanAkhirs', 'mahasiswa_id'));
+            // Perbarui nilai laporan
+            $laporan->nilai = $request->input('nilai');
+            $laporan->save();
+
+            // Redirect kembali ke halaman laporan mitra dengan pesan sukses
+            return redirect()->back()->with('success', 'Nilai berhasil diperbarui.');
+        } catch (\Exception $e) {
+            // Jika terjadi error, tampilkan pesan gagal
+            return redirect()->back()->with('error', 'Gagal memperbarui nilai. Silakan coba lagi.');
+        }
+    }
 }
-
-
-
-
-}
-

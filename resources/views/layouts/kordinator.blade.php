@@ -4,21 +4,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('gambar/polindraa.png') }}" type="image/x-icon">
   <title>@yield('title', 'Dashboard | SIKEPNI')</title>
 
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet"
-    href="{{ asset('lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- JQVMap -->
@@ -32,11 +31,8 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/mitra.css') }}">
-
-
+  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
 
   @yield('css')
@@ -48,15 +44,13 @@
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
-              style="color: white"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: white"></i></a>
         </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-            data-toggle="dropdown" aria-expanded="false" style="color:white">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false" style="color:white">
             {{ Auth::user()->email }}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -64,8 +58,7 @@
               <i class="fas fa-key"></i> Reset Password
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('logout') }}"
-              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
               <i class="fas fa-sign-out-alt"></i> Logout
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -106,7 +99,7 @@
               <i class="fas fa-calendar-alt"></i><span class="menu">{{$laporanMagang->count()}} Laporan Magang</span>
               <div class="dropdown-content" id="laporanMagangContent" style="display: none;">
                 @forelse ($laporanMagang as $laporan)
-                <a class="dropdown-item" href="{{ route('mitra.laporan', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
+                <a class="dropdown-item" href="{{ route('admin.laporan', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
                   <small><b>{{ $laporan->mahasiswa->name }}</b> Mengunggah Laporan Magang {{ $laporan->jenis_laporan }} : {{ basename($laporan->file_path) }}</small>
                   <small class="text-muted d-block">{{ $laporan->created_at->format('d M Y') }}</small>
                 </a>
@@ -121,7 +114,7 @@
               <i class="fas fa-file-invoice"></i><span class="menu">{{$laporanAkhir->count()}} Laporan Akhir Magang</span>
               <div class="dropdown-content" id="laporanAkhirContent" style="display: none;">
                 @forelse ($laporanAkhir as $laporan)
-                <a class="dropdown-item" href="{{ route('mitra.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
+                <a class="dropdown-item" href="{{ route('admin.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($laporan->mahasiswa->id)]) }}">
                   <small><b>{{ $laporan->mahasiswa->name }}</b> Mengunggah Laporan Akhir</small>
                   <small class="text-muted d-block">{{ $laporan->created_at->format('d M Y') }}</small>
                 </a>
@@ -135,14 +128,11 @@
         </li>
 
 
-
-
       </ul>
-
     </nav>
+
     <!-- Modal Ubah Password -->
-    <div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="ubahPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -162,8 +152,7 @@
                 <div class="input-group">
                   <input type="password" class="form-control" id="currentPassword" name="current_password" required>
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                      onclick="togglePasswordVisibility('currentPassword')">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('currentPassword')">
                       <i class="fas fa-eye" id="currentPasswordToggle"></i>
                     </button>
                   </div>
@@ -174,8 +163,7 @@
                 <div class="input-group">
                   <input type="password" class="form-control" id="newPassword" name="new_password" required>
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                      onclick="togglePasswordVisibility('newPassword')">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('newPassword')">
                       <i class="fas fa-eye" id="newPasswordToggle"></i>
                     </button>
                   </div>
@@ -184,11 +172,9 @@
               <div class="form-group">
                 <label for="confirmPassword">Konfirmasi Password Baru</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="confirmPassword" name="new_password_confirmation"
-                    required>
+                  <input type="password" class="form-control" id="confirmPassword" name="new_password_confirmation" required>
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                      onclick="togglePasswordVisibility('confirmPassword')">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('confirmPassword')">
                       <i class="fas fa-eye" id="confirmPasswordToggle"></i>
                     </button>
                   </div>
@@ -202,9 +188,12 @@
       </div>
     </div>
 
+
+
+
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
-      <a href="{{ route('mitra.dashboard') }}" class="brand-link">
+      <a href="{{ route('dashboard') }}" class="brand-link">
         <img src="{{ URL('gambar/SIKEPNI-logo.png') }}" alt="Logo" style="width:70%; height: 10%;" />
       </a>
 
@@ -212,34 +201,43 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="{{ route('mitra.dashboard') }}"
-                class="nav-link {{ request()->is('mitra/dashboard') ? 'active' : '' }}">
+              <a href="{{ route('kordinator.dashboard') }}" class="nav-link {{ request()->is('kordinator/dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>Dashboard</p>
               </a>
             </li>
+
             <li class="nav-item">
-              <a href="{{ route('mitra_lamaran') }}" class="nav-link {{ request()->is('mitra/pengajuan_magang') ? 'active' : '' }}">
+              <a href="{{ route('kordinator.data_user') }}" class="nav-link {{ request()->is('kordinator/data_user') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Data User</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('kordinator.data_mitra') }}" class="nav-link {{ request()->is('kordinator/data_mitra') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-handshake"></i>
+                <p>Data Mitra</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('kordinator.data_dosen') }}" class="nav-link {{ request()->is('kordinator/data_dosen') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user-tie"></i>
+                <p>Data Dosen</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('kordinator.jurusan') }}" class="nav-link {{ request()->is('kordinator/jurusan') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-cogs"></i>
+                <p>Data Jurusan/Prodi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('kordinator.admin_magang') }}" class="nav-link {{ request()->is('kordinator/laporan_magang') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-file-alt"></i>
-                <p>Pengajuan Magang</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('mitra.mahasiswa_diterima') }}"
-                class="nav-link {{ request()->is('mitra/mahasiswa_magang') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-folder-open"></i>
-                <p>Mahasiswa Magang</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('mitra_admin') }}"
-                class="nav-link {{ request()->is('mitra/info_kerjasama') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-briefcase"></i>
-                <p>Info Kerjasama</p>
+                <p>Laporan Magang</p>
               </a>
             </li>
           </ul>
-
         </nav>
       </div>
     </aside>
@@ -257,7 +255,6 @@
 
   <!-- jQuery -->
   <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
-
   <!-- Bootstrap 4 -->
   <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE App -->
@@ -330,13 +327,15 @@
         });
     });
 
-
     $(document).ready(function() {
       // Mengaktifkan dropdown
       $('.dropdown-toggle').dropdown();
     });
 
+    $(document).ready(function() {
 
+
+    });
 
     $(document).ready(function() {
       // Mencegah dropdown ditutup saat mengklik elemen di dalamnya
@@ -369,6 +368,8 @@
 
     });
   </script>
+
+
 
   @stack('js')
 
