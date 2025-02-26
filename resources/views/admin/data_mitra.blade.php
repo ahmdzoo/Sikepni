@@ -21,6 +21,22 @@
         </div>
     </div>
 
+    @if($expiredMitra->count() > 0)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Perhatian!</strong> <br>
+        <small>Ada {{ $expiredMitra->count() }} Mitra yang Masa Kerjasamanya telah berakhir.</small>
+        <ul>
+            @foreach($expiredMitra as $mitra)
+            <li>{{ $mitra->mitraUser->name }} - Kerjasama Berakhir pada: {{ \Carbon\Carbon::parse($mitra->tgl_selesai)->format('d M Y') }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
+
     <div class="container-fluid">
         <!-- Pesan Sukses -->
         @if(session('success'))
@@ -128,34 +144,34 @@
                         <label for="tgl_selesai">Tanggal Selesai</label>
                         <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" required>
                     </div>
+                    <div class="form-group">
+                        <label for="jurusan_id">Jurusan/Prodi</label>
+                        <div class="input-group">
+                            <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
+                                <option value="" disabled selected>Pilih Jurusan/Prodi</option>
+                                @foreach($jurusans as $jurusan)
+                                <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- <div class="form-group">
-                <label for="jurusan_id">Jurusan/Prodi</label>
-                <div class="input-group">
-                    <select class="form-control select2" id="jurusan_id" name="jurusan_id" required>
-                        <option value="" disabled selected>Pilih Jurusan/Prodi</option>
-                        @foreach($jurusans as $jurusan)
-                        <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="alamat">Alamat <small>(Opsional)</small></label>
-                <input type="text" class="form-control" id="alamat" name="alamat">
-            </div>
-            <div class="form-group">
-                <label for="kuota">Kuota <small>(Opsional)</small></label>
-                <input type="number" class="form-control" id="kuota" name="kuota">
-            </div>
-            <div class="form-group">
-                <label for="tanggal_mulai_magang">Mulai Magang <small>(Opsional)</small></label>
-                <input type="date" class="form-control" id="tanggal_mulai_magang" name="tanggal_mulai_magang">
-            </div>
-            <div class="form-group">
-                <label for="tanggal_selesai_magang">Selesai Magang <small>(Opsional)</small></label>
-                <input type="date" class="form-control" id="tanggal_selesai_magang" name="tanggal_selesai_magang">
-             </div> -->
+                        <label for="alamat">Alamat <small>(Opsional)</small></label>
+                        <input type="text" class="form-control" id="alamat" name="alamat">
+                    </div>
+                    <div class="form-group">
+                        <label for="kuota">Kuota <small>(Opsional)</small></label>
+                        <input type="number" class="form-control" id="kuota" name="kuota">
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal_mulai_magang">Mulai Magang <small>(Opsional)</small></label>
+                        <input type="date" class="form-control" id="tanggal_mulai_magang" name="tanggal_mulai_magang">
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal_selesai_magang">Selesai Magang <small>(Opsional)</small></label>
+                        <input type="date" class="form-control" id="tanggal_selesai_magang" name="tanggal_selesai_magang">
+                    </div> -->
                     <div class="form-group">
                         <label for="file_pks">Upload File PKS</label>
                         <input type="file" class="form-control-file" id="file_pks" name="file_pks" accept=".pdf">
@@ -349,97 +365,73 @@
     });
 
     function loadData() {
-        return $('#datamitra').DataTable({
-            processing: true,
-            pagination: true,
-            responsive: true,
-            serverSide: true,
-            searching: true,
-            ordering: false,
-            ajax: {
-                url: "{{ route('data_mitra') }}",
-                data: function(d) {
-                    d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
-                    d.search = $('input[type="search"]').val();
+    return $('#datamitra').DataTable({
+        processing: true,
+        pagination: true,
+        responsive: true,
+        serverSide: true,
+        searching: true,
+        ordering: false,
+        ajax: {
+            url: "{{ route('data_mitra') }}",
+            data: function(d) {
+                d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
+                d.search = $('input[type="search"]').val();
+            }
+        },
+        columns: [
+            {
+                data: null,
+                name: 'no',
+                className: 'text-center',
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: 'file_pks',
+                name: 'file_pks',
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if (row.file_pks) {
+                        return `<a href="/storage/${row.file_pks}" target="_blank" class="action-btn btn-sm btn-info">Lihat</a>`;
+                    } else {
+                        return `<span class="text-muted">Tidak ada file</span>`;
+                    }
                 }
             },
-            columns: [{
-                    data: null,
-                    name: 'no',
-                    className: 'text-center',
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'file_pks',
-                    name: 'file_pks',
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        if (row.file_pks) {
-                            return `<a href="/storage/${row.file_pks}" target="_blank" class="action-btn btn-sm btn-info">Lihat</a>`;
-                        } else {
-                            return `<span class="text-muted">Tidak ada file</span>`;
-                        }
-                    }
-                },
-                {
-                    data: 'tgl_mulai',
-                    name: 'tgl_mulai',
-                    className: 'text-center',
-                },
-                {
-                    data: 'tgl_selesai',
-                    name: 'tgl_selesai',
-                    className: 'text-center',
-                },
-                {
-                    data: 'mitra_user', // Mengambil nama mitra dari relasi
-                    name: 'mitra_user',
-                },
-                {
-                    data: 'alamat', // Mengambil nama mitra dari relasi
-                    name: 'alamat',
-                },
-                {
-                    data: 'kuota', // Mengambil nama mitra dari relasi
-                    name: 'kuota',
-                    className: 'text-center',
-                },
-                {
-                    data: 'jurusan', // Mengambil nama jurusan dari relasi
-                    name: 'jurusan',
-                },
-
-
-                {
-                    data: 'tanggal_mulai_magang',
-                    name: 'tanggal_mulai_magang',
-                    className: 'text-center',
-                },
-                {
-                    data: 'tanggal_selesai_magang',
-                    name: 'tanggal_selesai_magang',
-                    className: 'text-center',
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        return `
-                            <button class="action-btn btn-primary btn-sm edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal"><i class="fas fa-trash-alt"></i></button>
-                        `;
-                    }
+            { data: 'tgl_mulai', name: 'tgl_mulai', className: 'text-center' },
+            { data: 'tgl_selesai', name: 'tgl_selesai', className: 'text-center' },
+            { data: 'mitra_user', name: 'mitra_user' },
+            { data: 'alamat', name: 'alamat' },
+            { data: 'kuota', name: 'kuota', className: 'text-center' },
+            { data: 'jurusan', name: 'jurusan' },
+            { data: 'tanggal_mulai_magang', name: 'tanggal_mulai_magang', className: 'text-center' },
+            { data: 'tanggal_selesai_magang', name: 'tanggal_selesai_magang', className: 'text-center' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `
+                        <button class="action-btn btn-primary btn-sm edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal"><i class="fas fa-trash-alt"></i></button>
+                    `;
                 }
+            }
+        ],
+        rowCallback: function(row, data, index) {
+            let today = new Date().toISOString().split('T')[0]; // Ambil tanggal hari ini dalam format YYYY-MM-DD
+            if (data.tgl_selesai < today) {
+                $(row).css('background-color', '#ffcccc'); // Background merah muda
+            }
+        }
+    });
+}
 
-            ]
-        });
-    }
 
     function editMitra(id) {
         $.get(`${routes.edit}${id}/edit`, function(data) { // Pastikan URL sesuai

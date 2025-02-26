@@ -7,6 +7,7 @@ use App\Models\Mitra;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -17,8 +18,16 @@ class AdminController extends Controller
         $jumlahUser = DB::table('users')->count();
         $jumlahJurusan = DB::table('jurusans')->count();
 
+        $mitras = Mitra::all(); // Ambil semua mitra
+        $now = Carbon::now(); // Ambil tanggal hari ini
 
-        return view('admin.dashboard', compact('jumlahMitra', 'jumlahUser', 'jumlahJurusan'));
+        // Cek mitra yang tanggal selesai PKS sudah habis atau mencapai batasnya
+        $expiredMitra = $mitras->filter(function ($mitra) use ($now) {
+            return $mitra->tgl_selesai <= $now;
+        });
+
+
+        return view('admin.dashboard', compact('jumlahMitra', 'jumlahUser', 'jumlahJurusan', 'expiredMitra'));
     }
 
 

@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class KordinatorController extends Controller
 {
@@ -329,6 +330,109 @@ class KordinatorController extends Controller
             'jurusans' => Jurusan::all(),
         ]);
     }
+
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nama_mitra_id' => 'required|exists:users,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'tanggal_mulai_magang' => 'nullable|date',
+            'tanggal_selesai_magang' => 'nullable|date|after_or_equal:tanggal_mulai_magang',
+            'alamat' => 'nullable|string|max:255', // Validasi untuk alamat
+            'file_pks' => 'nullable|file|mimes:pdf|max:5120', // Validasi file opsional
+            'kuota' => 'nullable|integer', // Validasi untuk alamat
+        ]);
+
+        // Mengunggah file PKS jika ada
+        $filePath = $request->hasFile('file_pks')
+            ? $request->file('file_pks')->store('pks_files', 'public')
+            : null;
+
+        // Membuat mitra baru
+        Mitra::create(array_merge($request->all(), [
+            'file_pks' => $filePath,
+        ]));
+
+        return redirect()->route('kordinator.data_mitra')->with('success', 'Mitra Magang berhasil ditambahkan.');
+    }
+
+    /**
+     * Menampilkan form edit mitra.
+     */
+
+
+    public function edit(Mitra $mitra)
+    {
+        try {
+            $tgl_mulai = $mitra->tgl_mulai ? Carbon::parse($mitra->tgl_mulai)->format('Y-m-d') : null;
+            $tgl_selesai = $mitra->tgl_selesai ? Carbon::parse($mitra->tgl_selesai)->format('Y-m-d') : null;
+            $tanggal_mulai_magang = $mitra->tanggal_mulai_magang ? Carbon::parse($mitra->tanggal_mulai_magang)->format('Y-m-d') : null;
+            $tanggal_selesai_magang = $mitra->tanggal_selesai_magang ? Carbon::parse($mitra->tanggal_selesai_magang)->format('Y-m-d') : null;
+
+            return response()->json([
+                'id' => $mitra->id,
+                'file_pks' => $mitra->file_pks,
+                'tgl_mulai' => $tgl_mulai,
+                'tgl_selesai' => $tgl_selesai,
+                'nama_mitra_id' => $mitra->nama_mitra_id,
+                'jurusan_id' => $mitra->jurusan_id,
+                'tanggal_mulai_magang' => $tanggal_mulai_magang,
+                'tanggal_selesai_magang' => $tanggal_selesai_magang,
+                'alamat' => $mitra->alamat,
+                'kuota' => $mitra->kuota,
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+
+
+    public function update(Request $request, Mitra $mitra)
+    {
+        // Validasi input
+        $request->validate([
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'alamat' => 'nullable|string|max:255',
+            'file_pks' => 'nullable|file|mimes:pdf|max:5120', // Validasi file PKS
+            'kuota' => 'nullable|integer',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'tanggal_mulai_magang' => 'nullable|date',
+            'tanggal_selesai_magang' => 'nullable|date|after_or_equal:tanggal_mulai_magang',
+        ]);
+
+        // Tangani file PKS jika diunggah
+        if ($request->hasFile('file_pks')) {
+            // Hapus file lama jika ada
+            if ($mitra->file_pks && Storage::exists('public/' . $mitra->file_pks)) {
+                Storage::delete('public/' . $mitra->file_pks);
+            }
+
+            // Simpan file baru
+            $filePath = $request->file('file_pks')->store('pks_files', 'public');
+            $mitra->file_pks = $filePath;
+        }
+
+        // Perbarui data mitra
+        $mitra->update($request->except(['file_pks']) + ['file_pks' => $mitra->file_pks]);
+
+        return redirect()->route('kordinator.data_mitra')->with('success', 'Data mitra berhasil diperbarui.');
+    }
+
+    public function deleteMitra($id)
+    {
+        $mitra = Mitra::findOrFail($id);
+        $mitra->delete();
+
+        return redirect()->route('kordinator.data_mitra')->with('success', 'Data Mitra Berhasil di Hapus');
+    }
+
+
 
     public function jurusan(Request $request)
     {

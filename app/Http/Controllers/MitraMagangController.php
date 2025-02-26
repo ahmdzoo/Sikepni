@@ -146,11 +146,20 @@ class MitraMagangController extends Controller
                 ->make(true);
         }
 
+        $mitras = Mitra::all(); // Ambil semua mitra
+        $now = Carbon::now(); // Ambil tanggal hari ini
+
+        // Cek mitra yang tanggal selesai PKS sudah habis atau mencapai batasnya
+        $expiredMitra = $mitras->filter(function ($mitra) use ($now) {
+            return $mitra->tgl_selesai <= $now;
+        });
+
         // Jika bukan AJAX, kembalikan view data mitra
         return view('admin.data_mitra', [
             'mitras' => Mitra::with('jurusan')->get(),
             'mitrasMagang' => User::where('role', 'mitra_magang')->get(),
             'jurusans' => Jurusan::all(),
+            'expiredMitra' => $expiredMitra
         ]);
     }
 
@@ -161,7 +170,7 @@ class MitraMagangController extends Controller
         // Validasi input
         $request->validate([
             'nama_mitra_id' => 'required|exists:users,id',
-            // 'jurusan_id' => 'required|exists:jurusans,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             // 'tanggal_mulai_magang' => 'nullable|date',
@@ -258,17 +267,4 @@ class MitraMagangController extends Controller
     }
 
 
-    /**
-     * Menyimpan jurusan baru.
-     */
-    public function storeJurusan(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:jurusans,name',
-        ]);
-
-        Jurusan::create(['name' => $request->name]);
-
-        return redirect()->route('data_mitra')->with('success', 'Jurusan berhasil ditambahkan.');
-    }
 }
