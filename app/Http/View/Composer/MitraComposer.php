@@ -13,8 +13,23 @@ class MitraComposer
 {
     public function compose(View $view)
     {
+        // Pastikan user login
+        if (!Auth::check()) {
+            return;
+        }
+
         // Ambil data mitra berdasarkan pengguna yang sedang login
         $mitra = Mitra::where('nama_mitra_id', Auth::user()->id)->first();
+
+        // Jika mitra tidak ditemukan, kirim data kosong
+        if (!$mitra) {
+            $view->with([
+                'lamarans' => collect(),
+                'laporanMagang' => collect(),
+                'laporanAkhir' => collect(),
+            ]);
+            return;
+        }
 
         // Ambil data lamarans (pengajuan magang) yang pending dalam 3 bulan terakhir
         $lamarans = Lamaran::where('mitra_id', $mitra->id)
@@ -23,35 +38,31 @@ class MitraComposer
             ->latest()
             ->get();
 
-            // Array jenis laporan
-            $jenisLaporan = ['Harian', 'Mingguan', 'Bulanan']; // Bisa juga didapatkan dari input atau database
-            
-            // Menentukan rentang waktu berdasarkan jenis laporan
-            $tanggalBatasHarian = Carbon::now()->subDays(1); // 1 hari yang lalu
-            $tanggalBatasMingguan = Carbon::now()->subDays(7); // 7 hari yang lalu
-            $tanggalBatasBulanan = Carbon::now()->subMonths(1); // 1 bulan yang lalu
-            
-            // Query laporan magang mencakup semua jenis laporan
-            $laporanMagang = Laporan::where('mitra_id', $mitra->id)
-                ->whereIn('jenis_laporan', $jenisLaporan) // Filter berdasarkan semua jenis laporan
-                ->where(function ($query) use ($tanggalBatasHarian, $tanggalBatasMingguan, $tanggalBatasBulanan) {
-                    $query->where(function ($subQuery) use ($tanggalBatasHarian) {
-                        // Filter untuk laporan harian
-                        $subQuery->where('jenis_laporan', 'Harian')
-                                 ->where('created_at', '>=', $tanggalBatasHarian);
-                    })->orWhere(function ($subQuery) use ($tanggalBatasMingguan) {
-                        // Filter untuk laporan mingguan
-                        $subQuery->where('jenis_laporan', 'Mingguan')
-                                 ->where('created_at', '>=', $tanggalBatasMingguan);
-                    })->orWhere(function ($subQuery) use ($tanggalBatasBulanan) {
-                        // Filter untuk laporan bulanan
-                        $subQuery->where('jenis_laporan', 'Bulanan')
-                                 ->where('created_at', '>=', $tanggalBatasBulanan);
-                    });
-                })
-                ->latest()
-                ->get();
-            
+        // Array jenis laporan
+        $jenisLaporan = ['Harian', 'Mingguan', 'Bulanan'];
+
+        // Rentang waktu untuk filter laporan
+        $tanggalBatasHarian = Carbon::now()->subDays(1);
+        $tanggalBatasMingguan = Carbon::now()->subDays(7);
+        $tanggalBatasBulanan = Carbon::now()->subMonths(1);
+
+        // Query laporan magang mencakup semua jenis laporan
+        $laporanMagang = Laporan::where('mitra_id', $mitra->id)
+            ->whereIn('jenis_laporan', $jenisLaporan)
+            ->where(function ($query) use ($tanggalBatasHarian, $tanggalBatasMingguan, $tanggalBatasBulanan) {
+                $query->where(function ($subQuery) use ($tanggalBatasHarian) {
+                    $subQuery->where('jenis_laporan', 'Harian')
+                             ->where('created_at', '>=', $tanggalBatasHarian);
+                })->orWhere(function ($subQuery) use ($tanggalBatasMingguan) {
+                    $subQuery->where('jenis_laporan', 'Mingguan')
+                             ->where('created_at', '>=', $tanggalBatasMingguan);
+                })->orWhere(function ($subQuery) use ($tanggalBatasBulanan) {
+                    $subQuery->where('jenis_laporan', 'Bulanan')
+                             ->where('created_at', '>=', $tanggalBatasBulanan);
+                });
+            })
+            ->latest()
+            ->get();
 
         // Ambil data laporan akhir terkait mitra ini
         $laporanAkhir = LaporanAkhir::where('mitra_id', $mitra->id)

@@ -210,6 +210,7 @@
                 data: function(d) {
                     d.filter = $('#filter').val(); // Menambahkan filter ke data yang dikirim
                     d.search = $('input[type="search"]').val();
+                    d.status_verifikasi = 'approve';
                 }
             },
             columns: [{

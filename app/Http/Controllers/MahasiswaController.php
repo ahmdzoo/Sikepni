@@ -25,7 +25,7 @@ class MahasiswaController extends Controller
 
         $mahasiswa = auth()->user();
         $dosen = $mahasiswa->dosen; // Mengambil dosen yang berelasi dengan mahasiswa ini
-        
+
         // Menghitung jumlah laporan
         $totalLaporan = Laporan::where('user_id', $mahasiswaId)->count();
         $totalLaporanAkhir = LaporanAkhir::where('user_id', $mahasiswaId)->count();
@@ -39,12 +39,18 @@ class MahasiswaController extends Controller
         $totalMitra = Mitra::count();
 
         return view('mahasiswa.dashboard', compact(
-            'mitras', 'dosen', 'totalLaporan', 'totalLaporanAkhir', 
-            'totalLamaran', 'totalMitra', 'totalLamaranPending', 'totalLamaranDiterima'
+            'mitras',
+            'dosen',
+            'totalLaporan',
+            'totalLaporanAkhir',
+            'totalLamaran',
+            'totalMitra',
+            'totalLamaranPending',
+            'totalLamaranDiterima'
         ));
     }
 
-    
+
     // Menampilkan aktivitas mahasiswa
     public function mhs_aktifitas()
     {
@@ -61,7 +67,9 @@ class MahasiswaController extends Controller
     {
         if ($request->ajax()) {
             // Mengambil data mitra
-            $data = Mitra::with(['mitraUser', 'jurusan'])->select('mitras.*');
+            $data = Mitra::with(['mitraUser', 'jurusan'])
+                ->where('status_verifikasi', 'approved') // Filter hanya yang "approve"
+                ->select('mitras.*');
 
             // Menangani pencarian
             if ($request->has('search') && !empty($request->search)) {
@@ -74,7 +82,6 @@ class MahasiswaController extends Controller
                         ->orWhereHas('jurusan', function ($q) use ($searchValue) {
                             $q->where('name', 'like', "%{$searchValue}%");
                         });
-
                 });
             }
 
@@ -88,7 +95,7 @@ class MahasiswaController extends Controller
                 ->addColumn('no', function ($data) {
                     return $data->DT_RowIndex; // Jika Anda ingin menggunakan indeks baris
                 })
-                ->addColumn('no_pks', function($data) {
+                ->addColumn('no_pks', function ($data) {
                     return $data->no_pks;
                 })
                 ->editColumn('tanggal_mulai_magang', function ($mitra) {
@@ -103,13 +110,13 @@ class MahasiswaController extends Controller
                 ->addColumn('jurusan', function ($data) {
                     return $data->jurusan->name; // Mengambil nama jurusan
                 })
-                ->addColumn('kuota', function($data) {
+                ->addColumn('kuota', function ($data) {
                     return $data->kuota;
                 })
-                ->addColumn('alamat', function($data) {
+                ->addColumn('alamat', function ($data) {
                     return $data->alamat;
                 })
-                ->addColumn('file_pks', function($data) {
+                ->addColumn('file_pks', function ($data) {
                     return $data->file_pks;
                 })
                 ->addColumn('action', function ($data) {

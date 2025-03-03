@@ -14,6 +14,63 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+                <!-- Button Tambah Data -->
+                <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addMitraModal">
+                    Tambah Mitra
+                </button>
+
+                <!-- Modal Tambah Mitra -->
+                <div class="modal fade" id="addMitraModal" tabindex="-1" aria-labelledby="addMitraModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="{{ route('mitra.mitra.store') }}" method="POST">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addMitraModalLabel">Tambah Data Mitra</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="nama_mitra" class="form-label">Nama Mitra</label>
+                                        <input type="text" id="nama_mitra" name="nama_mitra" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jurusan_id" class="form-label">Jurusan</label>
+                                        <select id="jurusan_id" name="jurusan_id" class="form-select select2 w-100" required>
+                                            <option value="">Pilih Jurusan</option>
+                                            @foreach ($jurusans as $jurusan)
+                                            <option value="{{ $jurusan->id }}">{{ $jurusan->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tanggal_mulai_magang" class="form-label">Tanggal Mulai Magang</label>
+                                        <input type="date" id="tanggal_mulai_magang" name="tanggal_mulai_magang" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tanggal_selesai_magang" class="form-label">Tanggal Selesai Magang</label>
+                                        <input type="date" id="tanggal_selesai_magang" name="tanggal_selesai_magang" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="alamat" class="form-label">Alamat</label>
+                                        <textarea id="alamat" name="alamat" class="form-control" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="kuota" class="form-label">Kuota</label>
+                                        <input type="number" id="kuota" name="kuota" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Tambahkan class table-responsive di sini -->
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
@@ -37,12 +94,11 @@
                                     <button class="btn btn-sm btn-success" onclick="openPdfModal('{{ asset('storage/' . $mitra->file_pks) }}')">
                                         Lihat
                                     </button>
-                                    
                                     @else
-                                        <span class="text-muted">Tidak Ada File</span>
+                                    <span class="text-muted">Tidak Ada File</span>
                                     @endif
                                 </td>
-                                
+
                                 <td>{{ $mitra->mitraUser->name ?? '-' }}</td>
                                 <td>{{ $mitra->jurusan->name ?? '-' }}</td>
                                 <td class="text-center">{{ $mitra->tanggal_mulai_magang }}</td>
@@ -55,7 +111,62 @@
                                     </button>
                                 </td>
                             </tr>
+
+                            <!-- Modal Edit Mitra -->
+                            <div class="modal fade" id="editModal{{ $mitra->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $mitra->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('mitra.mitra.update', $mitra->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel{{ $mitra->id }}">Edit Data Mitra</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="jurusan_id_{{ $mitra->id }}" class="form-label">Jurusan</label>
+                                                    <select id="jurusan_id_{{ $mitra->id }}" name="jurusan_id" class="form-select select2 w-100" required>
+                                                        @foreach ($jurusans as $jurusan)
+                                                        <option value="{{ $jurusan->id }}" {{ $mitra->jurusan_id == $jurusan->id ? 'selected' : '' }}>
+                                                            {{ $jurusan->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="tanggal_mulai_magang_{{ $mitra->id }}" class="form-label">Tanggal Mulai Magang</label>
+                                                    <input type="date" id="tanggal_mulai_magang_{{ $mitra->id }}" name="tanggal_mulai_magang" class="form-control"
+                                                        value="{{ $mitra->tanggal_mulai_magang }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal_selesai_magang_{{ $mitra->id }}" class="form-label">Tanggal Selesai Magang</label>
+                                                    <input type="date" id="tanggal_selesai_magang_{{ $mitra->id }}" name="tanggal_selesai_magang" class="form-control"
+                                                        value="{{ $mitra->tanggal_selesai_magang }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="alamat_{{ $mitra->id }}" class="form-label">Alamat</label>
+                                                    <textarea id="alamat_{{ $mitra->id }}" name="alamat" class="form-control">{{ $mitra->alamat }}</textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="kuota_{{ $mitra->id }}" class="form-label">Kuota</label>
+                                                    <input type="number" id="kuota_{{ $mitra->id }}" name="kuota" class="form-control"
+                                                        value="{{ $mitra->kuota }}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -64,62 +175,6 @@
         </div>
     </div>
 
-   <!-- Modal Edit Mitra -->
-    <div class="modal fade" id="editModal{{ $mitra->id }}" aria-labelledby="editModalLabel{{ $mitra->id }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('mitra.mitra.update', $mitra->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel{{ $mitra->id }}">Edit Data Mitra</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="jurusan_id" class="form-label">Jurusan</label>
-                            <select id="jurusan_id" name="jurusan_id" class="form-select select2 w-100" required>
-                                @foreach ($jurusans as $jurusan)
-                                    <option value="{{ $jurusan->id }}" 
-                                        {{ old('jurusan_id', $mitra->jurusan->id ?? '') == $jurusan->id ? 'selected' : '' }}>
-                                        {{ $jurusan->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="tanggal_mulai_magang" class="form-label">Tanggal Mulai Magang</label>
-                            <input type="date" id="tanggal_mulai_magang" name="tanggal_mulai_magang" class="form-control" 
-                                value="{{ old('tanggal_mulai_magang', $mitra->tanggal_mulai_magang) }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_selesai_magang" class="form-label">Tanggal Selesai Magang</label>
-                            <input type="date" id="tanggal_selesai_magang" name="tanggal_selesai_magang" class="form-control" 
-                                value="{{ old('tanggal_selesai_magang', $mitra->tanggal_selesai_magang) }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <textarea id="alamat" name="alamat" class="form-control">{{ old('alamat', $mitra->alamat) }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kuota" class="form-label">Kuota</label>
-                            <input type="number" id="kuota" name="kuota" class="form-control" 
-                                value="{{ old('kuota', $mitra->kuota) }}">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">Tutup</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal View File PKS -->
     <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
@@ -137,7 +192,7 @@
             </div>
         </div>
     </div>
-    
+
 
 </div>
 @include('layouts/footer')
@@ -176,7 +231,9 @@
                 container.appendChild(canvas);
 
                 pdf.getPage(pageNumber).then((page) => {
-                    const viewport = page.getViewport({ scale: 1.5 });
+                    const viewport = page.getViewport({
+                        scale: 1.5
+                    });
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
 
@@ -193,6 +250,5 @@
             modalBody.innerHTML = `<p class="text-danger">Error loading PDF: ${error.message}</p>`;
         });
     }
-
 </script>
 @endsection

@@ -313,23 +313,52 @@ class KordinatorController extends Controller
                 ->editColumn('tanggal_selesai_magang', function ($mitra) {
                     return Carbon::parse($mitra->tanggal_selesai_magang)->format('Y-m-d'); // format sesuai kebutuhan
                 })
+                ->addColumn('status_verifikasi', function ($data) {
+                    return $data->status_verifikasi;
+                })
                 ->addColumn('action', function ($data) {
+                    $approveButton = ($data->status_verifikasi === 'pending')
+                        ? '<a href="javascript:void(0)" class="approve btn btn-success btn-sm" data-id="' . $data->id . '">Approve</a> '
+                        : '<span class="text-muted">Approved</span> ';
+
                     return '
+                        ' . $approveButton . '
                         <a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id="' . $data->id . '">Edit</a>
                         <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" data-id="' . $data->id . '">Delete</a>
                     ';
                 })
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        // Jika bukan AJAX, kembalikan view data mitra
+        // Hitung jumlah mitra dengan status pending
+        $pendingMitraCount = Mitra::where('status_verifikasi', 'pending')->count();
+
         return view('kordinator.data_mitra', [
             'mitras' => Mitra::with('jurusan')->get(),
             'mitrasMagang' => User::where('role', 'mitra_magang')->get(),
             'jurusans' => Jurusan::all(),
+            'pendingMitraCount' => $pendingMitraCount, // Kirim ke view
         ]);
     }
+    public function approve(Mitra $mitra)
+    {
+        if (!$mitra) {
+            return response()->json(['error' => 'Mitra tidak ditemukan'], 404);
+        }
+
+        try {
+            $mitra->update(['status_verifikasi' => 'approved']);
+            return response()->json(['message' => 'Mitra berhasil disetujui!']);
+        } catch (\Exception $e) {
+            \Log::error('Error approve mitra: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan saat menyetujui mitra.'], 500);
+        }
+    }
+
+
+
 
     public function store(Request $request)
     {

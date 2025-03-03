@@ -19,6 +19,7 @@ class Mitra extends Model
         'tanggal_selesai_magang',
         'alamat',
         'kuota',
+        'status_verifikasi',
         'file_pks',
     ];
 

@@ -110,6 +110,8 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
 
     Route::get('/mitra/info_kerjasama', [MitraAdminController::class, 'mitra_admin'])->name('mitra_admin');
     Route::put('/mitra/{id}', [MitraAdminController::class, 'update'])->name('mitra.mitra.update');
+    Route::post('/mitra/mitra/store', [MitraAdminController::class, 'store'])->name('mitra.mitra.store');
+    Route::get('/mitra/mitra/create', [MitraAdminController::class, 'create'])->name('mitra.mitra.create');
 
     Route::post('/mitra/laporan/{id}/nilai', [LaporanController::class, 'updateNilai'])->name('mitra.laporan.nilai');
     Route::post('/mitra/laporan/{id}/nilai', [LaporanAkhirController::class, 'updateNilai'])->name('mitra.laporanAkhir.nilai');
@@ -176,6 +178,7 @@ Route::group(['middleware' => ['auth', 'role:kordinator']], function () {
     Route::get('/kordinator/mitra/{mitra}/edit', [KordinatorController::class, 'edit'])->name('kordinator.mitra.edit');
     Route::put('/kordinator/mitra/{mitra}', [KordinatorController::class, 'update'])->name('kordinator.mitra.update');
     Route::delete('/kordinator/mitra/{mitra}', [KordinatorController::class, 'deleteMitra'])->name('kordinator.mitra.destroy');
+    Route::put('/kordinator/mitra/{mitra}/approve', [KordinatorController::class, 'approve'])->name('kordinator.mitra.approve');
 
 
     // Rute untuk manajemen user
