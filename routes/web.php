@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth', 'role:mitra_magang']], function () {
     Route::get('/mitra/mitra/create', [MitraAdminController::class, 'create'])->name('mitra.mitra.create');
 
     Route::post('/mitra/laporan/{id}/nilai', [LaporanController::class, 'updateNilai'])->name('mitra.laporan.nilai');
-    Route::post('/mitra/laporan/{id}/nilai', [LaporanAkhirController::class, 'updateNilai'])->name('mitra.laporanAkhir.nilai');
+    Route::post('/mitra/laporanAkhir/{id}/nilai', [LaporanAkhirController::class, 'updateNilai'])->name('mitra.laporanAkhir.nilai');
 
 
 });

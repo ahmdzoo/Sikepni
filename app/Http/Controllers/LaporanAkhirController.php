@@ -39,9 +39,9 @@ class LaporanAkhirController extends Controller
         }
 
         // Paginasi hasil dengan 10 laporan per halaman
-        $laporans = $query->paginate(10);
+        $LaporanAkhirs = $query->paginate(10);
 
-        return view('dosen.dosen_laporanAkhir', compact('laporans', 'mahasiswa_id'));
+        return view('dosen.dosen_laporanAkhir', compact('LaporanAkhirs', 'mahasiswa_id'));
     }
 
 
