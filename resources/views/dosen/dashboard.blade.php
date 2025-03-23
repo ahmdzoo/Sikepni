@@ -18,7 +18,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row m-4">
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="col-lg-3  col-md-6">
                     <div class="small-box">
                         <a href="{{ route('dosen.magang_mhs') }}">
                             <div class="inner">
@@ -26,12 +26,12 @@
                                 <p>Mahasiswa</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-user-graduate"></i>
                             </div>
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="col-lg-3  col-md-6">
                     <div class="small-box">
                         <a href="{{ route('dosen.magang_mhs') }}">
                             <div class="inner">
@@ -39,12 +39,12 @@
                                 <p>Laporan</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-file-alt"></i>
                             </div>
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="col-lg-3  col-md-6">
                     <div class="small-box">
                         <a href="{{ route('dosen.magang_mhs') }}">
                             <div class="inner">
@@ -52,7 +52,7 @@
                                 <p>Laporan Akhir</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-file-alt"></i>
                             </div>
                         </a>
                     </div>

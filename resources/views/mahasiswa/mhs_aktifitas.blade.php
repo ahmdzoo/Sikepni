@@ -121,6 +121,7 @@
                                 <th style="width: 20%; text-align: center;">Laporan</th>
                                 <th style="width: 20%; text-align: center;">Jenis Laporan</th>
                                 <th style="width: 20%; text-align: center;">Tanggal</th>
+                                <th style="width: 20%; text-align: center;">Nilai</th>
                                 <th style="width: 20%; text-align: center;">Aksi</th>
                             </tr>
                         </thead>
@@ -135,6 +136,7 @@
                                     </td>
                                     <td class="text-center">{{ $laporan->jenis_laporan }}</td>
                                     <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
+                                    <td class="text-center">{{ $laporan->nilai }}</td>
                                     <td class="text-center">
                                         <!-- Dropdown Action -->
                                         <div class="dropdown">

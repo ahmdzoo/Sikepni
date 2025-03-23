@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <h2 class="card-title mb-0">Laporan Magang</h2>
+                <h2 class="card-title mb-0">{{$laporans->first()->mahasiswa->name }}</h2>
             </div>
             <div class="card-body">
                 <!-- Filter Berdasarkan Jenis Laporan -->
@@ -61,7 +61,6 @@
                                 <th>No</th>
                                 <th>Laporan</th>
                                 <th>Jenis Laporan</th>
-                                <th>Nama</th>
                                 <th>Tanggal Upload</th>
                                 <th>Nilai</th>
                                 <th>Aksi</th>
@@ -82,7 +81,6 @@
                                     </a>
                                 </td>
                                 <td>{{ $laporan->jenis_laporan }}</td>
-                                <td>{{ $laporan->mahasiswa->name }}</td>
                                 <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
                                 <td class="text-center">
                                     <form action="{{ route('mitra.laporan.nilai', $laporan->id) }}" method="POST">

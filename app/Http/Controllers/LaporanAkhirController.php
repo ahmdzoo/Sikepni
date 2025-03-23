@@ -31,7 +31,9 @@ class LaporanAkhirController extends Controller
         $dosenId = auth()->user()->id; // Ambil ID dosen yang login
 
         // Query dasar untuk laporan sesuai mitra dan mahasiswa tertentu
-        $query = LaporanAkhir::forDosen($dosenId);
+        $query = LaporanAkhir::forDosen($dosenId)
+        ->where('user_id', $mahasiswa_id)
+            ->whereHas('mahasiswa');
 
         // Tambahkan filter jenis laporan jika tersedia
         if ($request->has('filter_jenis') && $request->filter_jenis) {

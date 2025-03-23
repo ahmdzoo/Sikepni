@@ -27,7 +27,7 @@
                 <table class="table table-bordered" id="dosenTable">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th class="text-center">No</th>
                             <th>Dosen</th>
                             <th>Mahasiswa</th>
                         </tr>
@@ -35,7 +35,7 @@
                     <tbody>
                         @foreach($dosen as $index => $d)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ $d->name }}</td>
                             <td>
                                 @if($d->mahasiswa->isEmpty())
@@ -70,19 +70,21 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="dosen_id" class="form-label">Pilih Dosen</label>
+                                <br>
                                 <select class="form-select" name="dosen_id" required>
                                     <option value="">-- Pilih Dosen --</option>
                                     @foreach($dosen as $d)
-                                    <option value="{{ $d->id }}">{{ $d->name }} ({{ $d->email }})</option>
+                                    <option value="{{ $d->id }}">{{ $d->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="mahasiswa_id" class="form-label">Pilih Mahasiswa</label>
+                                <br>
                                 <select class="form-select" name="mahasiswa_id" required>
                                     <option value="">-- Pilih Mahasiswa --</option>
                                     @foreach($mahasiswa as $m)
-                                    <option value="{{ $m->id }}">{{ $m->name }} ({{ $m->email }})</option>
+                                    <option value="{{ $m->id }}">{{ $m->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

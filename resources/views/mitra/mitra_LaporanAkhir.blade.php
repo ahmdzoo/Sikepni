@@ -33,7 +33,7 @@
     <div class="container-fluid">
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <h2 class="card-title mb-0">Laporan Akhir Magang</h2>
+                <h2 class="card-title mb-0">L{{$LaporanAkhirs->first()->mahasiswa->name }}</h2>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

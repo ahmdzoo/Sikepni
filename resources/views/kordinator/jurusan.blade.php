@@ -39,9 +39,9 @@
                     <table class="table table-striped table-sm" id="jurusan">
                         <thead class="">
                             <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Actions</th>
+                                <th class="text-center">No</th>
+                                <th>Nama Jurusan/Prodi</th>
+                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,6 +194,7 @@
             {
                 data: null,
                 name: 'no',
+                className: 'text-center',
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 },
@@ -203,10 +204,12 @@
             {
                 data: 'name',
                 name: 'name',
+                
             },
             {
                 data: 'action',
                 name: 'action',
+                className: 'text-center',
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row) {

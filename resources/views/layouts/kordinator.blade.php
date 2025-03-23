@@ -31,7 +31,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/kordinator.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
@@ -234,7 +234,7 @@
             <li class="nav-item">
               <a href="{{ route('kordinator.admin_magang') }}" class="nav-link {{ request()->is('kordinator/laporan_magang') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-file-alt"></i>
-                <p>Laporan Magang</p>
+                <p>Aktifitas Magang</p>
               </a>
             </li>
           </ul>

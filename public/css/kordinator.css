@@ -1,0 +1,397 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+body{
+  background-color: #b7dae2 !important;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.content-wrapper{
+  background-color: #b7dae2 !important;
+}
+/* Make navbar blend with the background */
+.main-header {
+  background-color: #b7dae2 !important; /* Ensure the background matches the content */
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Sidebar modification */
+.main-sidebar {
+  background-color: white !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow effect */
+  color: #333;
+}
+
+/* Remove the border under the Dashboard Admin in the sidebar */
+.brand-link {
+  border-bottom: none !important;
+  color: #333 !important;
+}
+
+/* Adjust sidebar link colors */
+.nav-sidebar .nav-link {
+  color: #333 !important;
+}
+
+.nav-sidebar .nav-link:hover {
+  background-color: #f0f0f0 !important;
+}
+
+/* Change color of active menu items */
+.nav-sidebar .nav-item .nav-link.active {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.nav-sidebar .nav-item .nav-link.active .nav-icon {
+  color: white !important; /* Warna ikon putih */
+}
+
+.nav-icon {
+  color: gray;
+}
+
+
+/* css card pada dashboard admin */
+
+/* Small box styling */
+.small-box {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.small-box:hover {
+  transform: translateY(-5px);
+}
+
+.small-box .inner {
+  color: #007bff;
+  padding: 20px;
+}
+
+.small-box .inner h3 {
+  font-weight: bold;
+}
+
+.small-box .inner p {
+  font-size: 18px;
+  color: #333;
+}
+
+.small-box .icon {
+  font-size: 60px;
+  color: #007bff;
+  opacity: 0.8;
+}
+
+.small-box-footer {
+  color: #007bff !important;
+  background-color: #f8f9fa !important;
+  border-radius: 0 0 15px 15px;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.small-box-footer:hover {
+  background-color: #e2e6ea;
+}
+
+/* Mengatur ukuran font untuk tabel */
+#datamitra {
+  font-size: 15px; /* Ukuran font kecil */
+}
+
+#datamitra th, #datamitra td {
+  font-size: 15px; /* Pastikan header dan isi tabel memiliki ukuran font kecil */
+}
+
+.action-btn {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+}
+
+/* RESPONSIVE TABLE */
+
+/* Mengatur ukuran font dan padding untuk pagination */
+.pagination {
+font-size: 0.8rem; /* Ukuran font lebih kecil */
+}
+
+.pagination li.page-item a.page-link,
+.pagination li.page-item span.page-link {
+padding: 0.2rem 0.4rem; /* Padding lebih kecil */
+font-size: 0.8rem; /* Ukuran font lebih kecil */
+}
+
+/* Mengatur ukuran ikon jika menggunakan ikon berbasis font, misalnya Font Awesome */
+.pagination li.page-item a.page-link i,
+.pagination li.page-item span.page-link i {
+font-size: 0.8rem; /* Ukuran ikon lebih kecil */
+}
+
+/* Responsif pada layar sangat kecil */
+@media (max-width: 576px) {
+.content-header h1 {
+    font-size: 30px !important;
+}
+
+.btn {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+}
+
+.form-control {
+    font-size: 0.8rem;
+}
+
+.modal-title {
+    font-size: 1.2rem;
+}
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Ubah warna sesuai keinginan */
+  border-color: #0056b3;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #80b8c7;
+}
+
+.table td, .table th {
+  max-width: 200px; /* Ganti sesuai kebutuhan */
+  word-wrap: break-word; /* Memungkinkan kata panjang untuk pecah */
+  white-space: normal; /* Biarkan teks turun ke baris baru */
+  vertical-align: top; /* Pastikan isi sel dimulai dari bagian atas */
+}
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  padding-left: 0;
+  height: auto;
+  margin-top: -8px;
+
+  
+}
+
+/* Hover flip effect for the buttons */
+.btn-flip {
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Laporan Magang Harian button hover effect */
+.btn-flip-harian {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+.btn-flip-harian:hover {
+  background-color: white;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+}
+
+/* Laporan Akhir button hover effect */
+.btn-flip-akhir {
+  background-color: white;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+}
+.btn-flip-akhir:hover {
+  background-color: #4a90e2;
+  color: white;
+}
+
+/* CSS untuk Filter Responsif dan Interaktif */
+.filter-section {
+  margin-top: 15px;
+}
+
+.input-group .input-group-text {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-group .input-group-text:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .filter-section {
+      text-align: center;
+  }
+  .input-group {
+      width: 100% !important;
+  }
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  color: #555;
+}
+
+.no-data-image {
+  width: 150px;
+  height: auto;
+}
+
+.no-data-text {
+  font-size: 1.0rem;
+  color: #666;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  width: 400px; /* Lebarkan sesuai kebutuhan */
+  max-height: 500px; /* Tinggikan sesuai kebutuhan */
+  overflow-y: auto; /* Scroll jika data terlalu panjang */
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown-submenu .dropdown-menu {
+  position: relative; /* Agar berada tepat di bawah */
+  left: 0;
+  top: 0;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  }
+  
+  .dropdown-item {
+  white-space: normal;
+  padding: 10px;
+  
+  }
+  
+  
+  
+  .dropdown-content {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: relative;
+    width: 100%; /* Memastikan konten dropdown mengambil ruang penuh */
+  }
+  
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .nav-item .fa-bell {
+    color: white !important; /* Mengubah warna ikon menjadi putih */
+  }
+  
+  .dropdown-item:active {
+    background-color: inherit !important;
+    color: inherit !important;
+    outline: none !important;
+  }
+  
+  span.menu {
+    margin-left: 10px; /* Menggeser span menu ke kanan dengan margin kiri */
+  }
+
+  /* Dropdown menu */
+.dropdown-menu {
+  width: 400px; /* Lebarkan dropdown pada ukuran layar besar */
+  max-height: 500px; /* Atur tinggi dropdown agar tidak terlalu tinggi */
+  overflow-y: auto; /* Membuat dropdown scrollable jika terlalu panjang */
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsif: Mengurangi lebar dropdown saat layar mengecil */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100%; /* Memperlebar dropdown agar sesuai dengan lebar layar kecil */
+    max-width: 300px; /* Tentukan lebar maksimal agar tidak terlalu besar */
+  }
+  
+  .dropdown-item {
+    font-size: 0.875rem; /* Mengecilkan ukuran font pada dropdown item */
+  }
+}
+
+/* Menyesuaikan lebih lanjut jika layar lebih kecil */
+@media (max-width: 480px) {
+  .dropdown-menu {
+    width: 100%;
+    max-width: 250px; /* Lebar dropdown pada layar sangat kecil */
+  }
+
+  .dropdown-item {
+    font-size: 0.75rem; /* Mengecilkan font lebih lanjut */
+  }
+}
+
+
+/* Styling for responsive cards in 4 columns per row */
+.row > .col-md-3 {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .row > .col-md-3 {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row > .col-md-3 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .row > .col-md-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}
+
+  /* Ukuran teks dan padding tabel akan mengecil pada layar kecil */
+  @media (max-width: 768px) {
+    .custom-table th, .custom-table td {
+        font-size: 8px; /* Ukuran font lebih kecil */
+        padding: 4px;    /* Padding lebih kecil */
+    }
+    .custom-table .btn {
+        padding: 2px 4px; /* Ukuran tombol lebih kecil */
+        font-size: 5px;  /* Ukuran font tombol lebih kecil */
+    }
+}
+
+
+    /* Ukuran teks dan padding tabel akan mengecil pada layar kecil */
+    @media (max-width: 768px) {
+        .custom-table th, .custom-table td {
+            font-size: 8px; /* Ukuran font lebih kecil */
+            padding: 4px;    /* Padding lebih kecil */
+        }
+        .custom-table .btn {
+            padding: 2px 4px; /* Ukuran tombol lebih kecil */
+            font-size: 5px;  /* Ukuran font tombol lebih kecil */
+        }
+    }

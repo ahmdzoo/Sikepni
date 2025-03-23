@@ -15,21 +15,31 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         @if($mitras->isEmpty())
             <div class="alert alert-warning text-center">
                 Tidak Ada Mitra Dengan Mahasiswa Yang Diterima.
             </div>
         @else
-            @foreach ($mitras as $mitra)
-                <div class="card mb-4" style="background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                    <a href="{{ route('admin_mhs',['mitra_id' => Crypt::encrypt($mitra->id)]) }}">
-                    <div class="card-body">
-                        <h3 class="card-title" style="font-weight: bold; color: #333;">{{ $mitra->mitraUser->name }}</h3>
+            <div class="row m-4">
+                @foreach ($mitras as $mitra)
+                    <div class="col-md-4 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-transparent text-left" style="font-size: 12px; color: #6c757d;">
+                                <span>Mitra Magang</span>
+                            </div>
+                            <div class="card-body p-3 overflow-hidden">
+                                <h6 class="card-title text-truncate" style="font-weight: 600; max-width: 100%;">
+                                    {{ $mitra->mitraUser->name }}
+                                </h6>
+                                <div class="d-flex gap-2 mt-5">
+                                    <a href="{{ route('admin_mhs',['mitra_id' => Crypt::encrypt($mitra->id)]) }}" class="btn btn-primary">Lihat</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    </a>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         @endif
     </div>
 </div>

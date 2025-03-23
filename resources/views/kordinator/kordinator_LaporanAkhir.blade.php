@@ -22,7 +22,7 @@
         @else
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="card-title mb-0">Laporan Akhir Magang</h2>
+                    <h2 class="card-title mb-0">{{$LaporanAkhirs->first()->mahasiswa->name }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -33,6 +33,7 @@
                                     <th>Laporan</th>
                                     <th>Mitra Magang</th>
                                     <th>Tanggal Upload</th>
+                                    <th>Nilai</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                         <td><a href="{{ Storage::url($laporan->file_path) }}" target="_blank">{{ basename($laporan->file_path) }}</a></td>
                                         <td>{{ $laporan->mitra->mitraUser->name }}</td>
                                         <td class="text-center">{{ $laporan->created_at->format('d M Y') }}</td>
+                                        <td class="text-center">{{ $laporan->nilai }}</td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
                                                 <i class="fas fa-comments"></i> Komentar

@@ -113,7 +113,7 @@
                         <a href="{{ route('mahasiswa.aktifitas') }}">
                             <div class="inner">
                                 <h3>{{ $totalLaporan }}</h3>
-                                <p>Total Laporan Magang</p>
+                                <p>Laporan Magang</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-file-alt"></i>
@@ -127,7 +127,7 @@
                         <a href="{{ route('mahasiswa.LaporanAkhir') }}">
                             <div class="inner">
                                 <h3>{{ $totalLaporanAkhir }}</h3>
-                                <p>Laporan Akhir Magang</p>
+                                <p>Laporan Akhir</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-file-alt"></i>

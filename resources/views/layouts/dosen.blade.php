@@ -164,7 +164,7 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('dosen_lamaran') }}" class="nav-link {{ request()->is('dosen/pengajuan_magang') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-file-alt"></i>
+                <i class="nav-icon fas fa-check-circle"></i>
                 <p>Pengajuan Magang</p>
               </a>
             </li>
