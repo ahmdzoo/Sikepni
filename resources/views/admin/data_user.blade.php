@@ -20,7 +20,7 @@
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -85,9 +85,7 @@
           @csrf
           <div class="modal-header">
             <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
           <div class="modal-body">
@@ -161,9 +159,7 @@
           @method('PUT')
           <div class="modal-header">
             <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
           <div class="modal-body">
@@ -237,9 +233,7 @@
           @method('DELETE')
           <div class="modal-header">
             <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
           <div class="modal-body">

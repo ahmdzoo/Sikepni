@@ -1,5 +1,7 @@
-@extends('layouts.dosen') <!-- Pastikan menggunakan layout yang sesuai dengan project Anda -->
-@section('title', 'Lamaran Magang | SIKEPNI')
+@extends('layouts.dosen.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Pengajuan Magang')
 
 @section('content')
 <div class="content-wrapper" style=" min-height: 100vh;">
@@ -91,5 +93,4 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-@include('layouts/footer')
 @endsection

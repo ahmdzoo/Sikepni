@@ -25,9 +25,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        View::composer('layouts.mitra', MitraComposer::class);
-        View::composer('layouts.main', AdminComposer::class);
-        View::composer('layouts.kordinator', KordinatorComposer::class);
+        View::composer('partials.mitra.navbar', MitraComposer::class);
+        View::composer('partials.budede.navbar', AdminComposer::class);
+        View::composer('partials.admin.navbar', KordinatorComposer::class);
         // View::composer('layouts.dosen', DosenComposer::class);
     }
 }

@@ -1,50 +1,42 @@
-@extends('layouts.dosen')
-@section('title', 'Mahasiswa Magang | SIKEPNI')
+@extends('layouts.dosen.app')
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Mahasiswa Magang')
 
 @section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Mahasiswa Magang</h1>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container-fluid text-center">
-        @if($mahasiswaDiterima->isEmpty())
+    <!-- Laporan Magang -->
+    @if($mahasiswaDiterima->isEmpty())
         <div class="no-data-container">
             <img src="{{ asset('gambar/empty.png') }}" alt="Gambar Illustrasi" class="no-data-image mb-3">
             <p class="no-data-text">Anda tidak memiliki mahasiswa magang.</p>
         </div>
-        @else
-        <div class="row m-4">
+    @else
+        <div class="row">
             @foreach($mahasiswaDiterima as $item)
-                <div class="col-lg-3  col-md-6">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-header bg-transparent text-left" style="font-size: 12px; color: #6c757d;">
-                            <span>{{ $item->mahasiswa->jurusan }}</span>
+                <div class="col-md-4 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h4 class="card-title m-0 me-2">{{ $item->mahasiswa->name }}</h4>
                         </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <h5 class="card-title text-center" style="font-weight: 600; color: #333; margin-top: 10px;">{{ $item->mahasiswa->name }}</h5>
-                            <p class="card-text text-muted" style="font-size: 14px;">{{ $item->mahasiswa->nim }}</p>
-                            <a href="{{ route('dosen.laporan', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-harian btn-block mb-2">Laporan Magang &rsaquo;</a>
-                            <a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}" class="btn btn-flip btn-flip-akhir btn-block">Laporan Akhir &rsaquo;</a>
+                        <div class="card-body">
+                            <h6 class="card-title">{{ $item->mahasiswa->jurusan }}</h6>
+                            <p class="card-text">
+                                {{ $item->mahasiswa->nim }}
+                            </p>
+                            <br>
+                            <div class="d-flex gap-2">
+                                <a href="{{ route('dosen.laporan', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}">
+                                    <button type="button" class="btn btn-primary">Laporan Magang</button>
+                                </a>
+                                <a href="{{ route('dosen.LaporanAkhir', ['mahasiswa_id' => Crypt::encrypt($item->mahasiswa->id)]) }}">
+                                    <button type="button" class="btn btn-secondary">Laporan Akhir</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-        @endif
-    </div>
-</div>
-@include('layouts.footer')
+    @endif
 
-<style>
-    
-
-
-</style>
 @endsection

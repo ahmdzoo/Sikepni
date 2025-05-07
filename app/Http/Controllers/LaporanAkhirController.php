@@ -157,11 +157,11 @@ class LaporanAkhirController extends Controller
         $LaporanAkhirCount = LaporanAkhir::paginate(10, ['*'], 'page', $page)->count();
 
         if ($LaporanAkhirCount == 0 && $page > 1) {
-            return redirect()->route('mahasiswa.aktifitas', ['page' => $page - 1])
+            return redirect()->route('mahasiswa.LaporanAkhir', ['page' => $page - 1])
                 ->with('success', 'LaporanAkhir berhasil dihapus');
         }
 
-        return redirect()->route('mahasiswa.aktifitas')
+        return redirect()->route('mahasiswa.LaporanAkhir')
             ->with('success', 'LaporanAkhir berhasil dihapus');
     }
 

@@ -1,45 +1,50 @@
-@extends('layouts.mhs')
-@section('title', 'Aktifitas Magang | SIKEPNI')
+@extends('layouts.mahasiswa.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Aktivitas Magang')
 
 @section('content')
-<div class="content-wrapper" style=" min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-4">
-                <div class="col-sm-12 text-left">
-                    <h1 class="m-4" style="font-size: 30px; color: #fff; font-weight: bold;">
-                        Aktifitas Magang
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-        @if(!$lamaran)
-        <div class="alert alert-warning text-center">
-            Anda Belum Memiliki Mitra Magang.
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card p-4">
+
+        @if (!$lamaran || !$lamaran->mitra || !$lamaran->mitra->mitraUser)
+          <div class="alert alert-warning text-center">
+            <strong>Anda belum memiliki Mitra Magang</strong>
+          </div>
         @else
-        <div class="card mb-4" style="background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            <div class="card-body">
-                <h3 class="card-title" style="font-weight: bold; color: #333;">{{ $lamaran->mitra->mitraUser->name }}</h3>
-                <p class="card-text" style="color: #555;">
-                    Dosen Pembimbing:
-                    @if (isset($dosen) && $dosen->isNotEmpty())
+          <div class="d-flex align-items-center row">
+            <div class="col-sm-7">
+              <div class="card-body">
+                <h4 class="card-title text-primary">{{ $lamaran->mitra->mitraUser->name }}</h4>
+                <p class="mb-4">
+                  Dosen Pembimbing:
+                  @if (isset($dosen) && $dosen->isNotEmpty())
                     {{ $dosen->first()->name }}
-                    @else
+                  @else
                     Tidak ada dosen pembimbing
-                    @endif
+                  @endif
                 </p>
+                <a href="{{ route('mahasiswa.aktifitas') }}" class="btn btn-primary w-100 mb-2">Laporan Magang</a>
+                <a href="{{ route('mahasiswa.LaporanAkhir') }}" class="btn btn-secondary w-100">Laporan Akhir</a>
+              </div>
             </div>
-            <div class="card-footer d-flex flex-wrap justify-content-center">
-                <a href="{{ route('mahasiswa.aktifitas') }}" class="btn btn-primary m-2" style="flex: 1; min-width: 150px;">Laporan Magang <i class="fas fa-arrow-circle-right"></i></a>
-                <a href="{{ route('mahasiswa.LaporanAkhir') }}" class="btn btn-secondary m-2" style="flex: 1; min-width: 150px;">Laporan Akhir <i class="fas fa-arrow-circle-right"></i></a>
+            <div class="col-sm-5 d-flex justify-content-end">
+              <div class="card-body pb-0 px-0 text-center">
+                <img
+                  src="{{ asset('images/img/illustrations/activity.png') }}"
+                  style="max-width: 60%; height: auto; object-fit: contain;"
+                  alt="View Badge User"
+                  data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                  data-app-light-img="illustrations/man-with-laptop-light.png"/>
+              </div>
             </div>
-        </div>
+          </div>
         @endif
+
+      </div>
     </div>
-</div>
-@include('layouts.footer')
+  </div>
+
 @endsection

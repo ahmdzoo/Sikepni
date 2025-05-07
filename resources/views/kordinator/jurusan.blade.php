@@ -1,30 +1,30 @@
-@extends('layouts.kordinator')
-@section('title', 'Data Jurusan | SIKEPNI')
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
-@endsection
+@extends('layouts.admin.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Data Jurusan/Prodi')
+
+
 @section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Data Jurusan</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+
     
     <div class="container-fluid">
-        <!-- Pesan Sukses -->
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+          <div>{{ session('success') }}</div>
+          <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      @endif
+
+      @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+          <div>{{ session('error') }}</div>
+          <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      @endif
 
         <div class="card">
             <div class="card-body">
@@ -39,9 +39,9 @@
                     <table class="table table-striped table-sm" id="jurusan">
                         <thead class="">
                             <tr>
-                                <th class="text-center">No</th>
-                                <th>Nama Jurusan/Prodi</th>
-                                <th class="text-center">Actions</th>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 <!-- Modal Add Jurusan -->
@@ -64,9 +64,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addJurusanModalLabel">Add Jurusan/Prodi</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+
         </div>
         <form action="{{ route('kordinator.jurusan.store') }}" method="POST">
           @csrf
@@ -95,9 +94,7 @@
           @method('PUT')
           <div class="modal-header">
             <h5 class="modal-title" id="editJurusanModalLabel">Edit Jurusan/Prodi</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
           </div>
           
           <div class="modal-body">
@@ -126,7 +123,7 @@
           @method('DELETE')
           <div class="modal-header">
             <h5 class="modal-title" id="deleteJurusanModalLabel">Confirm Delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background: none; border: none;">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -152,7 +149,7 @@
 
 <!-- Tambahkan ini di bagian bawah file untuk menyertakan skrip Bootstrap jika belum ada -->
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 @endpush
 
@@ -194,7 +191,6 @@
             {
                 data: null,
                 name: 'no',
-                className: 'text-center',
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 },
@@ -204,18 +200,16 @@
             {
                 data: 'name',
                 name: 'name',
-                
             },
             {
                 data: 'action',
                 name: 'action',
-                className: 'text-center',
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row) {
                     return `
-                        <button class="btn btn-primary btn-sm" onclick="editJurusan(${row.id})" data-toggle="modal" data-target="#editJurusanModal">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteJurusan(${row.id})" data-toggle="modal" data-target="#deleteJurusanModal">Delete</button>
+                        <button class="btn btn-primary btn-sm" onclick="editJurusan(${row.id})" data-toggle="modal" data-target="#editJurusanModal"><i class="bx bx-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteJurusan(${row.id})" data-toggle="modal" data-target="#deleteJurusanModal"><i class="bx bx-trash"></i></button>
                     `;
                 }
             },
@@ -239,7 +233,4 @@ function deleteJurusan(id) {
 
 
 </script>
-@include('layouts/footer')
 @endsection
-
-

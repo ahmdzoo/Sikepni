@@ -1,71 +1,51 @@
-@extends('layouts.kordinator')
-@section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Dashboard Kordinator</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+@extends('layouts.admin.app')
 
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row m-4">
-          <!-- Jumlah mitra -->
-          <div class="col-lg-3  col-md-6">
-            <!-- small box -->
-            <div class="small-box">
-              <a href="{{ route('kordinator.data_mitra') }}">
-                <div class="inner">
-                  <h3>{{ $jumlahMitra ?? 0 }}</h3>
-                </sup></h3>
-                  <p>Mitra</p>
-                </div>
-                <div class="icon">
-                  <i class="fas fa-handshake"></i>
-                </div>
-            </a>
-            </div>
-          </div>
-          <!-- Data user -->
-          <div class="col-lg-3  col-md-6">
-            <!-- small box -->
-            <div class="small-box">
-              <a href="{{ route('kordinator.data_user') }}">
-                <div class="inner">
-                  <h3>{{ $jumlahUser ?? 0 }}</sup></h3>
-                  <p>User</p>
-                </div>
-                <div class="icon">
-                  <i class="fas fa-users"></i>
-              </div>
-              </a>
-            </div>
-          </div>
-          <!-- Data jurusan -->
-          <div class="col-lg-3  col-md-6">
-            <!-- small box -->
-            <div class="small-box">
-              <a href="{{ route('kordinator.jurusan') }}">
-                <div class="inner">
-                  <h3>{{ $jumlahJurusan ?? 0 }}</sup></h3>
-                  <p>Jurusan/Prodi</p>
-                </div>
-                <div class="icon">
-                  <i class="fas fas fa-cogs"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
+@section('breadcumb', 'Dashboard')
+@section('page-title', 'Koordinator Magang')
+
+@section('content')
+<!-- Mitra -->
+<div class="row">
+  <!-- Total Mitra Magang -->
+  <div class="col-md-4 col-lg-4 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h4 class="card-title m-0 me-2">{{ $jumlahMitra ?? 0 }}</h4>
       </div>
-    </section>
-   
+      <div class="card-body">
+        <h6 class="card-title">Total Mitra Magang</h6>
+        <br>
+        <a href="{{ route('kordinator.data_mitra') }}" class="btn btn-outline-primary w-100">Lihat Detail</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total User -->
+  <div class="col-md-4 col-lg-4 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h4 class="card-title m-0 me-2">{{ $jumlahUser ?? 0 }}</h4>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title">Total User</h6>
+        <br>
+        <a href="{{ route('kordinator.data_user') }}" class="btn btn-outline-primary w-100">Lihat Detail</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Jurusan -->
+  <div class="col-md-4 col-lg-4 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h4 class="card-title m-0 me-2">{{ $jumlahJurusan ?? 0 }}</h4>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title">Total Jurusan</h6>
+        <br>
+        <a href="{{ route('kordinator.jurusan') }}" class="btn btn-outline-primary w-100">Lihat Detail</a>
+      </div>
+    </div>
+  </div>
 </div>
-@include('layouts/footer')
 @endsection

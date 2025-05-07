@@ -1,26 +1,26 @@
-@extends('layouts.kordinator')
-@section('title', 'Data User | SIKEPNI')
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
-@endsection
+@extends('layouts.admin.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Data User')
+
+
 @section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Data User</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <div class="container-fluid">
         <!-- Pesan Sukses -->
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+                <div>{{ session('success') }}</div>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+                <div>{{ session('error') }}</div>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <!-- Modal Add User -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
@@ -84,9 +84,8 @@
           @csrf
           <div class="modal-header">
             <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+
           </div>
           
           <div class="modal-body">
@@ -105,7 +104,7 @@
                       <option value="dosen_pembimbing">Dosen Pembimbing</option>
                       <option value="mitra_magang">Mitra Magang</option>
                       <option value="kordinator">kordinator</option>
-                      <Aption value="admin">Admin</Aption>
+                      <option value="admin">Admin</option>
                   </select>
               </div>
               
@@ -131,7 +130,7 @@
                       <input type="password" class="form-control form-control-sm" id="password" name="password" required>
                       <div class="input-group-append">
                           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
-                              <i id="togglePasswordIcon" class="fas fa-eye"></i>
+                              <i id="togglePasswordIcon" class="bx bx-show"></i>
                           </button>
                       </div>
                   </div>
@@ -150,7 +149,7 @@
   </div>
   
 <!-- End Modal Add User -->
-<!-- Modal Edit User -->
+
 <!-- Modal Edit User -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -160,9 +159,8 @@
           @method('PUT')
           <div class="modal-header">
             <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+
           </div>
           
           <div class="modal-body">
@@ -182,7 +180,7 @@
                       <option value="dosen_pembimbing">Dosen Pembimbing</option>
                       <option value="mitra_magang">Mitra Magang</option>
                       <option value="kordinator">kordinator</option>
-                      <Kption value="kordinator">Kordinator</Kption>
+                      <option value="admin">Admin</option>
                   </select>
               </div>
               
@@ -208,7 +206,7 @@
                       <input type="password" class="form-control form-control-sm" id="editPassword" name="password">
                       <div class="input-group-append">
                           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="togglePasswordVisibility('editPassword', 'editTogglePasswordIcon')">
-                              <i id="editTogglePasswordIcon" class="fas fa-eye"></i>
+                              <i id="editTogglePasswordIcon" class="bx bx-show"></i>
                           </button>
                       </div>
                   </div>
@@ -225,8 +223,8 @@
       </div>
     </div>
   </div>
-  
   <!-- End Modal Edit User -->
+
   <!-- Modal Delete User -->
 <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -236,9 +234,8 @@
           @method('DELETE')
           <div class="modal-header">
             <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+
           </div>
           
           <div class="modal-body">
@@ -262,7 +259,7 @@
 
 <!-- Tambahkan ini di bagian bawah file untuk menyertakan skrip Bootstrap jika belum ada -->
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 @endpush
 
@@ -339,8 +336,8 @@
                 searchable: false,
                 render: function (data, type, row) {
                     return `
-                        <button class="btn btn-primary btn-sm" onclick="editUser(${row.id})" data-toggle="modal" data-target="#editUserModal">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteUser(${row.id})" data-toggle="modal" data-target="#deleteUserModal">Delete</button>
+                        <button class="btn btn-primary btn-sm" onclick="editUser(${row.id})" data-toggle="modal" data-target="#editUserModal"><i class="bx bx-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteUser(${row.id})" data-toggle="modal" data-target="#deleteUserModal"><i class="bx bx-trash"></i></button>
                     `;
                 }
             },
@@ -385,7 +382,4 @@ function togglePasswordVisibility(inputId, iconId) {
 
 
 </script>
-@include('layouts/footer')
 @endsection
-
-

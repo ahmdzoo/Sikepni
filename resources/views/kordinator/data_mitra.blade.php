@@ -1,57 +1,44 @@
-@extends('layouts.kordinator')
-@section('title', 'Data Mitra | SIKEPNI')
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
+@extends('layouts.admin.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Data Mitra')
+
+@push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-
+    .highlight-pending {
+        background-color: #fff3cd !important;
+    }
 </style>
+@endpush
 
-@endsection
 
 @section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Data Mitra</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <div class="container-fluid">
-        <!-- Pesan Sukses -->
         @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+            <div>{{ session('success') }}</div>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         @endif
 
-        <!-- Pesan Kesalahan -->
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>
-                    {{ $error }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </li>
-                @endforeach
-            </ul>
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+            <div>{{ session('error') }}</div>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @endif
 
         @if($pendingMitraCount > 0)
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
             <strong>Perhatian!</strong> Ada {{ $pendingMitraCount }} mitra yang belum diverifikasi.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -80,7 +67,7 @@
                 <!-- Pembungkus Tabel Responsif -->
                 <div class="table-responsive">
                     <!-- Tabel Data Mitra -->
-                    <table class="table table-striped table-sm" id="datamitra">
+                    <table class="table table-sm" id="datamitra">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -106,7 +93,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <!-- Modal Add Mitra -->
 <div class="modal fade" id="addMitraModal" role="dialog" aria-labelledby="addMitraModalLabel" aria-hidden="true">
@@ -114,9 +101,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addMitraModalLabel">Add Mitra</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <form action="{{ route('kordinator.store_mitra') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -180,33 +166,7 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Add Jurusan -->
-<div class="modal fade" id="addJurusanModal" tabindex="-1" role="dialog" aria-labelledby="addJurusanModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addJurusanModalLabel">Add Jurusan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('kordinator.jurusan.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="jurusan_name">Nama Jurusan</label>
-                        <input type="text" class="form-control" id="jurusan_name" name="name" placeholder="Masukkan nama jurusan" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Jurusan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<!-- End Modal Add Mitra -->
 
 <!-- Modal Edit Mitra -->
 <div class="modal fade" id="editMitraModal" role="dialog" aria-labelledby="editMitraModalLabel" aria-hidden="true">
@@ -214,9 +174,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editMitraModalLabel">Edit Mitra</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="#" method="POST" id="editMitraForm" enctype="multipart/form-data">
                 @csrf
@@ -276,7 +234,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Update Mitra</button>
                 </div>
             </form>
@@ -294,9 +252,7 @@
                 @method('DELETE')
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteMitraModalLabel">Confirm Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -340,16 +296,14 @@
         destroy: "{{ url('/kordinator/mitra') }}/", // Base URL untuk delete
     };
 
-    $(document).ready(function() {
-        $('#addMitraModal').on('shown.bs.modal', function() {
-            $('.select2').select2({});
-        });
+    $('#addMitraModal').on('shown.bs.modal', function () {
+        $('#nama_mitra_id').select2({ dropdownParent: $('#addMitraModal') });
+        $('#jurusan_id').select2({ dropdownParent: $('#addMitraModal') });
     });
 
-    $(document).ready(function() {
-        $('#editMitraModal').on('shown.bs.modal', function() {
-            $('.select2').select2({});
-        });
+    $('#editMitraModal').on('shown.bs.modal', function () {
+        $('#edit_nama_mitra_id').select2({ dropdownParent: $('#editMitraModal') });
+        $('#edit_jurusan_id').select2({ dropdownParent: $('#editMitraModal') });
     });
 
 
@@ -415,6 +369,8 @@
             serverSide: true,
             searching: true,
             ordering: false,
+            stripeClasses: [],
+
             ajax: {
                 url: "{{ route('kordinator.data_mitra') }}",
                 data: function(d) {
@@ -424,9 +380,10 @@
             },
             createdRow: function(row, data, dataIndex) {
                 if (data.status_verifikasi === 'pending') {
-                    $(row).css('background-color', '#fff3cd'); // Warna kuning untuk pending
+                    $(row).addClass('highlight-pending');
                 }
             },
+
             columns: [{
                     data: null,
                     name: 'no',
@@ -496,8 +453,8 @@
 
                         return `
                         ${approveButton}
-                        <button class="action-btn btn-primary btn-sm edit" data-id="${row.id}"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal"><i class="fas fa-trash-alt"></i></button>
+                        <button class="action-btn btn-primary btn-sm edit" data-id="${row.id}"><i class="bx bx-edit"></i></button>
+                        <button class="action-btn btn-danger btn-sm delete" data-id="${row.id}" data-toggle="modal" data-target="#deleteMitraModal"><i class="bx bx-trash"></i></button>
                     `;
                     }
                 }
@@ -533,5 +490,4 @@
         $('#deleteMitraForm').attr('action', `/kordinator/mitra/${id}`);
     }
 </script>
-@include('layouts/footer')
 @endsection

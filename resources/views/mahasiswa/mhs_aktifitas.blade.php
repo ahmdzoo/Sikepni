@@ -1,24 +1,15 @@
-@extends('layouts.mhs')
-@section('title', 'Laporan Magang | SIKEPNI')
+@extends('layouts.mahasiswa.app')
+
+@section('breadcumb', 'Menu /Aktivitas Magang /')
+@section('page-title', 'Laporan Magang')
 
 @section('content')
-<div class="content-wrapper" style=" min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-4">
-                <div class="col-sm-12 text-left">
-                    <h1 class="m-4" style="font-size: 30px; color: #fff; font-weight: bold; text-shadow: 1px 1px 2px #333;">
-                        Laporan Magang
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <div class="container-fluid">
         <!-- Button to Open Modal -->
         <div class="text-center mb-4">
-            <button type="button" class="btn btn-white shadow" data-toggle="modal" data-target="#uploadLaporanModal" 
+            <button type="button" class="btn btn-white shadow" data-bs-toggle="modal" data-bs-target="#uploadLaporanModal" 
                 style="border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); color: #363535;; background-color: #ffffff; border: 1px solid #ccc;">
                 <i class="fas fa-upload" style="color: #363535;"></i> Upload Laporan
             </button>
@@ -30,9 +21,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="uploadLaporanModalLabel">Upload Laporan Magang</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
@@ -67,7 +56,7 @@
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -78,7 +67,7 @@
                 @foreach ($errors->all() as $error)
                     <li>
                         {{ $error }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </li>
@@ -88,17 +77,14 @@
 
         <!-- Daftar Laporan Section -->
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h2 class="card-title mb-0"> Daftar Laporan Magang</h2>
-            </div>
-
             <div class="card-body">
                 <!-- Filter Berdasarkan Jenis Laporan -->
                 <div class="filter-section mb-3 ml-3 text-left">
                     <form method="GET" action="{{ route('mahasiswa.aktifitas') }}" class="d-inline-block">
                         <div class="input-group" style="width: 250px; display: inline-flex;">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-white"><i class="fas fa-filter"></i></span>
+                                <span class="input-group-text bg-primary text-white"><i class="bx bx-slider"></i>
+                                </span>
                             </div>
                             <select name="filter_jenis" id="filter_jenis" class="form-control" onchange="this.form.submit()" style="border-radius: 0 5px 5px 0;">
                                 <option value="">Semua Jenis</option>
@@ -140,28 +126,28 @@
                                     <td class="text-center">
                                         <!-- Dropdown Action -->
                                         <div class="dropdown">
-                                            <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton-{{ $laporan->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-h"></i>
+                                            <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton-{{ $laporan->id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class='bx bx-dots-horizontal-rounded'></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton-{{ $laporan->id }}">
                                                 
-                                                <button class="dropdown-item" data-toggle="modal" data-target="#editLaporanModal-{{ $laporan->id }}">
-                                                    <i class="fas fa-edit"></i> Edit
+                                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editLaporanModal-{{ $laporan->id }}">
+                                                    <i class='bx bx-edit'></i> Edit
                                                 </button>
                                                 <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="dropdown-item">
-                                                        <i class="fas fa-trash-alt"></i> Hapus
+                                                        <i class='bx bx-trash'></i> Hapus
                                                     </button>
                                                 </form>
-                                                <button class="dropdown-item" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
-                                                    <i class="fas fa-comments"></i> Komentar
+                                                <button class="dropdown-item" data-bs-toggle="collapse" data-bs-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
+                                                    <i class='bx bx-comment-dots'></i> Komentar
                                                 </button>
                                             </div>
                                         </div>
-
                                     </td>
+                                    
                                 </tr>
 
                                 <!-- Bagian Komentar Dropdown -->
@@ -181,8 +167,8 @@
                                                         <form action="{{ route('laporan.komentar.destroy', ['laporan' => $laporan->id, 'komentar' => $komentar->id]) }}" method="POST" class="delete-form">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn-delete-icon">
-                                                                <i class="fas fa-trash-alt"></i>
+                                                            <button type="submit" class="btn btn-sm">
+                                                                <i class='bx bxs-trash-alt'></i>
                                                             </button>
                                                         </form>
                                                     </li>
@@ -198,7 +184,7 @@
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success mt-2">Kirim</button>
                                                 <!-- Tombol untuk menutup komentar -->
-                                                <button type="button" class="btn btn-sm btn-secondary mt-2" data-toggle="collapse" data-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
+                                                <button type="button" class="btn btn-sm btn-secondary mt-2" data-bs-toggle="collapse" data-bs-target="#komentar-{{ $laporan->id }}" aria-expanded="false" aria-controls="komentar-{{ $laporan->id }}">
                                                     Tutup
                                                 </button>
                                             </form>
@@ -212,9 +198,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header bg-primary text-white">
                                                 <h5 class="modal-title" id="editLaporanModalLabel-{{ $laporan->id }}">Edit Laporan Magang</h5>
-                                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <form action="{{ route('laporan.update', $laporan->id) }}" method="POST" enctype="multipart/form-data">
@@ -249,7 +233,6 @@
                 @endif
             </div>
         </div>
-    </div>
+    
 </div>
-@include('layouts/footer')
 @endsection

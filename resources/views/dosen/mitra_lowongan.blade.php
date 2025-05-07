@@ -1,21 +1,8 @@
-@extends('layouts.dosen')
-@section('title', 'Program Magang | SIKEPNI')
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.min.css" />
-@endsection
+@extends('layouts.dosen.app')
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Data Mitra')
 
-@section('content')
-<div class="content-wrapper" style=" min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Daftar Mitra</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+@section('content') 
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -55,30 +42,19 @@
             </div>
         </div>
     </div>
-</div>
 
 
-<!-- Modal untuk Menampilkan File PDF 2 -->
-<div id="fileModal" class="modal fade" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+
+<!-- Modal View File PKS -->
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="fileModalLabel">DOKUMEN PKS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="pdfModalLabel">Dokumen PKS</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Tombol Zoom -->
-                <div class="zoom-controls">
-                    <button id="zoomIn" class="btn btn-primary">+</button>
-                    <button id="zoomOut" class="btn btn-primary">-</button>
-                </div>
-
-                <!-- Tempat PDF ditampilkan -->
-                <div id="pdfCanvas" style="width: 100%; height: auto; overflow: auto; transform-origin: center center;">
-                    <!-- PDF content akan ditampilkan di sini -->
-                </div>
+                <canvas id="pdfCanvas" style="width: 100%;"></canvas>
             </div>
         </div>
     </div>
@@ -195,88 +171,49 @@
          });
      }
 
-     $(document).on('click', '.lihat-file', function () {
-        var filePath = $(this).data('file');
-        var fileUrl = `/storage/${filePath}`; // Path ke file
+     function openPdfModal(pdfUrl) {
+        const modal = new bootstrap.Modal(document.getElementById('pdfModal'));
+        modal.show();
 
-        $('#previewFrame').attr('src', fileUrl); // Set file ke iframe
-        $('#previewFileModal').modal('show'); // Tampilkan modal
-    });
+        const container = document.createElement('div');
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.gap = '20px';
 
-    let zoomLevel = 1;  // Menyimpan tingkat zoom default
+        const modalBody = document.querySelector('#pdfModal .modal-body');
+        modalBody.innerHTML = ''; // Hapus konten sebelumnya
+        modalBody.appendChild(container);
 
-    // Fungsi untuk melakukan zoom in
-    document.getElementById('zoomIn').addEventListener('click', function() {
-        zoomLevel += 0.1;  // Menambah zoom level
-        updateZoom();      // Memperbarui tampilan zoom pada PDF
-    });
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        loadingTask.promise.then((pdf) => {
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                const canvas = document.createElement('canvas');
+                container.appendChild(canvas);
 
-    // Fungsi untuk melakukan zoom out
-    document.getElementById('zoomOut').addEventListener('click', function() {
-        if (zoomLevel > 0.1) {  // Menjamin agar zoom level tidak menjadi terlalu kecil
-            zoomLevel -= 0.1;  // Mengurangi zoom level
-            updateZoom();      // Memperbarui tampilan zoom pada PDF
-        }
-    });
-
-    // Fungsi untuk memperbarui zoom dan memuat ulang konten PDF
-    function updateZoom() {
-        const viewerContainer = document.getElementById('pdfCanvas');
-        viewerContainer.innerHTML = ""; // Hapus konten PDF lama
-
-        // Ambil URL PDF yang akan ditampilkan
-        const url = document.getElementById('fileModal').getAttribute('data-file-url');
-
-        // Muat ulang PDF dengan zoom yang baru
-        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-            var pdfDoc = pdfDoc_;
-            var totalPages = pdfDoc.numPages;
-
-            // Loop untuk memuat ulang halaman PDF dengan zoom yang baru
-            for (var pageNum = 1; pageNum <= totalPages; pageNum++) {
-                pdfDoc.getPage(pageNum).then(function(page) {
-                    var canvas = document.createElement('canvas');
-                    var context = canvas.getContext('2d');
-                    var viewport = page.getViewport({ scale: zoomLevel });  // Gunakan zoom level yang sudah diperbarui
+                pdf.getPage(pageNumber).then((page) => {
+                    const viewport = page.getViewport({
+                        scale: 1.5
+                    });
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
 
-                    // Render halaman PDF ke dalam canvas
-                    page.render({
+                    const context = canvas.getContext('2d');
+                    const renderContext = {
                         canvasContext: context,
-                        viewport: viewport
-                    });
-
-                    // Tambahkan canvas ke dalam viewer container
-                    viewerContainer.appendChild(canvas);
+                        viewport: viewport,
+                    };
+                    page.render(renderContext);
                 });
             }
-        }).catch(function(error) {
-            console.error('Error loading PDF: ', error);
-            alert('Terjadi kesalahan saat memuat file PDF.');
+        }).catch((error) => {
+            console.error('Error loading PDF:', error);
+            modalBody.innerHTML = `<p class="text-danger">Error loading PDF: ${error.message}</p>`;
         });
     }
-
-    // Fungsi untuk menampilkan PDF di dalam modal
-    function viewFile(filePath) {
-        var viewerContainer = document.getElementById('pdfCanvas');
-        var url = filePath;
-
-        // Pastikan modal terbuka terlebih dahulu
-        $('#fileModal').modal('show');
-
-        // Set URL file PDF ke atribut data-file-url modal
-        $('#fileModal').attr('data-file-url', url);
-
-        // Delay kecil untuk memastikan modal terbuka sepenuhnya
-        setTimeout(function() {
-            updateZoom();  // Memperbarui tampilan PDF setelah modal terbuka
-        }, 500); // Waktu delay 500ms (sesuaikan sesuai kebutuhan)
-    }
-
-  
+    function viewFile(pdfUrl) {
+    openPdfModal(pdfUrl);
+}
 
     
 </script>
-@include('layouts/footer')
 @endsection

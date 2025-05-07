@@ -1,21 +1,36 @@
-@extends('layouts.mitra')
-@section('title', 'Data Mitra | Admin')
+@extends('layouts.mitra.app')
+
+@section('breadcumb', 'Menu /')
+@section('page-title', 'Informasi Kerjasama')
+
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
-@section('content')
-<div class="content-wrapper" style="min-height: 100vh;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <h1 class="m-4" style="font-size: 30px; color: white; font-weight: bold;">Informasi Kerjasama Magang</h1>
-        </div>
-    </div>
 
+@section('content')
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+        <div>{{ session('success') }}</div>
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+        <div>{{ session('error') }}</div>
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" style="background: none; border: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <!-- Button Tambah Data -->
-                <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addMitraModal">
+                <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addMitraModal">
                     Tambah Mitra
                 </button>
 
@@ -27,9 +42,8 @@
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="addMitraModalLabel">Tambah Data Mitra</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
@@ -63,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </form>
@@ -106,7 +120,7 @@
                                 <td>{{ $mitra->alamat ?? '-' }}</td>
                                 <td class="text-center">{{ $mitra->kuota ?? '-' }}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $mitra->id }}">
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $mitra->id }}">
                                         Edit
                                     </button>
                                 </td>
@@ -121,9 +135,8 @@
                                             @method('PUT')
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editModalLabel{{ $mitra->id }}">Edit Data Mitra</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
@@ -158,7 +171,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                             </div>
                                         </form>
@@ -182,9 +195,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pdfModalLabel">Dokumen PKS</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <canvas id="pdfCanvas" style="width: 100%;"></canvas>
@@ -194,8 +205,7 @@
     </div>
 
 
-</div>
-@include('layouts/footer')
+
 
 @endsection
 
@@ -209,6 +219,14 @@
             placeholder: "Pilih",
             allowClear: false
         });
+    });
+
+    $('#addMitraModal').on('shown.bs.modal', function () {
+        $('#jurusan_id').select2({ dropdownParent: $('#addMitraModal') });
+    });
+
+    $('#editModal').on('shown.bs.modal', function () {
+        $('#jurusan_id').select2({ dropdownParent: $('#editModal') });
     });
 
     function openPdfModal(pdfUrl) {
